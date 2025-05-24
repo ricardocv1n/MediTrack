@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTrack - Salpicadero</title>
+    <link rel="stylesheet" href="sidebar/sidebar.css">
+    <link rel="stylesheet" href="Estilos/inicio.css">
+      <link rel="stylesheet" href="medibot/medibot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content dashboard-content" role="main" aria-label="Contenido principal">
+            <div class="today-summary">
+                <div class="header">
+                    <h1>Resumen de hoy</h1>
+                </div>
+                <div class="summary-cards" role="region" aria-label="Resumen de estado de salud">
+                    <div class="summary-card upcoming-dose">
+                        <i class="fas fa-pills"></i>
+                        <h3>Próxima dosis</h3>
+                        <p class="medication-name">Paracetamol 500mg</p>
+                        <p class="medication-time">Toma a las 14:00.</p>
+                        <div class="card-actions">
+                            <button class="primary-button small confirmar-toma-btn" aria-label="Confirmar toma de Paracetamol 500mg">Confirmar</button>
+                            <button class="secondary-button small open-modal-btn" data-modal-id="modalDetallesDosis">Detalles</button>
+                        </div>
+                    </div>
+                    <div class="summary-card missed-dose">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Alerta de dosis</h3>
+                        <p class="alert-text">¡Dosis atrasada!</p>
+                        <p class="medication-name">Ibuprofeno (10:00)</p>
+                        <div class="card-actions">
+                            <button class="primary-button small open-modal-btn" data-modal-id="modalRegistrarDosis">Registrar ahora</button>
+                            <button class="secondary-button small open-modal-btn" data-modal-id="modalConfirmacionOmitirDosis">Omitir</button>
+                        </div>
+                    </div>
+                    <div class="summary-card blood-pressure">
+                        <i class="fas fa-heartbeat"></i>
+                        <h3>Presión arterial</h3>
+                        <p class="last-measurement">Última: 120/80 mmHg</p>
+                        <p class="status"><i class="fas fa-circle" style="color: var(--success-color);"></i> Normal</p>
+                        <div class="card-actions">
+                            <button class="primary-button small open-modal-btn" data-modal-id="modalRegistrarPresion">Nueva lectura</button>
+                            <button class="secondary-button small open-modal-btn" data-modal-id="modalHistorialPresion">Historial</button>
+                        </div>
+                    </div>
+                    <div class="summary-card adherence">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Adherencia semanal</h3>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 85%;"></div>
+                        </div>
+                        <p class="adherence-percentage"><span>85%</span> (17/20 dosis)</p>
+                        <p class="progress-text">Buen progreso, 3% mejor que la semana pasada.</p>
+                        <button class="secondary-button small open-modal-btn" data-modal-id="modalDetallesAdherencia">Ver detalles</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="upcoming-appointments">
+                <div class="header">
+                    <h2>Próximas citas</h2>
+                    <a href="Citas.html" class="view-all">Ver todas</a>
+                </div>
+                <div class="appointment-card" data-Inicio="0">
+                    <i class="fas fa-calendar-check"></i>
+                    <div class="appointment-details">
+                        <h3>Dra. García - Cardiología</h3>
+                        <p>Mañana, 15 de Mayo a las 10:30</p>
+                        <p>Hospital Central, Consultorio 402</p>
+                    </div>
+                    <button class="secondary-button small open-modal-btn" data-modal-id="modalRecordatorioCita" data-appointment-id="cita1">Recordatorio</button>
+                </div>
+                <div class="appointment-card" data-Inicio="1">
+                    <i class="fas fa-tooth"></i>
+                    <div class="appointment-details">
+                        <h3>Dr. Martínez - Odontología</h3>
+                        <p>Viernes, 18 de Mayo a las 16:15</p>
+                        <p>Clínica Dental Sonrisa, Piso 3</p>
+                    </div>
+                    <button class="secondary-button small open-modal-btn" data-modal-id="modalRecordatorioCita" data-appointment-id="cita2">Recordatorio</button>
+                </div>
+            </div>
+
+            <div class="health-indicators">
+                <div class="header">
+                    <h2>Indicadores de salud</h2>
+                </div>
+                <div class="chart-container">
+                    <canvas id="healthChart" width="400" height="200"></canvas>
+                </div>
+                <div class="chart-labels">
+                    <span>Lun</span>
+                    <span>Mar</span>
+                    <span>Mié</span>
+                    <span>Jue</span>
+                    <span>Vie</span>
+                    <span>Sáb</span>
+                    <span>Dom</span>
+                </div>
+            </div>
+
+            <div class="quick-access">
+                <div class="header">
+                    <h2>Accesos rápidos</h2>
+                </div>
+                <div class="quick-buttons">
+                    <button class="primary-button open-modal-btn" data-modal-id="modalRegistrarMedicacion"><i class="fas fa-plus"></i> Registrar medicación</button>
+                    <button class="secondary-button open-modal-btn" data-modal-id="modalAnadirSintoma"><i class="fas fa-exclamation-triangle"></i> Añadir síntoma</button>
+                    <button class="secondary-button open-modal-btn" data-modal-id="modalVerInformes"><i class="fas fa-file-alt"></i> Ver informes</button>
+                </div>
+            </div>
+
+            <div class="health-tips">
+                <div class="header">
+                    <h2>Consejo de salud del día</h2>
+                    <button class="primary-button small" id="generateTipBtn">✨ Generar nuevo consejo</button>
+                </div>
+                <div class="tip-card">
+                    <i class="fas fa-lightbulb"></i>
+                    <p id="dailyHealthTip">Recuerda mantener una hidratación adecuada. Bebe al menos 8 vasos de agua al día, especialmente si estás tomando medicamentos diuréticos.</p>
+                </div>
+                <p id="tipLoadingIndicator" class="text-center text-gray-500 hidden mt-2">Generando consejo...</p>
+            </div>
+        </main>
+    </div>
+
+    <div id="modalDetallesDosis" class="modal" aria-hidden="true" aria-labelledby="modalDetallesDosisTitle">
+        <div class="modal-content">
+            <span class="close" data-modal-id="modalDetallesDosis">×</span>
+            <h2 id="modalDetallesDosisTitle">Detalles de la Dosis</h2>
+            <p><strong>Medicamento:</strong> <span id="detalleDosisMedicamento">Paracetamol 500mg</span></p>
+            <p><strong>Hora:</strong> <span id="detalleDosisHora">14:00</span></p>
+            <p><strong>Instrucciones:</strong> <span id="detalleDosisInstrucciones">Tomar cada 8 horas con alimentos.</span></p>
+            <p><strong>Última toma:</strong> <span id="detalleDosisUltimaToma">13 de Mayo, 06:00</span></p>
+            <div class="modal-actions">
+                <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalDetallesDosis">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalRegistrarDosis" class="modal" aria-hidden="true" aria-labelledby="modalRegistrarDosisTitle">
+        <div class="modal-content">
+            <span class="close" data-modal-id="modalRegistrarDosis">×</span>
+            <h2 id="modalRegistrarDosisTitle">Registrar Dosis</h2>
+            <form>
+                <p><strong>Medicamento:</strong> <span id="medicamentoDosisAtrasada">Ibuprofeno</span></p>
+                <p><strong>Dosis programada:</strong> <span id="horaDosisProgramada">10:00</span></p>
+
+                <div class="form-group">
+                    <label for="horaTomaReal">Hora de la toma:</label>
+                    <input type="time" id="horaTomaReal" name="horaTomaReal" value="10:00">
+                </div>
+
+                <div class="form-group">
+                    <label for="notasDosis">Notas (opcional):</label>
+                    <textarea id="notasDosis" name="notasDosis" rows="3" placeholder="Ej: Me la tomé con comida."></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="primary-button" id="submitRegistrarDosis">Guardar Registro</button>
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalRegistrarDosis">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalRegistrarPresion" class="modal" aria-hidden="true" aria-labelledby="modalRegistrarPresionTitle">
+        <div class="modal-content">
+            <span class="close" data-modal-id="modalRegistrarPresion">×</span>
+            <h2 id="modalRegistrarPresionTitle">Registrar Presión Arterial</h2>
+            <form>
+                <div class="form-group">
+                    <label for="sistolica">Sistólica (mmHg):</label>
+                    <input type="number" id="sistolica" name="sistolica" required placeholder="Ej: 120">
+                </div>
+                <div class="form-group">
+                    <label for="diastolica">Diastólica (mmHg):</label>
+                    <input type="number" id="diastolica" name="diastolica" required placeholder="Ej: 80">
+                </div>
+                <div class="form-group">
+                    <label for="fechaPresion">Fecha:</label>
+                    <input type="date" id="fechaPresion" name="fechaPresion" value="2025-05-22">
+                </div>
+                <div class="form-group">
+                    <label for="horaPresion">Hora:</label>
+                    <input type="time" id="horaPresion" name="horaPresion" value="10:00">
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="primary-button" id="submitRegistrarPresion">Guardar Lectura</button>
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalRegistrarPresion">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalAnadirSintoma" class="modal" aria-hidden="true" aria-labelledby="modalAnadirSintomaTitle">
+        <div class="modal-content">
+            <span class="close" data-modal-id="modalAnadirSintoma">×</span>
+            <h2 id="modalAnadirSintomaTitle">Añadir Nuevo Síntoma</h2>
+            <form>
+                <div class="form-group">
+                    <label for="nombreSintoma">Nombre del Síntoma:</label>
+                    <input type="text" id="nombreSintoma" name="nombreSintoma" required placeholder="Ej: Dolor de cabeza">
+                </div>
+                <div class="form-group">
+                    <label for="intensidadSintoma">Intensidad:</label>
+                    <select id="intensidadSintoma" name="intensidadSintoma">
+                        <option value="leve">Leve</option>
+                        <option value="moderado">Moderado</option>
+                        <option value="severo">Severo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="descripcionSintoma">Descripción (opcional):</label>
+                    <textarea id="descripcionSintoma" name="descripcionSintoma" rows="3" placeholder="Ej: Pulsátil, detrás de los ojos."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="fechaSintoma">Fecha de inicio:</label>
+                    <input type="date" id="fechaSintoma" name="fechaSintoma" value="2025-05-22">
+                </div>
+                <div class="form-group">
+                    <label for="horaSintoma">Hora de inicio:</label>
+                    <input type="time" id="horaSintoma" name="horaSintoma" value="10:00">
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="primary-button" id="submitAnadirSintoma">Registrar Síntoma</button>
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalAnadirSintoma">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalConfirmacionOmitirDosis" class="modal" aria-hidden="true" aria-labelledby="modalConfirmacionOmitirDosisTitle">
+        <div class="modal-content small-content">
+            <span class="close" data-modal-id="modalConfirmacionOmitirDosis">×</span>
+            <h2 id="modalConfirmacionOmitirDosisTitle">Confirmar Acción</h2>
+            <p id="confirmacionMensaje">¿Estás seguro de que quieres realizar esta acción?</p>
+            <div class="modal-actions justify-end">
+                <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalConfirmacionOmitirDosis">Cancelar</button>
+                <button type="button" class="danger-button" id="confirmarAccionBtn">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalDetallesCita" class="modal" aria-hidden="true" aria-labelledby="modalDetallesCitaTitle">
+        <div class="modal-content">
+            <span class="close" data-modal-id="modalDetallesCita">×</span>
+            <h2 id="modalDetallesCitaTitle">Detalles de la Cita</h2>
+            <p><strong>Médico:</strong> <span id="citaMedico"></span></p>
+            <p><strong>Especialidad:</strong> <span id="citaEspecialidad"></span></p>
+            <p><strong>Fecha y Hora:</strong> <span id="citaFechaHora"></span></p>
+            <p><strong>Lugar:</strong> <span id="citaLugar"></span></p>
+            <p><strong>Notas:</strong> <span id="citaNotas"></span></p>
+            <div class="modal-actions">
+                <button class="danger-button" id="cancelarCitaBtn">Cancelar Cita</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalVerInformes" class="modal" aria-hidden="true" aria-labelledby="modalVerInformesTitle">
+        <div class="modal-content">
+            <span class="close" data-modal-id="modalVerInformes">×</span>
+            <h2 id="modalVerInformesTitle">Informes de Salud</h2>
+            <p>Aquí se mostrarían tus informes de salud detallados.</p>
+            <ul class="list-disc pl-5 text-gray-700">
+                <li>Informe de Presión Arterial - Mayo 2025</li>
+                <li>Historial de Medicación - Últimos 3 meses</li>
+                <li>Resumen de Síntomas - Abril 2025</li>
+            </ul>
+            <div class="modal-actions">
+                <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalVerInformes">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalAnalisisSintoma" class="modal" aria-hidden="true" aria-labelledby="modalAnalisisSintomaTitle">
+        <div class="modal-content">
+            <span class="close" data-modal-id="modalAnalisisSintoma">×</span>
+            <h2 id="modalAnalisisSintomaTitle">Análisis de Síntoma ✨</h2>
+            <p>Hemos registrado tu síntoma: <strong><span id="analisisSintomaNombre"></span></strong>.</p>
+            <p>A continuación, la IA te proporcionará información general sobre este síntoma. Recuerda que esto no sustituye el consejo médico profesional.</p>
+            <div id="analisisSintomaContent" class="mt-4 p-3 bg-gray-50 rounded-md border border-gray-200 text-gray-800">
+                <p id="analisisSintomaText">Cargando análisis...</p>
+                <p id="analisisSintomaLoading" class="text-center text-gray-500 hidden mt-2">Analizando síntoma con IA...</p>
+            </div>
+            <div class="modal-actions justify-end">
+                <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalAnalisisSintoma">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalHistorialPresion" class="modal" aria-hidden="true" aria-labelledby="modalHistorialPresionTitle">
+        <div class="modal-content">
+            <span class="close" data-modal-id="modalHistorialPresion">×</span>
+            <h2 id="modalHistorialPresionTitle">Historial de Presión Arterial</h2>
+            <div id="historialPresionContent" class="mt-4 p-3 bg-gray-50 rounded-md border border-gray-200 text-gray-800">
+                <p class="text-center text-gray-500 mb-2">Cargando historial...</p>
+                <div class="chart-canvas-container">
+                    <canvas id="pressureHistoryChart"></canvas>
+                </div>
+                <h3 class="font-semibold mt-4 mb-2">Lecturas Recientes:</h3>
+                <ul id="listaHistorialPresion" class="list-disc pl-5">
+                    <li>14/05/2025 08:00: 125/82 mmHg (Normal)</li>
+                    <li>13/05/2025 18:30: 118/79 mmHg (Normal)</li>
+                </ul>
+            </div>
+            <div class="modal-actions justify-end">
+                <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalHistorialPresion">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalDetallesAdherencia" class="modal" aria-hidden="true" aria-labelledby="modalDetallesAdherenciaTitle">
+        <div class="modal-content">
+            <span class="close" data-modal-id="modalDetallesAdherencia">×</span>
+            <h2 id="modalDetallesAdherenciaTitle">Detalles de Adherencia Semanal</h2>
+            <div id="detallesAdherenciaContent" class="mt-4 p-3 bg-gray-50 rounded-md border border-gray-200 text-gray-800">
+                <p class="text-center text-gray-500 mb-2">Cargando detalles...</p>
+                <p><strong>Adherencia Total:</strong> <span id="adherenciaTotal">85%</span> (17 de 20 dosis)</p>
+                <h3 class="font-semibold mt-4 mb-2">Detalle por Medicamento:</h3>
+                <ul id="listaDetalleAdherencia" class="list-disc pl-5">
+                    <li>Paracetamol: 5/5 (100%)</li>
+                    <li>Ibuprofeno: 4/5 (80%)</li>
+                    <li>Amoxicilina: 8/10 (80%)</li>
+                </ul>
+                <h3 class="font-semibold mt-4 mb-2">Tendencia:</h3>
+                <p>Tu adherencia ha mejorado un 3% respecto a la semana pasada. ¡Sigue así!</p>
+            </div>
+            <div class="modal-actions justify-end">
+                <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalDetallesAdherencia">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalRecordatorioCita" class="modal" aria-hidden="true" aria-labelledby="modalRecordatorioCitaTitle">
+        <div class="modal-content">
+            <span class="close" data-modal-id="modalRecordatorioCita">×</span>
+            <h2 id="modalRecordatorioCitaTitle">Recordatorio de Cita</h2>
+            <p>Tienes una cita con <strong><span id="recordatorioMedico"></span></strong> (<span id="recordatorioEspecialidad"></span>).</p>
+            <p><strong>Fecha y Hora:</strong> <span id="recordatorioFechaHora"></span></p>
+            <p><strong>Lugar:</strong> <span id="recordatorioLugar"></span></p>
+            <p class="mt-4 text-sm text-gray-600">Este es un recordatorio automático. Por favor, verifica los detalles de tu cita en la sección de Citas.</p>
+            <div class="modal-actions justify-end">
+                <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalRecordatorioCita">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalRegistrarMedicacion" class="modal" aria-hidden="true" aria-labelledby="modalRegistrarMedicacionTitle">
+        <div class="modal-content">
+            <span class="close" data-modal-id="modalRegistrarMedicacion">×</span>
+            <h2 id="modalRegistrarMedicacionTitle">Registrar Nueva Medicación</h2>
+            <form>
+                <div class="form-group">
+                    <label for="medicacionNombre">Nombre del Medicamento:</label>
+                    <input type="text" id="medicacionNombre" name="medicacionNombre" required placeholder="Ej: Amoxicilina 500mg">
+                </div>
+                <div class="form-group">
+                    <label for="medicacionDosis">Dosis:</label>
+                    <input type="text" id="medicacionDosis" name="medicacionDosis" placeholder="Ej: 1 tableta">
+                </div>
+                <div class="form-group">
+                    <label for="medicacionFrecuencia">Frecuencia:</label>
+                    <input type="text" id="medicacionFrecuencia" name="medicacionFrecuencia" placeholder="Ej: Cada 8 horas">
+                </div>
+                <div class="form-group">
+                    <label for="medicacionInicio">Fecha de Inicio:</label>
+                    <input type="date" id="medicacionInicio" name="medicacionInicio" value="2025-05-22">
+                </div>
+                <div class="form-group">
+                    <label for="medicacionNotas">Notas (opcional):</label>
+                    <textarea id="medicacionNotas" rows="3" placeholder="Ej: Tomar con alimentos."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="primary-button" id="submitRegistrarMedicacion">Guardar Medicación</button>
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalRegistrarMedicacion">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Cargar el sidebar dinámicamente
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('sidebar/sidebar.html')
+                .then(response => response.text())
+                .then(data => {
+                    const sidebarContainer = document.getElementById('sidebar-container');
+                    if (sidebarContainer) {
+                        sidebarContainer.innerHTML = data;
+                        // Marcar como activo el elemento del menú correspondiente
+                        const currentPage = window.location.pathname.split('/').pop() || 'Inicio.html';
+                        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                            // Ajuste para manejar 'index.html' y la ruta raíz
+                            const linkHref = link.getAttribute('href');
+                            if (linkHref === currentPage || (currentPage === '' && linkHref === 'Inicio.html')) {
+                                link.parentElement.classList.add('active');
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar el sidebar:', error);
+                });
+        });
+    </script>
+    
+
+
+   <div class="medibot-toggle" id="medibotToggle" role="button" aria-expanded="false" aria-controls="medibotContainer">
+        <i class="fa-solid fa-user-doctor"></i>
+        <span class="notification-badge hidden" id="notificationBadge" aria-live="polite" aria-atomic="true">1</span>
+    </div>
+
+    <div class="medibot-container" id="medibotContainer" aria-live="polite" aria-atomic="true" role="dialog" aria-labelledby="medibotHeaderTitle">
+        <div class="medibot-header" id="medibotHeader">
+            <div class="header-content">
+                <i class="fas fa-robot"></i>
+                <h2 id="medibotHeaderTitle">MediBot</h2>
+                <span class="connection-status">
+                    <i class="fas fa-circle online-status" aria-hidden="true"></i>
+                    Online
+                </span>
+            </div>
+            <div class="header-controls">
+                <button class="control-btn" id="medibotMinimize" aria-label="Minimizar chatbot">
+                    <i class="fas fa-minus" aria-hidden="true"></i>
+                </button>
+                <button class="control-btn" id="medibotClose" aria-label="Cerrar chatbot">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="medibot-messages" id="medibotMessages" role="log" aria-live="polite"></div>
+
+        <div class="medibot-quick-actions" id="medibotQuickActions" role="group" aria-label="Acciones rápidas del chatbot"></div>
+
+        <div class="medibot-input-area">
+            <input type="text" class="medibot-input" id="medibotInput" placeholder="Escribe tu mensaje..." aria-label="Escribe tu mensaje">
+            <button class="voice-btn" id="medibotVoiceInput" aria-label="Entrada de voz">
+                <i class="fas fa-microphone" aria-hidden="true"></i>
+            </button>
+            <button class="send-btn" id="medibotSend" aria-label="Enviar mensaje">
+                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <script src="medibot/medibot.js"></script>
+    <script src="Scripts/inicio.js"></script>
+</body>
+</html>

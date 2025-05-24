@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTrack - Consejos de Salud</title>
+    <link rel="stylesheet" href="Estilos/Consejos.css">
+    <link rel="stylesheet" href="sidebar/sidebar.css">
+        <link rel="stylesheet" href="medibot/medibot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <div class="app-container health-tips-layout">
+        <main class="main-content health-tips-content">
+            <div class="page-header">
+                <div class="breadcrumbs">
+                    <a href="#">Inicio</a> <i class="fas fa-chevron-right separator"></i> <span>Consejos de Salud</span>
+                </div>
+                <h1>Consejos de Salud</h1>
+                <p class="page-subtitle">Recomendaciones personalizadas para mejorar tu bienestar y hábitos diarios.</p>
+                
+                <!-- Barra de búsqueda y filtros -->
+                <div class="search-filter-container">
+                    <div class="search-box">
+                        <input type="text" placeholder="Buscar consejos...">
+                        <button class="search-button"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="filter-dropdown">
+                        <select>
+                            <option value="all">Todos los temas</option>
+                            <option value="activity">Actividad física</option>
+                            <option value="nutrition">Nutrición</option>
+                            <option value="mental">Salud mental</option>
+                            <option value="sleep">Sueño</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de progreso y estadísticas -->
+            <section class="user-progress-section">
+                <h2>Tu progreso de salud</h2>
+                <div class="progress-cards">
+                    <div class="progress-card animate__animated animate__fadeIn">
+                        <div class="progress-circle" data-percent="75">
+                            <svg class="progress-ring" width="80" height="80">
+                                <circle class="progress-ring-circle" stroke="#4CAF50" stroke-width="6" fill="transparent" r="35" cx="40" cy="40"/>
+                            </svg>
+                            <span class="progress-percent">75%</span>
+                        </div>
+                        <h3>Consejos completados</h3>
+                        <p>15 de 20 este mes</p>
+                    </div>
+                    <div class="progress-card animate__animated animate__fadeIn animate__delay-1s">
+                        <div class="progress-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <h3>Racha actual</h3>
+                        <p>7 días seguidos</p>
+                        <small>¡Sigue así!</small>
+                    </div>
+                    <div class="progress-card animate__animated animate__fadeIn animate__delay-2s">
+                        <div class="progress-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>Logros</h3>
+                        <p>5 logros desbloqueados</p>
+                        <button class="secondary-button small">Ver todos</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de consejos destacados con carrusel -->
+            <section class="featured-tips">
+                <div class="section-header">
+                    <h2>Consejos destacados</h2>
+                    <div class="carousel-controls">
+                        <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+                        <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="featured-carousel">
+                    <div class="featured-grid">
+                        <div class="tip-card featured" data-tip-id="cardio">
+                            <div class="card-badge">Popular</div>
+                            <i class="fas fa-walking"></i>
+                            <h3>Salud Cardiovascular</h3>
+                            <h4>Camina 30 minutos</h4>
+                            <p>Realiza caminatas diarias para mejorar la circulación y reducir el estrés.</p>
+                            <div class="card-footer">
+                                <div class="difficulty">
+                                    <span class="difficulty-label">Facilidad:</span>
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <button class="primary-button small open-modal-btn" data-modal="tip-details-modal">Ver más</button>
+                            </div>
+                        </div>
+                        <div class="tip-card featured" data-tip-id="nutricion">
+                            <div class="card-badge">Nuevo</div>
+                            <i class="fas fa-apple-alt"></i>
+                            <h3>Nutrición</h3>
+                            <h4>Incluye frutas</h4>
+                            <p>Agrega al menos 2 porciones de fruta fresca a tu dieta diaria.</p>
+                            <div class="card-footer">
+                                <div class="difficulty">
+                                    <span class="difficulty-label">Facilidad:</span>
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <button class="primary-button small open-modal-btn" data-modal="tip-details-modal">Ver más</button>
+                            </div>
+                        </div>
+                        <div class="tip-card featured" data-tip-id="mental">
+                            <div class="card-badge">Recomendado</div>
+                            <i class="fas fa-leaf"></i>
+                            <h3>Bienestar Mental</h3>
+                            <h4>Toma pausas</h4>
+                            <p>Dedica 5 minutos a la respiración profunda para reducir la ansiedad.</p>
+                            <div class="card-footer">
+                                <div class="difficulty">
+                                    <span class="difficulty-label">Facilidad:</span>
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <button class="primary-button small open-modal-btn" data-modal="tip-details-modal">Ver más</button>
+                            </div>
+                        </div>
+                        <div class="tip-card featured" data-tip-id="hidratacion">
+                            <i class="fas fa-tint"></i>
+                            <h3>Hidratación</h3>
+                            <h4>Bebe agua regularmente</h4>
+                            <p>Mantente hidratado durante todo el día para mejorar tu energía y concentración.</p>
+                            <div class="card-footer">
+                                <div class="difficulty">
+                                    <span class="difficulty-label">Facilidad:</span>
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <button class="primary-button small open-modal-btn" data-modal="tip-details-modal">Ver más</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de consejos personalizados -->
+            <section class="personalized-tips">
+                <h2>Consejos para ti</h2>
+                <p class="section-subtitle">Basado en tu historial y preferencias</p>
+                
+                <div class="personalized-grid">
+                    <div class="personalized-tip-card">
+                        <div class="tip-image" style="background-image: url('https://images.unsplash.com/photo-1498837167922-ddd27525d352')"></div>
+                        <div class="tip-content">
+                            <h3>Rutina matutina</h3>
+                            <p>Como sueles despertarte temprano, te recomendamos esta rutina de estiramientos para empezar el día.</p>
+                            <div class="tip-meta">
+                                <span class="duration"><i class="far fa-clock"></i> 10 min</span>
+                                <span class="frequency"><i class="fas fa-calendar-alt"></i> Diario</span>
+                            </div>
+                            <button class="primary-button small">Comenzar rutina</button>
+                        </div>
+                    </div>
+                    <div class="personalized-tip-card">
+                        <div class="tip-image" style="background-image: url('https://images.unsplash.com/photo-1490645935967-10de6ba17061')"></div>
+                        <div class="tip-content">
+                            <h3>Snacks saludables</h3>
+                            <p>Basado en tus preferencias alimenticias, aquí tienes opciones de snacks bajos en azúcar.</p>
+                            <div class="tip-meta">
+                                <span class="duration"><i class="far fa-clock"></i> 5 min prep.</span>
+                                <span class="frequency"><i class="fas fa-utensils"></i> Entre comidas</span>
+                            </div>
+                            <button class="primary-button small">Ver recetas</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de explorar consejos con pestañas -->
+            <section class="explore-tips">
+                <div class="tabbed-interface">
+                    <div class="tabs">
+                        <button class="tab-button active" data-tab="actividad">Actividad Física</button>
+                        <button class="tab-button" data-tab="alimentacion">Alimentación</button>
+                        <button class="tab-button" data-tab="sueno">Sueño</button>
+                        <button class="tab-button" data-tab="mental">Salud Mental</button>
+                        <button class="tab-button" data-tab="prevencion">Prevención</button>
+                    </div>
+                    
+                    <div class="tab-content active" data-tab="actividad">
+                        <div class="tip-cards-grid">
+                            <div class="tip-card">
+                                <i class="fas fa-running"></i>
+                                <h3>Ejercicio aeróbico</h3>
+                                <p>Realiza al menos 150 minutos de ejercicio moderado por semana.</p>
+                                <div class="card-footer">
+                                    <span class="tag"><i class="fas fa-heartbeat"></i> Cardiovascular</span>
+                                    <button class="icon-button open-modal-btn" data-modal="tip-details-modal"><i class="fas fa-info-circle"></i></button>
+                                </div>
+                            </div>
+                            <div class="tip-card">
+                                <i class="fas fa-dumbbell"></i>
+                                <h3>Entrenamiento de fuerza</h3>
+                                <p>Incluye ejercicios de resistencia 2-3 veces por semana.</p>
+                                <div class="card-footer">
+                                    <span class="tag"><i class="fas fa-bone"></i> Músculos</span>
+                                    <button class="icon-button open-modal-btn" data-modal="tip-details-modal"><i class="fas fa-info-circle"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" data-tab="alimentacion">
+                        <div class="tip-cards-grid">
+                            <div class="tip-card">
+                                <i class="fas fa-carrot"></i>
+                                <h3>Vegetales variados</h3>
+                                <p>Consume al menos 3 porciones de vegetales de diferentes colores al día.</p>
+                                <div class="card-footer">
+                                    <span class="tag"><i class="fas fa-seedling"></i> Nutrición</span>
+                                    <button class="icon-button open-modal-btn" data-modal="tip-details-modal"><i class="fas fa-info-circle"></i></button>
+                                </div>
+                            </div>
+                            <div class="tip-card">
+                                <i class="fas fa-fish"></i>
+                                <h3>Ácidos grasos</h3>
+                                <p>Incluye pescado en tu dieta al menos dos veces por semana.</p>
+                                <div class="card-footer">
+                                    <span class="tag"><i class="fas fa-brain"></i> Omega-3</span>
+                                    <button class="icon-button open-modal-btn" data-modal="tip-details-modal"><i class="fas fa-info-circle"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de retos de salud -->
+            <section class="health-challenges">
+                <h2>Retos de salud</h2>
+                <p class="section-subtitle">Únete a estos desafíos para mejorar tus hábitos</p>
+                
+                <div class="challenges-grid">
+                    <div class="challenge-card">
+                        <div class="challenge-header">
+                            <h3>Reto de hidratación</h3>
+                            <span class="participants">1,245 participantes</span>
+                        </div>
+                        <div class="challenge-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%;"></div>
+                            </div>
+                            <span>65% completado</span>
+                        </div>
+                        <p>Bebe 8 vasos de agua al día durante 7 días seguidos.</p>
+                        <div class="challenge-footer">
+                            <span class="duration"><i class="far fa-clock"></i> 7 días</span>
+                            <button class="primary-button small">Unirse</button>
+                        </div>
+                    </div>
+                    
+                    <div class="challenge-card">
+                        <div class="challenge-header">
+                            <h3>10,000 pasos</h3>
+                            <span class="participants">892 participantes</span>
+                        </div>
+                        <div class="challenge-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 42%;"></div>
+                            </div>
+                            <span>42% completado</span>
+                        </div>
+                        <p>Camina al menos 10,000 pasos diarios durante un mes.</p>
+                        <div class="challenge-footer">
+                            <span class="duration"><i class="far fa-clock"></i> 30 días</span>
+                            <button class="primary-button small">Unirse</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="secondary-button">Ver todos los retos</button>
+            </section>
+
+            <!-- Sección de artículos y recursos -->
+            <section class="health-articles">
+                <h2>Artículos de salud</h2>
+                <p class="section-subtitle">Aprende más sobre hábitos saludables</p>
+                
+                <div class="articles-grid">
+                    <article class="article-card">
+                        <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1535914254981-b5012eebbd15')"></div>
+                        <div class="article-content">
+                            <h3>Los beneficios del ejercicio regular</h3>
+                            <p class="article-excerpt">Descubre cómo el ejercicio constante puede mejorar tu salud física y mental...</p>
+                            <div class="article-meta">
+                                <span class="reading-time"><i class="far fa-clock"></i> 5 min lectura</span>
+                                <span class="article-category">Fitness</span>
+                            </div>
+                            <button class="text-button">Leer artículo <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </article>
+                    
+                    <article class="article-card">
+                        <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1490645935967-10de6ba17061')"></div>
+                        <div class="article-content">
+                            <h3>Alimentación consciente</h3>
+                            <p class="article-excerpt">Aprende técnicas para desarrollar una relación saludable con la comida...</p>
+                            <div class="article-meta">
+                                <span class="reading-time"><i class="far fa-clock"></i> 7 min lectura</span>
+                                <span class="article-category">Nutrición</span>
+                            </div>
+                            <button class="text-button">Leer artículo <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </article>
+                </div>
+                
+                <button class="secondary-button">Ver más artículos</button>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modales (se mantienen igual que en tu versión original) -->
+    <div id="tip-details-modal" class="modal-overlay">
+        <!-- Contenido del modal igual que antes -->
+    </div>
+
+    <!-- Nuevo modal para consejos detallados -->
+    <div id="detailed-tip-modal" class="modal-overlay">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> Consejo detallado</h3>
+                <button class="close-modal-btn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="detailed-tip-header">
+                    <div class="tip-icon-large">
+                        <i class="fas fa-walking"></i>
+                    </div>
+                    <div class="tip-header-content">
+                        <h4 id="detailed-tip-title">Camina 30 minutos diarios</h4>
+                        <div class="tip-meta">
+                            <span class="category"><i class="fas fa-tag"></i> Actividad física</span>
+                            <span class="difficulty"><i class="fas fa-star"></i> Fácil</span>
+                            <span class="duration"><i class="far fa-clock"></i> 30 min/día</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="detailed-tip-content">
+                    <div class="tip-description">
+                        <h5>Descripción</h5>
+                        <p>Caminar regularmente puede mejorar significativamente tu salud cardiovascular, fortalecer tus músculos, ayudarte a mantener un peso saludable y mejorar tu estado de ánimo.</p>
+                    </div>
+                    
+                    <div class="tip-benefits">
+                        <h5>Beneficios</h5>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Reduce el riesgo de enfermedades cardíacas</li>
+                            <li><i class="fas fa-check-circle"></i> Mejora la circulación sanguínea</li>
+                            <li><i class="fas fa-check-circle"></i> Ayuda a controlar la presión arterial</li>
+                            <li><i class="fas fa-check-circle"></i> Reduce los niveles de estrés</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tip-instructions">
+                        <h5>Cómo hacerlo</h5>
+                        <ol>
+                            <li>Usa calzado cómodo y adecuado para caminar.</li>
+                            <li>Mantén una postura erguida mientras caminas.</li>
+                            <li>Comienza con un ritmo moderado y aumenta gradualmente.</li>
+                            <li>Puedes dividir los 30 minutos en sesiones más cortas si lo prefieres.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="tip-tracking">
+                        <h5>Seguimiento</h5>
+                        <p>Registra tus caminatas diarias para mantener la motivación:</p>
+                        <div class="tracking-options">
+                            <button class="secondary-button"><i class="fas fa-plus"></i> Añadir a mi rutina</button>
+                            <button class="secondary-button"><i class="fas fa-bell"></i> Configurar recordatorio</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="primary-button">Marcar como completado</button>
+                <button class="secondary-button close-modal-btn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        fetch('sidebar/sidebar.html')
+            .then(response => response.text())
+            .then(data => {
+                const sidebarContainer = document.querySelector('.app-container');
+                const mainContent = sidebarContainer.innerHTML;
+                sidebarContainer.innerHTML = data + mainContent;
+
+                // After injecting the sidebar, you might need to adjust the main content's margin
+                const sidebarElement = document.querySelector('.sidebar');
+                const mainContentElement = document.querySelector('.main-content');
+                if (sidebarElement && mainContentElement && window.innerWidth > 768) {
+                    mainContentElement.style.marginLeft = sidebarElement.offsetWidth + 'px';
+                } else if (mainContentElement && window.innerWidth <= 768) {
+                    mainContentElement.style.marginLeft = '0';
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar el sidebar:', error);
+            });
+
+        // Animación de círculo de progreso
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressCircle = document.querySelector('.progress-ring-circle');
+            const radius = progressCircle.r.baseVal.value;
+            const circumference = 2 * Math.PI * radius;
+            
+            progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+            progressCircle.style.strokeDashoffset = circumference;
+            
+            const setProgress = (percent) => {
+                const offset = circumference - percent / 100 * circumference;
+                progressCircle.style.strokeDashoffset = offset;
+            };
+            
+            setProgress(75); // Valor inicial
+        });
+
+        // Simulación de carrusel
+        document.querySelector('.carousel-next').addEventListener('click', function() {
+            const carousel = document.querySelector('.featured-grid');
+            carousel.style.transform = 'translateX(-100%)';
+        });
+
+        document.querySelector('.carousel-prev').addEventListener('click', function() {
+            const carousel = document.querySelector('.featured-grid');
+            carousel.style.transform = 'translateX(0)';
+        });
+
+        // Funcionalidad de pestañas
+        const tabButtons = document.querySelectorAll('.tab-button');
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remover clase active de todos los botones y contenidos
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Agregar clase active al botón clickeado
+                this.classList.add('active');
+                
+                // Mostrar el contenido correspondiente
+                const tabId = this.getAttribute('data-tab');
+                document.querySelector(`.tab-content[data-tab="${tabId}"]`).classList.add('active');
+            });
+        });
+    </script>
+    <div class="medibot-toggle" id="medibotToggle" role="button" aria-expanded="false" aria-controls="medibotContainer">
+        <i class="fa-solid fa-user-doctor"></i>
+        <span class="notification-badge hidden" id="notificationBadge" aria-live="polite" aria-atomic="true">1</span>
+    </div>
+
+    <div class="medibot-container" id="medibotContainer" aria-live="polite" aria-atomic="true" role="dialog" aria-labelledby="medibotHeaderTitle">
+        <div class="medibot-header" id="medibotHeader">
+            <div class="header-content">
+                <i class="fas fa-robot"></i>
+                <h2 id="medibotHeaderTitle">MediBot</h2>
+                <span class="connection-status">
+                    <i class="fas fa-circle online-status" aria-hidden="true"></i>
+                    Online
+                </span>
+            </div>
+            <div class="header-controls">
+                <button class="control-btn" id="medibotMinimize" aria-label="Minimizar chatbot">
+                    <i class="fas fa-minus" aria-hidden="true"></i>
+                </button>
+                <button class="control-btn" id="medibotClose" aria-label="Cerrar chatbot">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="medibot-messages" id="medibotMessages" role="log" aria-live="polite"></div>
+
+        <div class="medibot-quick-actions" id="medibotQuickActions" role="group" aria-label="Acciones rápidas del chatbot"></div>
+
+        <div class="medibot-input-area">
+            <input type="text" class="medibot-input" id="medibotInput" placeholder="Escribe tu mensaje..." aria-label="Escribe tu mensaje">
+            <button class="voice-btn" id="medibotVoiceInput" aria-label="Entrada de voz">
+                <i class="fas fa-microphone" aria-hidden="true"></i>
+            </button>
+            <button class="send-btn" id="medibotSend" aria-label="Enviar mensaje">
+                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <script src="medibot/medibot.js"></script>
+    <script src="Scripts/ConsejosSalud.js"></script> 
+</body>
+</html>

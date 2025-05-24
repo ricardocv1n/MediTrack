@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTrack - Recordatorios Extra</title>
+    <link rel="stylesheet" href="Estilos/Recordatorios.css">
+        <link rel="stylesheet" href="medibot/medibot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="sidebar/sidebar.css">
+    <script>
+        async function loadSidebar() {
+            try {
+                const response = await fetch('sidebar/sidebar.html');
+                const sidebarHTML = await response.text();
+                document.body.insertAdjacentHTML('afterbegin', sidebarHTML);
+                // Ajustar el margen del contenido principal después de cargar el sidebar
+                const sidebarElement = document.querySelector('.sidebar');
+                const mainContent = document.querySelector('.main-content');
+                if (sidebarElement && mainContent) {
+                    mainContent.style.marginLeft = `${sidebarElement.offsetWidth}px`;
+                }
+            } catch (error) {
+                console.error('Error al cargar el sidebar:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadSidebar);
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content extra-reminders-content">
+            <div class="header">
+                <div class="breadcrumbs">
+                    <a href="Inicio.html">Inicio</a> <i class="fas fa-chevron-right"></i> <span>Recordatorios Extra</span>
+                </div>
+                <h1>Recordatorios Extra</h1>
+                <p>Configura alertas personalizadas para tus necesidades diarias de salud.</p>
+            </div>
+
+            <section class="active-reminders">
+                <h2>Tus recordatorios activos</h2>
+                <div class="reminders-grid">
+                    <div class="reminder-card" data-reminder-id="1" data-reminder-title="Tomar Vitamina D" data-reminder-description="Recuerda tomar tu suplemento de Vitamina D con el desayuno." data-reminder-time="08:00">
+                        <i class="fas fa-sun"></i>
+                        <h3>Tomar Vitamina D</h3>
+                        <p>Con el desayuno, a las 08:00 AM.</p>
+                        <div class="reminder-actions">
+                            <button class="primary-button small edit-reminder-btn" data-id="1">Editar</button>
+                            <button class="secondary-button small delete-reminder-btn" data-id="1">Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="reminder-card" data-reminder-id="2" data-reminder-title="Paseo matutino" data-reminder-description="Sal a caminar 30 minutos por el Parque Ronda del Sinú." data-reminder-time="06:30">
+                        <i class="fas fa-walking"></i>
+                        <h3>Paseo matutino</h3>
+                        <p>30 minutos por el Parque Ronda del Sinú, a las 06:30 AM.</p>
+                        <div class="reminder-actions">
+                            <button class="primary-button small edit-reminder-btn" data-id="2">Editar</button>
+                            <button class="secondary-button small delete-reminder-btn" data-id="2">Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="reminder-card" data-reminder-id="3" data-reminder-title="Medir glucosa" data-reminder-description="Realiza la medición de glucosa post-almuerzo." data-reminder-time="14:30">
+                        <i class="fas fa-hand-holding-medical"></i>
+                        <h3>Medir glucosa</h3>
+                        <p>Después del almuerzo, a las 02:30 PM.</p>
+                        <div class="reminder-actions">
+                            <button class="primary-button small edit-reminder-btn" data-id="3">Editar</button>
+                            <button class="secondary-button small delete-reminder-btn" data-id="3">Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="reminder-card" data-reminder-id="4" data-reminder-title="Llamar a la farmacia" data-reminder-description="Confirmar disponibilidad de medicamento en Farmatodo." data-reminder-time="11:00">
+                        <i class="fas fa-phone-volume"></i>
+                        <h3>Llamar a la farmacia</h3>
+                        <p>Confirmar disponibilidad de medicamento en Farmatodo, a las 11:00 AM.</p>
+                        <div class="reminder-actions">
+                            <button class="primary-button small edit-reminder-btn" data-id="4">Editar</button>
+                            <button class="secondary-button small delete-reminder-btn" data-id="4">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="add-new-reminder">
+                <h2>Agregar nuevo recordatorio</h2>
+                <div class="form-group">
+                    <label for="new-reminder-title">Título del recordatorio</label>
+                    <input type="text" id="new-reminder-title" placeholder="Ej: Tomar medicamento, Cita con nutricionista">
+                </div>
+                <div class="form-group">
+                    <label for="new-reminder-description">Descripción del recordatorio</label>
+                    <textarea id="new-reminder-description" placeholder="Ej: Tomar 1 pastilla de Losartán 50mg, Recordar llevar exámenes a la cita..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="new-reminder-time">Hora del recordatorio</label>
+                    <input type="time" id="new-reminder-time" placeholder="Ej: 07:00, 18:30">
+                </div>
+                <button id="save-new-reminder-btn" class="primary-button">
+                    <i class="fas fa-save"></i> Guardar recordatorio
+                </button>
+            </section>
+        </main>
+    </div>
+
+    <div id="edit-reminder-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Editar Recordatorio</h3>
+                <button class="close-modal" data-modal-id="edit-reminder-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="edit-reminder-title">Título</label>
+                    <input type="text" id="edit-reminder-title">
+                </div>
+                <div class="form-group">
+                    <label for="edit-reminder-description">Descripción</label>
+                    <textarea id="edit-reminder-description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="edit-reminder-time">Hora</label>
+                    <input type="time" id="edit-reminder-time">
+                </div>
+                <input type="hidden" id="edit-reminder-id">
+            </div>
+            <div class="modal-footer">
+                <button class="primary-button" id="save-edited-reminder-btn">Guardar cambios</button>
+                <button class="secondary-button close-modal" data-modal-id="edit-reminder-modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="delete-reminder-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-trash-alt"></i> Eliminar Recordatorio</h3>
+                <button class="close-modal" data-modal-id="delete-reminder-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas eliminar el recordatorio "<span id="delete-reminder-title"></span>"?</p>
+                <input type="hidden" id="delete-reminder-id">
+            </div>
+            <div class="modal-footer">
+                <button class="danger-button" id="confirm-delete-reminder-btn">Eliminar</button>
+                <button class="secondary-button close-modal" data-modal-id="delete-reminder-modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification-container" class="notification-container">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar el sidebar dinámicamente
+            fetch('sidebar/sidebar.html')
+                .then(response => response.text())
+                .then(data => {
+                    const sidebarContainer = document.getElementById('sidebar-container');
+                    if (sidebarContainer) {
+                        sidebarContainer.innerHTML = data;
+                        // Marcar como activo el elemento del menú correspondiente
+                        const currentPage = window.location.pathname.split('/').pop() || 'Inicio.html';
+                        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                            if (link.getAttribute('href') === currentPage) {
+                                link.parentElement.classList.add('active');
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar el sidebar:', error);
+                });
+
+            const notificationContainer = document.getElementById('notification-container');
+
+            function showNotification(message, type) {
+                const notification = document.createElement('div');
+                notification.classList.add('notification', `notification-${type}`);
+                notification.textContent = message;
+                notificationContainer.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.classList.add('notification-fade-out');
+                    notification.addEventListener('transitionend', () => notification.remove());
+                }, 3000);
+            }
+
+            // Manejo de modales
+            const editReminderModal = document.getElementById('edit-reminder-modal');
+            const deleteReminderModal = document.getElementById('delete-reminder-modal');
+
+            document.querySelectorAll('.close-modal').forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal-id');
+                    document.getElementById(modalId).classList.remove('active');
+                });
+            });
+
+            // Lógica para el botón "Editar"
+            document.querySelectorAll('.edit-reminder-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const reminderCard = this.closest('.reminder-card');
+                    const id = reminderCard.getAttribute('data-reminder-id');
+                    const title = reminderCard.getAttribute('data-reminder-title');
+                    const description = reminderCard.getAttribute('data-reminder-description');
+                    const time = reminderCard.getAttribute('data-reminder-time');
+
+                    document.getElementById('edit-reminder-id').value = id;
+                    document.getElementById('edit-reminder-title').value = title;
+                    document.getElementById('edit-reminder-description').value = description;
+                    document.getElementById('edit-reminder-time').value = time;
+
+                    editReminderModal.classList.add('active');
+                });
+            });
+
+            // Lógica para guardar cambios en el recordatorio editado
+            document.getElementById('save-edited-reminder-btn').addEventListener('click', function() {
+                const id = document.getElementById('edit-reminder-id').value;
+                const newTitle = document.getElementById('edit-reminder-title').value;
+                const newDescription = document.getElementById('edit-reminder-description').value;
+                const newTime = document.getElementById('edit-reminder-time').value;
+
+                const reminderCard = document.querySelector(`.reminder-card[data-reminder-id="${id}"]`);
+                if (reminderCard) {
+                    reminderCard.setAttribute('data-reminder-title', newTitle);
+                    reminderCard.setAttribute('data-reminder-description', newDescription);
+                    reminderCard.setAttribute('data-reminder-time', newTime);
+
+                    reminderCard.querySelector('h3').textContent = newTitle;
+                    reminderCard.querySelector('p').textContent = `${newDescription}, a las ${newTime}.`;
+                }
+
+                editReminderModal.classList.remove('active');
+                showNotification('Recordatorio actualizado con éxito', 'success');
+            });
+
+            // Lógica para el botón "Eliminar"
+            document.querySelectorAll('.delete-reminder-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const reminderCard = this.closest('.reminder-card');
+                    const id = reminderCard.getAttribute('data-reminder-id');
+                    const title = reminderCard.getAttribute('data-reminder-title');
+
+                    document.getElementById('delete-reminder-id').value = id;
+                    document.getElementById('delete-reminder-title').textContent = title;
+
+                    deleteReminderModal.classList.add('active');
+                });
+            });
+
+            // Lógica para confirmar eliminación
+            document.getElementById('confirm-delete-reminder-btn').addEventListener('click', function() {
+                const id = document.getElementById('delete-reminder-id').value;
+                const reminderCard = document.querySelector(`.reminder-card[data-reminder-id="${id}"]`);
+                if (reminderCard) {
+                    reminderCard.remove();
+                }
+
+                deleteReminderModal.classList.remove('active');
+                showNotification('Recordatorio eliminado con éxito', 'success');
+            });
+
+            // Lógica para guardar un nuevo recordatorio
+            document.getElementById('save-new-reminder-btn').addEventListener('click', function() {
+                const titleInput = document.getElementById('new-reminder-title');
+                const descriptionInput = document.getElementById('new-reminder-description');
+                const timeInput = document.getElementById('new-reminder-time');
+
+                const newTitle = titleInput.value.trim();
+                const newDescription = descriptionInput.value.trim();
+                const newTime = timeInput.value.trim();
+
+                if (newTitle && newDescription && newTime) {
+                    const remindersGrid = document.querySelector('.reminders-grid');
+                    const newId = Date.now().toString(); // Generar un ID único
+
+                    const newReminderCard = document.createElement('div');
+                    newReminderCard.classList.add('reminder-card');
+                    newReminderCard.setAttribute('data-reminder-id', newId);
+                    newReminderCard.setAttribute('data-reminder-title', newTitle);
+                    newReminderCard.setAttribute('data-reminder-description', newDescription);
+                    newReminderCard.setAttribute('data-reminder-time', newTime);
+
+                    // Determinar icono basado en el título (ejemplo simple)
+                    let iconClass = 'fas fa-bell';
+                    if (newTitle.toLowerCase().includes('agua')) {
+                        iconClass = 'fas fa-tint';
+                    } else if (newTitle.toLowerCase().includes('ejercicio') || newTitle.toLowerCase().includes('caminar')) {
+                        iconClass = 'fas fa-walking';
+                    } else if (newTitle.toLowerCase().includes('medir') || newTitle.toLowerCase().includes('glucosa') || newTitle.toLowerCase().includes('presión')) {
+                        iconClass = 'fas fa-hand-holding-medical';
+                    } else if (newTitle.toLowerCase().includes('farmacia') || newTitle.toLowerCase().includes('llamar')) {
+                        iconClass = 'fas fa-phone-volume';
+                    } else if (newTitle.toLowerCase().includes('medicamento') || newTitle.toLowerCase().includes('pastilla')) {
+                        iconClass = 'fas fa-pills';
+                    }
+
+                    newReminderCard.innerHTML = `
+                        <i class="${iconClass}"></i>
+                        <h3>${newTitle}</h3>
+                        <p>${newDescription}, a las ${newTime}.</p>
+                        <div class="reminder-actions">
+                            <button class="primary-button small edit-reminder-btn" data-id="${newId}">Editar</button>
+                            <button class="secondary-button small delete-reminder-btn" data-id="${newId}">Eliminar</button>
+                        </div>
+                    `;
+                    remindersGrid.appendChild(newReminderCard);
+
+                    // Re-adjuntar listeners a los nuevos botones
+                    newReminderCard.querySelector('.edit-reminder-btn').addEventListener('click', function() {
+                        const reminderCard = this.closest('.reminder-card');
+                        const id = reminderCard.getAttribute('data-reminder-id');
+                        const title = reminderCard.getAttribute('data-reminder-title');
+                        const description = reminderCard.getAttribute('data-reminder-description');
+                        const time = reminderCard.getAttribute('data-reminder-time');
+
+                        document.getElementById('edit-reminder-id').value = id;
+                        document.getElementById('edit-reminder-title').value = title;
+                        document.getElementById('edit-reminder-description').value = description;
+                        document.getElementById('edit-reminder-time').value = time;
+
+                        editReminderModal.classList.add('active');
+                    });
+
+                    newReminderCard.querySelector('.delete-reminder-btn').addEventListener('click', function() {
+                        const reminderCard = this.closest('.reminder-card');
+                        const id = reminderCard.getAttribute('data-reminder-id');
+                        const title = reminderCard.getAttribute('data-reminder-title');
+
+                        document.getElementById('delete-reminder-id').value = id;
+                        document.getElementById('delete-reminder-title').textContent = title;
+
+                        deleteReminderModal.classList.add('active');
+                    });
+
+                    titleInput.value = '';
+                    descriptionInput.value = '';
+                    timeInput.value = '';
+                    showNotification('Recordatorio agregado con éxito', 'success');
+                } else {
+                    showNotification('Por favor, completa todos los campos del recordatorio.', 'error');
+                }
+            });
+        });
+    </script>
+    <div class="medibot-toggle" id="medibotToggle" role="button" aria-expanded="false" aria-controls="medibotContainer">
+        <i class="fa-solid fa-user-doctor"></i>
+        <span class="notification-badge hidden" id="notificationBadge" aria-live="polite" aria-atomic="true">1</span>
+    </div>
+
+    <div class="medibot-container" id="medibotContainer" aria-live="polite" aria-atomic="true" role="dialog" aria-labelledby="medibotHeaderTitle">
+        <div class="medibot-header" id="medibotHeader">
+            <div class="header-content">
+                <i class="fas fa-robot"></i>
+                <h2 id="medibotHeaderTitle">MediBot</h2>
+                <span class="connection-status">
+                    <i class="fas fa-circle online-status" aria-hidden="true"></i>
+                    Online
+                </span>
+            </div>
+            <div class="header-controls">
+                <button class="control-btn" id="medibotMinimize" aria-label="Minimizar chatbot">
+                    <i class="fas fa-minus" aria-hidden="true"></i>
+                </button>
+                <button class="control-btn" id="medibotClose" aria-label="Cerrar chatbot">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="medibot-messages" id="medibotMessages" role="log" aria-live="polite"></div>
+
+        <div class="medibot-quick-actions" id="medibotQuickActions" role="group" aria-label="Acciones rápidas del chatbot"></div>
+
+        <div class="medibot-input-area">
+            <input type="text" class="medibot-input" id="medibotInput" placeholder="Escribe tu mensaje..." aria-label="Escribe tu mensaje">
+            <button class="voice-btn" id="medibotVoiceInput" aria-label="Entrada de voz">
+                <i class="fas fa-microphone" aria-hidden="true"></i>
+            </button>
+            <button class="send-btn" id="medibotSend" aria-label="Enviar mensaje">
+                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <script src="medibot/medibot.js"></script>
+</body>
+</html>

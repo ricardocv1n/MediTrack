@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTrack - Informe Semanal</title>
+    <link rel="stylesheet" href="Estilos/Informe.css">
+    <link rel="stylesheet" href="sidebar/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+        <link rel="stylesheet" href="medibot/medibot.css">
+    <script>
+        async function loadSidebar() {
+            try {
+                const response = await fetch('sidebar/sidebar.html');
+                const sidebarHTML = await response.text();
+                document.body.insertAdjacentHTML('afterbegin', sidebarHTML);
+                // Ajustar el margen del contenido principal después de cargar el sidebar
+                const sidebarElement = document.querySelector('.sidebar');
+                const mainContent = document.querySelector('.main-content');
+                if (sidebarElement && mainContent) {
+                    mainContent.style.marginLeft = `${sidebarElement.offsetWidth}px`;
+                }
+            } catch (error) {
+                console.error('Error al cargar el sidebar:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadSidebar);
+    </script>
+</head>
+<body>
+    <div class="container weekly-report-layout">
+        <main class="main-content weekly-report-content">
+            <div class="header">
+                <div class="breadcrumbs">
+                    <a href="Inicio.html">Inicio</a> <i class="fas fa-chevron-right"></i> <span>Informe Semanal</span>
+                </div>
+                <h1>Informe de Salud Semanal</h1>
+                <div class="report-period-selector">
+                    <button class="period-button" id="prev-week">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span class="current-period">Semana del 12 al 18 de Junio 2023</span>
+                    <button class="period-button" id="next-week">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <section class="summary-cards">
+                <div class="summary-card adherence-summary">
+                    <div class="card-header">
+                        <i class="fas fa-pills"></i>
+                        <h2>Adherencia a Medicación</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="adherence-rate">
+                            <span class="percentage">92%</span>
+                            <span class="trend up"><i class="fas fa-arrow-up"></i> 3%</span>
+                        </div>
+                        <p>Mejora respecto a la semana anterior</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 92%;"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="secondary-button small" id="view-adherence-details">
+                            <i class="fas fa-chart-line"></i> Ver detalles
+                        </button>
+                    </div>
+                </div>
+
+                <div class="summary-card appointments-summary">
+                    <div class="card-header">
+                        <i class="fas fa-calendar-check"></i>
+                        <h2>Citas Médicas</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="appointments-count">
+                            <span class="number">2</span>
+                            <span class="status">Completadas</span>
+                        </div>
+                        <p>Próxima cita: Dra. García (20 Jun)</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="secondary-button small" id="view-appointments">
+                            <i class="fas fa-calendar-alt"></i> Ver agenda
+                        </button>
+                    </div>
+                </div>
+
+                <div class="summary-card health-summary">
+                    <div class="card-header">
+                        <i class="fas fa-heartbeat"></i>
+                        <h2>Indicadores de Salud</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="health-metrics">
+                            <div class="metric">
+                                <span class="value">126/82</span>
+                                <span class="label">Presión arterial</span>
+                            </div>
+                            <div class="metric">
+                                <span class="value">72</span>
+                                <span class="label">Latidos/min</span>
+                            </div>
+                        </div>
+                        <p>Estables respecto a la semana anterior</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="secondary-button small" id="view-health-metrics">
+                            <i class="fas fa-chart-bar"></i> Ver evolución
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="detailed-charts">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h2>Adherencia Diaria</h2>
+                        <div class="chart-actions">
+                            <button class="chart-action-button active" data-period="week">
+                                Semana
+                            </button>
+                            <button class="chart-action-button" data-period="month">
+                                Mes
+                            </button>
+                            <button class="chart-action-button" data-period="year">
+                                Año
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="adherenceChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h2>Medicamentos Tomados</h2>
+                        <div class="chart-actions">
+                            <button class="chart-action-button active" data-view="quantity">
+                                Cantidad
+                            </button>
+                            <button class="chart-action-button" data-view="time">
+                                Horario
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="medicationChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="health-events">
+                <div class="section-header">
+                    <h2>Eventos de Salud</h2>
+                    <button class="secondary-button small" id="add-health-event">
+                        <i class="fas fa-plus"></i> Añadir evento
+                    </button>
+                </div>
+
+                <div class="events-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <span class="day">15</span>
+                            <span class="month">Jun</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Cita con Cardiólogo</h3>
+                            <p class="event-description">Revisión de tratamiento. Ajuste de medicación.</p>
+                            <div class="event-meta">
+                                <span class="event-type"><i class="fas fa-calendar-alt"></i> Cita médica</span>
+                                <span class="event-time"><i class="fas fa-clock"></i> 10:30 AM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <span class="day">13</span>
+                            <span class="month">Jun</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Análisis de sangre</h3>
+                            <p class="event-description">Resultados dentro de parámetros normales.</p>
+                            <div class="event-meta">
+                                <span class="event-type"><i class="fas fa-flask"></i> Prueba médica</span>
+                                <span class="event-time"><i class="fas fa-clock"></i> 9:00 AM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            <span class="day">12</span>
+                            <span class="month">Jun</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Nota personal</h3>
+                            <p class="event-description">Me siento más cansada de lo habitual hoy.</p>
+                            <div class="event-meta">
+                                <span class="event-type"><i class="fas fa-sticky-note"></i> Nota</span>
+                                <span class="event-time"><i class="fas fa-clock"></i> 8:45 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="recommendations-section">
+                <div class="section-header">
+                    <h2>Recomendaciones Personalizadas</h2>
+                    <button class="secondary-button small" id="refresh-recommendations">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+
+                <div class="recommendations-grid">
+                    <div class="recommendation-card medication">
+                        <div class="card-icon">
+                            <i class="fas fa-pills"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Optimización de Medicación</h3>
+                            <p>Considera tomar tu medicación para la presión arterial por la mañana para mejorar su efectividad.</p>
+                            <div class="card-actions">
+                                <button class="secondary-button small">
+                                    <i class="fas fa-info-circle"></i> Más info
+                                </button>
+                                <button class="primary-button small">
+                                    <i class="fas fa-check"></i> Aplicar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recommendation-card activity">
+                        <div class="card-icon">
+                            <i class="fas fa-walking"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Actividad Física</h3>
+                            <p>Intenta caminar al menos 30 minutos diarios para mejorar tu salud cardiovascular.</p>
+                            <div class="card-actions">
+                                <button class="secondary-button small">
+                                    <i class="fas fa-info-circle"></i> Más info
+                                </button>
+                                <button class="primary-button small">
+                                    <i class="fas fa-plus"></i> Registrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recommendation-card nutrition">
+                        <div class="card-icon">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Consejo Nutricional</h3>
+                            <p>Aumenta tu consumo de vegetales verdes para mejorar tus niveles de hierro.</p>
+                            <div class="card-actions">
+                                <button class="secondary-button small">
+                                    <i class="fas fa-info-circle"></i> Más info
+                                </button>
+                                <button class="primary-button small">
+                                    <i class="fas fa-utensils"></i> Recetas
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="report-actions">
+                <button class="secondary-button" id="print-report">
+                    <i class="fas fa-print"></i> Imprimir Informe
+                </button>
+                <button class="primary-button" id="share-report">
+                    <i class="fas fa-share-alt"></i> Compartir con Médico
+                </button>
+                <button class="secondary-button" id="download-report">
+                    <i class="fas fa-file-pdf"></i> Descargar PDF
+                </button>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal" id="health-event-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3><i class="fas fa-plus-circle"></i> Añadir Evento de Salud</h3>
+
+            <form id="health-event-form">
+                <div class="form-group">
+                    <label for="event-type">Tipo de evento:</label>
+                    <select id="event-type" required>
+                        <option value="">Selecciona un tipo</option>
+                        <option value="appointment">Cita médica</option>
+                        <option value="test">Prueba médica</option>
+                        <option value="symptom">Síntoma</option>
+                        <option value="note">Nota personal</option>
+                        <option value="medication">Cambio en medicación</option>
+                        <option value="other">Otro</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="event-date">Fecha:</label>
+                        <input type="date" id="event-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-time">Hora (opcional):</label>
+                        <input type="time" id="event-time">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="event-title">Título:</label>
+                    <input type="text" id="event-title" placeholder="Ej: Dolor de cabeza" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="event-description">Descripción:</label>
+                    <textarea id="event-description" rows="3" placeholder="Describe el evento con detalle..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="secondary-button close-modal-btn">Cancelar</button>
+                    <button type="submit" class="primary-button">Guardar Evento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="medibot-toggle" id="medibotToggle" role="button" aria-expanded="false" aria-controls="medibotContainer">
+        <i class="fa-solid fa-user-doctor"></i>
+        <span class="notification-badge hidden" id="notificationBadge" aria-live="polite" aria-atomic="true">1</span>
+    </div>
+
+    <div class="medibot-container" id="medibotContainer" aria-live="polite" aria-atomic="true" role="dialog" aria-labelledby="medibotHeaderTitle">
+        <div class="medibot-header" id="medibotHeader">
+            <div class="header-content">
+                <i class="fas fa-robot"></i>
+                <h2 id="medibotHeaderTitle">MediBot</h2>
+                <span class="connection-status">
+                    <i class="fas fa-circle online-status" aria-hidden="true"></i>
+                    Online
+                </span>
+            </div>
+            <div class="header-controls">
+                <button class="control-btn" id="medibotMinimize" aria-label="Minimizar chatbot">
+                    <i class="fas fa-minus" aria-hidden="true"></i>
+                </button>
+                <button class="control-btn" id="medibotClose" aria-label="Cerrar chatbot">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="medibot-messages" id="medibotMessages" role="log" aria-live="polite"></div>
+
+        <div class="medibot-quick-actions" id="medibotQuickActions" role="group" aria-label="Acciones rápidas del chatbot"></div>
+
+        <div class="medibot-input-area">
+            <input type="text" class="medibot-input" id="medibotInput" placeholder="Escribe tu mensaje..." aria-label="Escribe tu mensaje">
+            <button class="voice-btn" id="medibotVoiceInput" aria-label="Entrada de voz">
+                <i class="fas fa-microphone" aria-hidden="true"></i>
+            </button>
+            <button class="send-btn" id="medibotSend" aria-label="Enviar mensaje">
+                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <script src="medibot/medibot.js"></script>
+
+    <script src="Scripts/Informe.js"></script>
+</body>
+</html>

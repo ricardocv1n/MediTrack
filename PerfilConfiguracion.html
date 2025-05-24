@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTrack - Perfil y Configuración</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="Estilos/Perfil-Configuración.css">
+        <link rel="stylesheet" href="medibot/medibot.css">
+    <link rel="stylesheet" href="sidebar/sidebar.css">
+</head>
+
+<body>
+    <div class="app-container profile-settings-layout">
+        <div id="sidebar-container">
+            </div>
+        <main class="main-content profile-settings-content">
+            <div class="header">
+                <div class="breadcrumbs">
+                    <a href="Inicio.html">Inicio</a> <i class="fas fa-chevron-right"></i> <span data-translate-key="profileAndSettings">Perfil y Configuración</span>
+                </div>
+                <h1 data-translate-key="profileAndSettings">Perfil y Configuración</h1>
+                <p class="header-description" data-translate-key="managePersonalInformation">Gestiona tu información personal y preferencias de la cuenta.</p>
+            </div>
+
+            <nav class="profile-tabs" aria-label="Navegación de perfil">
+                <button class="tab active" data-tab="profile" aria-selected="true" data-translate-key="profile">Perfil</button>
+                <button class="tab" data-tab="security" aria-selected="false" data-translate-key="security">Seguridad</button>
+                <button class="tab" data-tab="preferences" aria-selected="false" data-translate-key="preferences">Preferencias</button>
+                <button class="tab" data-tab="account-actions" aria-selected="false" data-translate-key="accountActions">Acciones de Cuenta</button>
+            </nav>
+
+            <section id="profile" class="tab-content active" aria-labelledby="profile-tab">
+                <h2 data-translate-key="personalInfo">Información personal</h2>
+                <article class="profile-card">
+                    <img src="https://placehold.co/150x150/b2dfdb/00796b?text=SR" alt="Foto de perfil de María López " class="profile-image" id="profileImage">
+                    <div class="profile-details">
+                        <span class="profile-name">María López </span>
+                        <span class="profile-role">Paciente</span>
+                        <button class="secondary-button small" data-modal-id="editProfileModal" aria-label="Editar perfil">
+                            <i class="fas fa-edit"></i> <span data-translate-key="edit">Editar</span>
+                        </button>
+                    </div>
+                </article>
+
+                <h2 data-translate-key="contactDetails">Datos de contacto</h2>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="email" data-translate-key="email">Correo electrónico</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="email" value="María.Lopez@email.com" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" data-translate-key="phone">Teléfono</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-phone input-icon"></i>
+                            <input type="tel" id="phone" value="   +57 310 123 4567" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" data-translate-key="address">Dirección</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-map-marker-alt input-icon"></i>
+                            <input type="text" id="address" value="  Calle 29 # 14-50, Montería, Córdoba" readonly>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <section id="security" class="tab-content" aria-labelledby="security-tab">
+                <h2 data-translate-key="securitySettings">Configuración de seguridad</h2>
+                <div class="security-settings">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-key setting-icon"></i>
+                            <div>
+                                <h3 data-translate-key="changePassword">Cambiar contraseña</h3>
+                                <p data-translate-key="updatePasswordRegularly">Actualiza tu contraseña regularmente para mayor seguridad</p>
+                            </div>
+                        </div>
+                        <button class="secondary-button" data-modal-id="changePasswordModal">
+                            <i class="fas fa-pencil-alt"></i> <span data-translate-key="change">Cambiar</span>
+                        </button>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-shield-alt setting-icon"></i>
+                            <div>
+                                <h3 data-translate-key="twoFactorAuth">Verificación en dos pasos</h3>
+                                <p data-translate-key="addSecurityLayer">Añade una capa adicional de seguridad a tu cuenta</p>
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="twoFactorAuth">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-history setting-icon"></i>
+                            <div>
+                                <h3 data-translate-key="loginActivity">Actividad de inicio de sesión</h3>
+                                <p data-translate-key="reviewRecentAccess">Revisa los accesos recientes a tu cuenta</p>
+                            </div>
+                        </div>
+                        <button class="secondary-button" data-modal-id="loginActivityModal">
+                            <i class="fas fa-eye"></i> <span data-translate-key="viewActivity">Ver actividad</span>
+                        </button>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-laptop setting-icon"></i>
+                            <div>
+                                <h3 data-translate-key="activeSessions">Sesiones activas</h3>
+                                <p data-translate-key="manageConnectedDevices">Gestiona los dispositivos conectados a tu cuenta</p>
+                            </div>
+                        </div>
+                        <button class="secondary-button" data-modal-id="sessionManagementModal">
+                            <i class="fas fa-cog"></i> <span data-translate-key="manage">Gestionar</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="preferences" class="tab-content" aria-labelledby="preferences-tab">
+                <h2 data-translate-key="preferencesTitle">Preferencias</h2>
+                <form class="preference-form">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-language setting-icon"></i>
+                            <div>
+                                <h3 data-translate-key="language">Idioma</h3>
+                                <p data-translate-key="selectPreferredLanguage">Selecciona tu idioma preferido</p>
+                            </div>
+                        </div>
+                        <select id="language" class="styled-select">
+                            <option value="es" data-translate-key="es">Español</option>
+                            <option value="en" data-translate-key="en">English</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-bell setting-icon"></i>
+                            <div>
+                                <h3 data-translate-key="notifications">Notificaciones</h3>
+                                <p data-translate-key="toggleSystemNotifications">Activa o desactiva las notificaciones del sistema</p>
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="notificationsEnabled" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    </form>
+            </section>
+
+            <section id="account-actions" class="tab-content" aria-labelledby="account-actions-tab">
+                <h2 data-translate-key="accountActions">Acciones de la cuenta</h2>
+                <div class="actions-grid">
+                    <button class="secondary-button" data-modal-id="downloadDataModal">
+                        <i class="fas fa-download"></i> <span data-translate-key="downloadMyData">Descargar mis datos</span>
+                    </button>
+                    <button class="alert-button" data-modal-id="deleteAccountModal">
+                        <i class="fas fa-trash-alt"></i> <span data-translate-key="deleteAccount">Eliminar cuenta</span>
+                    </button>
+                    <button class="primary-button logout-button" id="logoutButton">
+                        <i class="fas fa-sign-out-alt"></i> <span data-translate-key="logout">Cerrar Sesión</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="editProfileModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-translate-key="editProfile">Editar perfil</h2>
+                <button class="close-button" data-modal-id="editProfileModal">&times;</button>
+            </div>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label for="newName" data-translate-key="fullName">Nombre completo</label>
+                    <input type="text" id="newName" value="María López" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEmail" data-translate-key="email">Correo electrónico</label>
+                    <input type="email" id="newEmail" value="María.López@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPhone" data-translate-key="phone">Teléfono</label>
+                    <input type="tel" id="newPhone" value="+57 310 123 4567" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAddress" data-translate-key="address">Dirección</label>
+                    <input type="text" id="newAddress" value="Calle 29 # 14-50, Montería, Córdoba" required>
+                </div>
+                <div class="form-group">
+                    <label for="newBio" data-translate-key="biography">Biografía</label>
+                    <textarea id="newBio" rows="4" placeholder="Escribe algo sobre ti...">Paciente en MediTrack, interesada en el bienestar integral.</textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="secondary-button close-modal" data-modal-id="editProfileModal" data-translate-key="cancel">Cancelar</button>
+                    <button type="submit" class="primary-button" data-translate-key="saveChanges">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="changePasswordModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-translate-key="changePassword">Cambiar contraseña</h2>
+                <button class="close-button" data-modal-id="changePasswordModal">&times;</button>
+            </div>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label for="currentPassword" data-translate-key="currentPassword">Contraseña actual</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="currentPassword" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword" data-translate-key="newPassword">Nueva contraseña</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="newPassword" required>
+                    </div>
+                    <div class="password-strength">
+                        <span class="strength-bar"></span>
+                        <span class="strength-bar"></span>
+                        <span class="strength-bar"></span>
+                        <span class="strength-text" data-translate-key="securityLow">Seguridad: baja</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword" data-translate-key="confirmNewPassword">Confirmar nueva contraseña</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="secondary-button close-modal" data-modal-id="changePasswordModal" data-translate-key="cancel">Cancelar</button>
+                    <button type="submit" class="primary-button" data-translate-key="updatePassword">Actualizar contraseña</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="loginActivityModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-translate-key="recentActivity">Actividad reciente</h2>
+                <button class="close-button" data-modal-id="loginActivityModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <ul class="activity-list">
+                    <li class="activity-item">
+                        <i class="fas fa-desktop activity-icon"></i>
+                        <div class="activity-details">
+                            <h3 data-translate-key="chromeWindows">Navegador Chrome - Windows</h3>
+                            <p><span data-translate-key="monteriaColombia">Montería, Colombia</span> · 22 may 2025, 11:00 PM</p>
+                        </div>
+                    </li>
+                    <li class="activity-item">
+                        <i class="fas fa-mobile-alt activity-icon"></i>
+                        <div class="activity-details">
+                            <h3 data-translate-key="androidChrome">Android - Chrome Mobile</h3>
+                            <p><span data-translate-key="barranquillaColombia">Barranquilla, Colombia</span> · 21 may 2025, 08:30 AM</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="secondary-button close-modal" data-modal-id="loginActivityModal" data-translate-key="close">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="sessionManagementModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-translate-key="activeSessionsTitle">Sesiones activas</h2>
+                <button class="close-button" data-modal-id="sessionManagementModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <ul class="session-list">
+                    <li class="session-item">
+                        <i class="fas fa-desktop session-icon"></i>
+                        <div class="session-details">
+                            <h3 data-translate-key="chromeWindows">Navegador Chrome - Windows</h3>
+                            <p><span data-translate-key="monteriaColombia">Montería, Colombia</span> · <span data-translate-key="activeNow">Activo ahora</span></p>
+                            <p class="session-ip">IP: 192.168.1.1</p>
+                        </div>
+                        <button class="alert-button small" data-translate-key="closeSession">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                        </button>
+                    </li>
+                    <li class="session-item">
+                        <i class="fas fa-mobile-alt session-icon"></i>
+                        <div class="session-details">
+                            <h3 data-translate-key="androidChrome">Android - Chrome Mobile</h3>
+                            <p><span data-translate-key="barranquillaColombia">Barranquilla, Colombia</span> · <span data-translate-key="active2HoursAgo">Activo hace 2 horas</span></p>
+                            <p class="session-ip">IP: 192.168.1.2</p>
+                        </div>
+                        <button class="alert-button small" data-translate-key="closeSession">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="secondary-button" data-translate-key="closeAllSessions">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar todas las sesiones
+                </button>
+                <button type="button" class="secondary-button close-modal" data-modal-id="sessionManagementModal" data-translate-key="close">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteAccountModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-translate-key="deleteAccount">Eliminar cuenta</h2>
+                <button class="close-button" data-modal-id="deleteAccountModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="warning-message">
+                    <i class="fas fa-exclamation-triangle warning-icon"></i>
+                    <h3 data-translate-key="deleteAccountConfirm">¿Estás seguro de que deseas eliminar tu cuenta?</h3>
+                    <p data-translate-key="irreversibleAction">Esta acción es irreversible. Se eliminarán todos tus datos personales, historial médico y configuraciones asociadas a esta cuenta.</p>
+                </div>
+                <div class="form-group">
+                    <label for="confirmDelete" data-translate-key="confirmDeletePrompt">Para confirmar, escribe "ELIMINAR" en el siguiente campo:</label>
+                    <input type="text" id="confirmDelete" placeholder="ELIMINAR" required>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="secondary-button close-modal" data-modal-id="deleteAccountModal" data-translate-key="cancel">Cancelar</button>
+                <button type="button" class="alert-button" id="confirmDeleteButton" disabled data-translate-key="deleteAccountPermanently">
+                    <i class="fas fa-trash-alt"></i> Eliminar cuenta permanentemente
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="downloadDataModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-translate-key="downloadMyDataTitle">Descargar mis datos</h2>
+                <button class="close-button" data-modal-id="downloadDataModal">&times;</button>
+            </div>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label for="dataFormat" data-translate-key="downloadFormat">Formato de descarga</label>
+                    <select id="dataFormat" class="styled-select">
+                        <option value="json" data-translate-key="jsonFormat">JSON (Formato universal)</option>
+                        <option value="csv" data-translate-key="csvFormat">CSV (Para hojas de cálculo)</option>
+                        <option value="pdf" data-translate-key="pdfFormat">PDF (Documento imprimible)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dataRange" data-translate-key="dataRange">Rango de datos</label>
+                    <select id="dataRange" class="styled-select">
+                        <option value="all" data-translate-key="allMyData">Todos mis datos</option>
+                        <option value="profile" data-translate-key="onlyProfileInfo">Solo información de perfil</option>
+                        <option value="medical" data-translate-key="onlyMedicalHistory">Solo historial médico</option>
+                        <option value="year" data-translate-key="last12Months">Últimos 12 meses</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="secondary-button close-modal" data-modal-id="downloadDataModal" data-translate-key="cancel">Cancelar</button>
+                    <button type="submit" class="primary-button" data-translate-key="generateFile">
+                        <i class="fas fa-download"></i> Generar archivo
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="notification-container" aria-live="polite"></div>
+    <div class="medibot-toggle" id="medibotToggle" role="button" aria-expanded="false" aria-controls="medibotContainer">
+        <i class="fa-solid fa-user-doctor"></i>
+        <span class="notification-badge hidden" id="notificationBadge" aria-live="polite" aria-atomic="true">1</span>
+    </div>
+
+    <div class="medibot-container" id="medibotContainer" aria-live="polite" aria-atomic="true" role="dialog" aria-labelledby="medibotHeaderTitle">
+        <div class="medibot-header" id="medibotHeader">
+            <div class="header-content">
+                <i class="fas fa-robot"></i>
+                <h2 id="medibotHeaderTitle">MediBot</h2>
+                <span class="connection-status">
+                    <i class="fas fa-circle online-status" aria-hidden="true"></i>
+                    Online
+                </span>
+            </div>
+            <div class="header-controls">
+                <button class="control-btn" id="medibotMinimize" aria-label="Minimizar chatbot">
+                    <i class="fas fa-minus" aria-hidden="true"></i>
+                </button>
+                <button class="control-btn" id="medibotClose" aria-label="Cerrar chatbot">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="medibot-messages" id="medibotMessages" role="log" aria-live="polite"></div>
+
+        <div class="medibot-quick-actions" id="medibotQuickActions" role="group" aria-label="Acciones rápidas del chatbot"></div>
+
+        <div class="medibot-input-area">
+            <input type="text" class="medibot-input" id="medibotInput" placeholder="Escribe tu mensaje..." aria-label="Escribe tu mensaje">
+            <button class="voice-btn" id="medibotVoiceInput" aria-label="Entrada de voz">
+                <i class="fas fa-microphone" aria-hidden="true"></i>
+            </button>
+            <button class="send-btn" id="medibotSend" aria-label="Enviar mensaje">
+                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <script src="medibot/medibot.js"></script>
+
+    <script src="Scripts/PerfilConfiguracion.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,455 @@
+/* Importación de la fuente Inter */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #e0f2f7; /* Azul claro muy suave para el fondo */
+    overflow: hidden; /* Evita barras de desplazamiento no deseadas */
+}
+
+/* Definición de variables CSS para los colores */
+:root {
+    --primary-color: #26a69a; /* Teal */
+    --primary-dark: #00796b; /* Darker Teal */
+    --primary-light: #b2dfdb; /* Light Teal */
+    --secondary-color: #80cbc4; /* Medium Teal */
+    --accent-color: #4db6ac; /* Accent Teal */
+    --text-dark: #2F4F4F; /* Azul oscuro para el texto principal */
+    --text-medium: #555;
+    --text-light: #777;
+    --error-color: #e74c3c;
+    --success-bg: #d4edda;
+    --success-text: #155724;
+    --error-bg: #f8d7da;
+    --error-text: #721c24;
+}
+
+.container {
+    display: flex;
+    width: 90%; /* Ancho responsivo */
+    max-width: 1000px; /* Ancho máximo para pantallas grandes */
+    background-color: #fff;
+    border-radius: 20px; /* Bordes más redondeados */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada y suave */
+    overflow: hidden; /* Asegura que los bordes redondeados se apliquen a los paneles */
+    min-height: 650px; /* Altura mínima aumentada para el contenedor */
+}
+
+/* Panel Izquierdo */
+.left-panel {
+    flex: 1;
+    background-color: var(--primary-color); /* Usando el color primario */
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px; /* Más padding */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px 0 0 20px; /* Bordes redondeados solo en la izquierda */
+}
+
+.left-panel .logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px; /* Más margen */
+}
+
+.left-panel .logo i {
+    font-size: 60px; /* Icono más grande */
+    margin-right: 20px;
+}
+
+.left-panel .logo h1 {
+    font-size: 48px; /* Título más grande */
+    font-weight: 700;
+    margin: 0;
+}
+
+.left-panel h2 {
+    font-size: 38px; /* Título más grande */
+    margin-bottom: 25px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.left-panel p {
+    font-size: 20px; /* Texto más grande */
+    line-height: 1.8; /* Mayor espaciado entre líneas */
+    margin-bottom: 50px; /* Más margen */
+    max-width: 450px;
+}
+
+.left-panel .icons {
+    display: flex;
+    gap: 40px; /* Mayor espacio entre iconos */
+}
+
+.left-panel .icons i {
+    font-size: 50px; /* Iconos más grandes */
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Panel Derecho */
+.right-panel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px; /* Más padding */
+    position: relative;
+    perspective: 1000px; /* Para la animación 3D */
+}
+
+.form-container {
+    width: 100%;
+    max-width: 450px; /* Ancho máximo aumentado */
+    text-align: center;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#form-title {
+    font-size: 36px; /* Título de formulario más grande */
+    margin-bottom: 40px; /* Más margen */
+    color: var(--text-dark); /* Usando el color de texto oscuro */
+    font-weight: 700;
+}
+
+form {
+    background-color: #fff;
+    padding: 40px; /* Más padding */
+    border-radius: 15px; /* Bordes más redondeados */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Mayor espacio entre elementos del formulario */
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.7s ease-in-out; /* Animación más lenta */
+}
+
+form.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translate(-50%, -50%) rotateY(0deg);
+}
+
+/* Animación de giro para el formulario de registro */
+#register-form.active {
+    transform: translate(-50%, -50%) rotateY(0deg);
+}
+
+#register-form {
+    transform: translate(-50%, -50%) rotateY(90deg);
+}
+
+/* Animación de giro para el formulario de login */
+#login-form.active {
+    transform: translate(-50%, -50%) rotateY(0deg);
+}
+
+#login-form {
+    transform: translate(-50%, -50%) rotateY(-90deg);
+}
+
+
+.input-group {
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 10px; /* Más margen */
+    color: var(--text-medium);
+    font-weight: 600;
+    font-size: 18px; /* Etiqueta más grande */
+}
+
+/* Nuevo estilo para el contenedor del input y el icono */
+.input-with-icon {
+    position: relative;
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px 18px; /* Más padding */
+    border: 1px solid #ddd;
+    border-radius: 10px; /* Bordes más redondeados */
+    font-size: 18px; /* Texto de entrada más grande */
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--accent-color); /* Usando el color de acento al enfocar */
+}
+
+.password-group {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 18px; /* Ajuste de posición */
+    top: 50%; /* Centra verticalmente dentro de .input-with-icon */
+    transform: translateY(-50%); /* Ajusta para la altura del propio icono */
+    cursor: pointer;
+    color: #999;
+}
+
+.toggle-password i {
+    font-size: 22px; /* Icono más grande */
+}
+
+.btn-primary {
+    background-color: var(--primary-color); /* Usando el color primario para el botón */
+    color: #fff;
+    padding: 16px 30px; /* Más padding */
+    border: none;
+    border-radius: 10px; /* Bordes más redondeados */
+    font-size: 22px; /* Texto de botón más grande */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 15px rgba(38, 166, 154, 0.4); /* Sombra basada en primary-color */
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark); /* Tono más oscuro al pasar el ratón */
+    transform: translateY(-3px); /* Pequeño efecto de elevación */
+    box-shadow: 0 8px 20px rgba(38, 166, 154, 0.5);
+}
+
+.forgot-password {
+    color: var(--text-medium);
+    font-size: 16px; /* Texto más grande */
+    text-decoration: none;
+    margin-top: -15px; /* Ajuste para acercar al botón */
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: var(--accent-color);
+}
+
+.switch-form {
+    font-size: 17px; /* Texto más grande */
+    color: var(--text-light);
+    margin-top: 15px; /* Más margen */
+}
+
+.switch-form a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.switch-form a:hover {
+    color: var(--primary-dark);
+}
+
+.error-message {
+    color: var(--error-color); /* Rojo para mensajes de error */
+    font-size: 14px; /* Texto de error ligeramente más grande */
+    margin-top: 5px;
+    text-align: left;
+    height: 20px; /* Mantiene el espacio para evitar CLS */
+}
+
+/* Mensaje de éxito/error */
+.message-box {
+    position: absolute;
+    top: 30px; /* Más abajo */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--error-bg); /* Fondo rojo claro para error */
+    color: var(--error-text); /* Texto rojo oscuro */
+    padding: 18px 30px; /* Más padding */
+    border-radius: 10px; /* Bordes más redondeados */
+    border: 1px solid #f5c6cb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 85%; /* Ancho aumentado */
+    max-width: 450px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease; /* Transición más suave */
+    z-index: 1000;
+}
+
+.message-box.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.message-box.success {
+    background-color: var(--success-bg); /* Fondo verde claro para éxito */
+    color: var(--success-text); /* Texto verde oscuro */
+    border-color: #c3e6cb;
+}
+
+.message-box.error {
+    background-color: var(--error-bg); /* Fondo rojo claro para error */
+    color: var(--error-text); /* Texto rojo oscuro */
+    border-color: #f5c6cb;
+}
+
+.message-box p {
+    margin: 0;
+    font-size: 16px; /* Texto del mensaje más grande */
+}
+
+.message-box .btn-close {
+    background: none;
+    border: none;
+    font-size: 24px; /* Botón de cierre más grande */
+    font-weight: bold;
+    color: inherit;
+    cursor: pointer;
+    margin-left: 25px;
+    transition: color 0.2s ease;
+}
+
+.message-box .btn-close:hover {
+    color: #000;
+}
+
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Apila los paneles en pantallas pequeñas */
+        width: 100%;
+        min-height: 100vh; /* Ocupa toda la altura en móviles */
+        border-radius: 0; /* Sin bordes redondeados en móviles */
+        box-shadow: none; /* Sin sombra en móviles */
+    }
+
+    .left-panel {
+        border-radius: 0; /* Sin bordes redondeados */
+        padding: 40px 25px;
+    }
+
+    .left-panel .logo h1 {
+        font-size: 38px;
+    }
+
+    .left-panel h2 {
+        font-size: 30px;
+    }
+
+    .left-panel p {
+        font-size: 16px;
+        margin-bottom: 40px;
+    }
+
+    .left-panel .icons i {
+        font-size: 40px;
+    }
+
+    .right-panel {
+        padding: 40px 25px;
+        min-height: 550px; /* Altura mínima para el panel derecho en móviles */
+    }
+
+    form {
+        padding: 30px;
+    }
+
+    #form-title {
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+
+    .btn-primary {
+        padding: 14px 25px;
+        font-size: 18px;
+    }
+
+    .input-group input {
+        padding: 12px 15px;
+        font-size: 16px;
+    }
+
+    .input-group label {
+        font-size: 16px;
+    }
+
+    .toggle-password i {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .left-panel .logo i {
+        font-size: 50px;
+    }
+
+    .left-panel .logo h1 {
+        font-size: 34px;
+    }
+
+    .left-panel h2 {
+        font-size: 26px;
+    }
+
+    .left-panel p {
+        font-size: 15px;
+    }
+
+    .left-panel .icons {
+        gap: 25px;
+    }
+
+    .left-panel .icons i {
+        font-size: 36px;
+    }
+
+    .form-container {
+        max-width: 320px;
+    }
+
+    #form-title {
+        font-size: 26px;
+    }
+
+    .btn-primary {
+        font-size: 17px;
+    }
+
+    .input-group input {
+        font-size: 15px;
+    }
+
+    .forgot-password, .switch-form {
+        font-size: 14px;
+    }
+
+    .message-box p {
+        font-size: 14px;
+    }
+
+    .message-box .btn-close {
+        font-size: 20px;
+    }
+}

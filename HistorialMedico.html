@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTrack - Historial Médico</title>
+     <link rel="stylesheet" href="sidebar/sidebar.css">
+    <link rel="stylesheet" href="Estilos/Historial-Médic.css">
+    <link rel="stylesheet" href="medibot/medibot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script>
+        async function loadSidebar() {
+            try {
+                const response = await fetch('sidebar/sidebar.html');
+                const sidebarHTML = await response.text();
+                document.body.insertAdjacentHTML('afterbegin', sidebarHTML);
+                // Ajustar el margen del contenido principal después de cargar el sidebar
+                const sidebarElement = document.querySelector('.sidebar');
+                const mainContent = document.querySelector('.main-content');
+                if (sidebarElement && mainContent) {
+                    mainContent.style.marginLeft = `${sidebarElement.offsetWidth}px`;
+                }
+            } catch (error) {
+                console.error('Error al cargar el sidebar:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadSidebar);
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+        
+        <main class="main-content">
+            <div class="header">
+                <div class="breadcrumbs">
+                    <a href="Inicio.html">Inicio</a> <i class="fas fa-chevron-right separator"></i> <span>Historial Médico</span>
+                </div>
+                <h1>Historial Médico</h1>
+                <p class="subtitle">Accede a tus diagnósticos, tratamientos, eventos y documentos médicos.</p>
+            </div>
+
+            <section class="patient-section">
+                <div class="section-header">
+                    <h2>Paciente actual</h2>
+                    <button class="secondary-button small" id="change-patient"><i class="fas fa-exchange-alt"></i> Cambiar</button>
+                </div>
+                <div class="patient-info-card">
+                    <div class="patient-details">
+                        <i class="fas fa-user-circle patient-icon"></i> <div class="info-text">
+                            <p class="patient-name">María López <span class="patient-age">(42 años)</span></p>
+                            <p class="patient-meta">
+                                <span class="meta-item"><i class="fas fa-id-card"></i> ID: MT-458792</span>
+                                <span class="meta-item"><i class="fas fa-tint"></i> A+</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="patient-quickstats">
+                        <div class="stat-item">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Diagnósticos</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">5</span>
+                            <span class="stat-label">Medicamentos</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">92%</span>
+                            <span class="stat-label">Adherencia</span>
+                        </div>
+                    </div>
+                    <div class="patient-actions">
+                        <button class="warning-button small"><i class="fas fa-exclamation-triangle"></i> 2 alertas</button>
+                        <button class="info-button small"><i class="fas fa-calendar-check"></i> Cita próxima</button>
+                    </div>
+                </div>
+            </section>
+
+            <nav class="profile-tabs" aria-label="Navegación del historial médico">
+                <button class="tab-button active" data-tab="diagnostics">Diagnósticos</button>
+                <button class="tab-button" data-tab="treatments">Tratamientos</button>
+                <button class="tab-button" data-tab="events">Eventos</button>
+                <button class="tab-button" data-tab="documents">Documentos</button>
+            </nav>
+
+            <div id="diagnostics-panel" class="tab-panel active">
+                <div class="section-header">
+                    <h2>Diagnósticos</h2>
+                    <button class="primary-button" id="add-diagnosis"><i class="fas fa-plus"></i> Añadir Diagnóstico</button>
+                </div>
+                <div class="diagnostics-grid">
+                    </div>
+            </div>
+
+            <div id="treatments-panel" class="tab-panel">
+                <div class="section-header">
+                    <h2>Tratamientos</h2>
+                    <div class="actions-group">
+                        <button class="primary-button" id="add-treatment"><i class="fas fa-plus"></i> Añadir Tratamiento</button>
+                        <button class="secondary-button" id="view-all-treatments-btn"><i class="fas fa-list"></i> Ver Todos</button>
+                    </div>
+                </div>
+                <div class="treatments-grid">
+                    <div class="empty-state">
+                        <i class="fas fa-prescription-bottle-alt"></i>
+                        <h4>No hay tratamientos activos</h4>
+                        <p>Agrega un nuevo tratamiento para empezar a gestionarlos.</p>
+                        <button class="primary-button small" id="add-treatment-empty">
+                            <i class="fas fa-plus"></i> Agregar tratamiento
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="events-panel" class="tab-panel">
+                <div class="section-header">
+                    <h2>Eventos Médicos</h2>
+                    <div class="actions-group">
+                        <button class="primary-button" id="add-event"><i class="fas fa-plus"></i> Registrar Evento</button>
+                        <button class="secondary-button" id="view-all-events-btn"><i class="fas fa-list"></i> Ver Todos</button>
+                    </div>
+                </div>
+                <div class="events-grid">
+                    <div class="empty-state">
+                        <i class="fas fa-calendar-check"></i>
+                        <h4>No hay eventos registrados</h4>
+                        <p>Registra un nuevo evento médico para mantener tu historial completo.</p>
+                        <button class="primary-button small" id="add-event-empty">
+                            <i class="fas fa-plus"></i> Registrar evento
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="documents-panel" class="tab-panel">
+                <div class="section-header">
+                    <h2>Documentos Médicos</h2>
+                    <div class="actions-group">
+                        <button class="primary-button" id="upload-document"><i class="fas fa-upload"></i> Subir Documento</button>
+                        <button class="secondary-button" id="view-all-documents-btn"><i class="fas fa-list"></i> Ver Todos</button>
+                    </div>
+                </div>
+                <div class="documents-grid">
+                    <div class="empty-state">
+                        <i class="fas fa-file-medical-alt"></i>
+                        <h4>No hay documentos subidos</h4>
+                        <p>Sube tus documentos médicos para tenerlos siempre a mano.</p>
+                        <button class="primary-button small" id="upload-document-empty">
+                            <i class="fas fa-upload"></i> Subir documento
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="diagnosis-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-notes-medical"></i> <span id="diagnosis-modal-title">Añadir Nuevo Diagnóstico</span></h3>
+                <button class="close-modal" data-modal-id="diagnosis-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="diagnosis-form">
+                    <input type="hidden" id="diagnosis-id">
+                    <div class="form-group">
+                        <label for="diagnosis-name">Nombre del Diagnóstico</label>
+                        <input type="text" id="diagnosis-name" placeholder="Ej: Hipertensión, Diabetes" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diagnosis-date">Fecha del Diagnóstico</label>
+                        <input type="date" id="diagnosis-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diagnosis-doctor">Médico responsable</label>
+                        <input type="text" id="diagnosis-doctor" placeholder="Nombre del médico">
+                    </div>
+                    <div class="form-group">
+                        <label for="diagnosis-severity">Gravedad</label>
+                        <select id="diagnosis-severity">
+                            <option value="stable">Estable</option>
+                            <option value="warning">Requiere atención</option>
+                            <option value="urgent">Urgente</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="diagnosis-notes">Notas adicionales</label>
+                        <textarea id="diagnosis-notes" rows="3" placeholder="Detalles importantes sobre el diagnóstico"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="secondary-button" id="cancel-diagnosis">Cancelar</button>
+                        <button type="submit" class="primary-button">Guardar diagnóstico</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div id="treatment-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-prescription-bottle-alt"></i> <span id="treatment-modal-title">Agregar Nuevo Tratamiento</span></h3>
+                <button class="close-modal" data-modal-id="treatment-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="treatment-form">
+                    <input type="hidden" id="treatment-id">
+                    <div class="form-group">
+                        <label for="treatment-name">Nombre del Tratamiento</label>
+                        <input type="text" id="treatment-name" placeholder="Ej: Losartán 50mg" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="treatment-diagnosis">Diagnóstico Asociado</label>
+                        <select id="treatment-diagnosis">
+                            <option value="">Seleccione un diagnóstico</option>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="treatment-doctor">Médico Prescriptor</label>
+                        <input type="text" id="treatment-doctor" placeholder="Ej: Dr. Gómez" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="treatment-start-date">Fecha de Inicio</label>
+                        <input type="date" id="treatment-start-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="treatment-dosage">Dosis e Instrucciones</label>
+                        <input type="text" id="treatment-dosage" placeholder="Ej: 1 pastilla cada 24h con el desayuno" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="treatment-notes">Notas Adicionales</label>
+                        <textarea id="treatment-notes" rows="3" placeholder="Detalles importantes sobre el tratamiento..."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="primary-button" id="save-treatment-btn">Guardar Tratamiento</button>
+                        <button type="button" class="secondary-button close-modal" data-modal-id="treatment-modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="treatment-details-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> Detalles del Tratamiento</h3>
+                <button class="close-modal" data-modal-id="treatment-details-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Nombre:</strong> <span id="detail-treatment-name"></span></p>
+                <p><strong>Diagnóstico Asociado:</strong> <span id="detail-treatment-diagnosis"></span></p>
+                <p><strong>Médico:</strong> <span id="detail-treatment-doctor"></span></p>
+                <p><strong>Fecha de Inicio:</strong> <span id="detail-treatment-start-date"></span></p>
+                <p><strong>Dosis:</strong> <span id="detail-treatment-dosage"></span></p>
+                <p><strong>Notas:</strong> <span id="detail-treatment-notes"></span></p>
+                <p><strong>Adherencia:</strong> <span id="detail-treatment-adherence"></span>%</p>
+                <p><strong>Estado:</strong> <span id="detail-treatment-status"></span></p>
+            </div>
+            <div class="modal-footer justify-center">
+                <button class="secondary-button close-modal" data-modal-id="treatment-details-modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="all-treatments-modal" class="modal-overlay">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-list"></i> Todos tus Tratamientos</h3>
+                <button class="close-modal" data-modal-id="all-treatments-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="treatments-list-modal">
+                    </div>
+            </div>
+            <div class="modal-footer justify-center">
+                <button class="secondary-button close-modal" data-modal-id="all-treatments-modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="event-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-calendar-check"></i> <span id="event-modal-title">Registrar Nuevo Evento</span></h3>
+                <button class="close-modal" data-modal-id="event-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="event-form">
+                    <input type="hidden" id="event-id">
+                    <div class="form-group">
+                        <label for="event-name">Nombre del Evento</label>
+                        <input type="text" id="event-name" placeholder="Ej: Cirugía, Vacunación" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-date">Fecha del Evento</label>
+                        <input type="date" id="event-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-hospital">Hospital/Clínica</label>
+                        <input type="text" id="event-hospital" placeholder="Ej: Hospital Central">
+                    </div>
+                    <div class="form-group">
+                        <label for="event-doctor">Médico/Personal de Salud</label>
+                        <input type="text" id="event-doctor" placeholder="Ej: Dr. Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label for="event-description">Descripción</label>
+                        <textarea id="event-description" rows="4" placeholder="Detalles del evento, resultados, etc."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="primary-button" id="save-event-btn">Guardar Evento</button>
+                        <button type="button" class="secondary-button close-modal" data-modal-id="event-modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="event-details-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> Detalles del Evento</h3>
+                <button class="close-modal" data-modal-id="event-details-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Nombre:</strong> <span id="detail-event-name"></span></p>
+                <p><strong>Fecha:</strong> <span id="detail-event-date"></span></p>
+                <p><strong>Hospital/Clínica:</strong> <span id="detail-event-hospital"></span></p>
+                <p><strong>Médico:</strong> <span id="detail-event-doctor"></span></p>
+                <p><strong>Descripción:</strong> <span id="detail-event-description"></span></p>
+            </div>
+            <div class="modal-footer justify-center">
+                <button class="secondary-button close-modal" data-modal-id="event-details-modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="all-events-modal" class="modal-overlay">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-list"></i> Todos tus Eventos Médicos</h3>
+                <button class="close-modal" data-modal-id="all-events-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="event-list-modal">
+                    </div>
+            </div>
+            <div class="modal-footer justify-center">
+                <button class="secondary-button close-modal" data-modal-id="all-events-modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="document-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-medical-alt"></i> <span id="document-modal-title">Subir Nuevo Documento</span></h3>
+                <button class="close-modal" data-modal-id="document-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="document-form">
+                    <input type="hidden" id="document-id">
+                    <div class="form-group">
+                        <label for="document-name">Nombre del Documento</label>
+                        <input type="text" id="document-name" placeholder="Ej: Resultados de laboratorio, Receta médica" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="document-date">Fecha del Documento</label>
+                        <input type="date" id="document-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="document-type">Tipo de Documento</label>
+                        <input type="text" id="document-type" placeholder="Ej: Análisis Clínico, Informe Médico">
+                    </div>
+                    <div class="form-group">
+                        <label for="document-description">Descripción</label>
+                        <textarea id="document-description" rows="4" placeholder="Breve descripción del contenido del documento..."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="primary-button" id="save-document-btn">Guardar Documento</button>
+                        <button type="button" class="secondary-button close-modal" data-modal-id="document-modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="document-details-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> Detalles del Documento</h3>
+                <button class="close-modal" data-modal-id="document-details-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Nombre:</strong> <span id="detail-document-name"></span></p>
+                <p><strong>Fecha:</strong> <span id="detail-document-date"></span></p>
+                <p><strong>Tipo:</strong> <span id="detail-document-type"></span></p>
+                <p><strong>Descripción:</strong> <span id="detail-document-description"></span></p>
+            </div>
+            <div class="modal-footer justify-center">
+                <button class="secondary-button close-modal" data-modal-id="document-details-modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="all-documents-modal" class="modal-overlay">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-list"></i> Todos tus Documentos Médicos</h3>
+                <button class="close-modal" data-modal-id="all-documents-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="document-list-modal">
+                    </div>
+            </div>
+            <div class="modal-footer justify-center">
+                <button class="secondary-button close-modal" data-modal-id="all-documents-modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="diagnosis-details-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> Detalles del Diagnóstico</h3>
+                <button class="close-modal" data-modal-id="diagnosis-details-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Nombre:</strong> <span id="detail-diagnosis-name"></span></p>
+                <p><strong>Fecha:</strong> <span id="detail-diagnosis-date"></span></p>
+                <p><strong>Médico:</strong> <span id="detail-diagnosis-doctor"></span></p>
+                <p><strong>Gravedad:</strong> <span id="detail-diagnosis-severity"></span></p>
+                <p><strong>Última Lectura:</strong> <span id="detail-diagnosis-last-reading"></span></p>
+                <p><strong>Fecha Última Lectura:</strong> <span id="detail-diagnosis-last-reading-date"></span></p>
+                <p><strong>Adherencia:</strong> <span id="detail-diagnosis-adherence"></span>%</p>
+                <p><strong>Notas:</strong> <span id="detail-diagnosis-notes"></span></p>
+                <p><strong>Próximo Control:</strong> <span id="detail-diagnosis-next-control"></span></p>
+            </div>
+            <div class="modal-footer justify-center">
+                <button class="secondary-button close-modal" data-modal-id="diagnosis-details-modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="custom-confirmation-modal" class="modal-overlay">
+        <div class="modal-content small-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-question-circle"></i> Confirmación</h3>
+                <button class="close-modal" data-modal-id="custom-confirmation-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmation-message"></p>
+            </div>
+            <div class="modal-footer justify-center">
+                <button class="danger-button" id="confirm-action-btn">Confirmar</button>
+                <button class="secondary-button close-modal" data-modal-id="custom-confirmation-modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification-container" class="notification-container"></div>
+    <div class="medibot-toggle" id="medibotToggle" role="button" aria-expanded="false" aria-controls="medibotContainer">
+        <i class="fa-solid fa-user-doctor"></i>
+        <span class="notification-badge hidden" id="notificationBadge" aria-live="polite" aria-atomic="true">1</span>
+    </div>
+
+    <div class="medibot-container" id="medibotContainer" aria-live="polite" aria-atomic="true" role="dialog" aria-labelledby="medibotHeaderTitle">
+        <div class="medibot-header" id="medibotHeader">
+            <div class="header-content">
+                <i class="fas fa-robot"></i>
+                <h2 id="medibotHeaderTitle">MediBot</h2>
+                <span class="connection-status">
+                    <i class="fas fa-circle online-status" aria-hidden="true"></i>
+                    Online
+                </span>
+            </div>
+            <div class="header-controls">
+                <button class="control-btn" id="medibotMinimize" aria-label="Minimizar chatbot">
+                    <i class="fas fa-minus" aria-hidden="true"></i>
+                </button>
+                <button class="control-btn" id="medibotClose" aria-label="Cerrar chatbot">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="medibot-messages" id="medibotMessages" role="log" aria-live="polite"></div>
+
+        <div class="medibot-quick-actions" id="medibotQuickActions" role="group" aria-label="Acciones rápidas del chatbot"></div>
+
+        <div class="medibot-input-area">
+            <input type="text" class="medibot-input" id="medibotInput" placeholder="Escribe tu mensaje..." aria-label="Escribe tu mensaje">
+            <button class="voice-btn" id="medibotVoiceInput" aria-label="Entrada de voz">
+                <i class="fas fa-microphone" aria-hidden="true"></i>
+            </button>
+            <button class="send-btn" id="medibotSend" aria-label="Enviar mensaje">
+                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <script src="medibot/medibot.js"></script>
+
+    <script src ="Scripts/HistorialMedico.js"></script>
+    
+    </body>
+</html>

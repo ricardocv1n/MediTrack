@@ -1,0 +1,784 @@
+/* Variables CSS (pueden ser importadas de un archivo global si se prefiere) */
+:root {
+    --color-primary: #26a69a;
+    --color-primary-dark: #00796b;
+    --color-primary-light: #b2dfdb;
+    --color-secondary: #80cbc4;
+    --color-accent: #4db6ac;
+    --color-light: #f5f5f5;
+    --color-dark: #333333;
+    --color-gray-light: #e0e0e0;
+    --color-gray-medium: #9e9e9e;
+    --color-gray-dark: #616161;
+    --color-success: #81c784;
+    --color-warning: #ffb74d;
+    --color-danger: #e57373;
+    --color-info: #64b5f6;
+    --color-emergency: #f44336;
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.1);
+    --shadow-emphasis: 0 0 0 3px rgba(38, 166, 154, 0.3);
+
+    --transition-fast: 120ms ease;
+    --transition-medium: 240ms ease;
+    --transition-slow: 360ms ease;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    /* Aumentar el espaciado para hacer los componentes visualmente más grandes */
+    --space-xxs: 0.35rem;
+    --space-xs: 0.7rem;
+    --space-sm: 1rem;
+    --space-md: 1.3rem;
+    --space-lg: 2rem;
+    --space-xl: 2.6rem;
+    --space-xxl: 4rem;
+
+    --font-base: 'Poppins', system-ui, -apple-system, sans-serif;
+    /* Aumentar los tamaños de fuente */
+    --font-size-xs: 0.9rem;
+    --font-size-sm: 1.1rem;
+    --font-size-md: 1.25rem;
+    --font-size-lg: 1.4rem;
+    --font-size-xl: 1.6rem;
+    --font-size-xxl: 1.9rem;
+    --font-size-xxxl: 2.6rem;
+
+    --z-base: 1;
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-modal: 1000;
+    --z-overlay: 1050;
+
+    /* Colores específicos de la página */
+    --primary-color: var(--color-primary);
+    --primary-dark: var(--color-primary-dark);
+    --gray-dark: var(--color-gray-dark);
+    --gray-medium: var(--color-gray-medium);
+    --gray-light: var(--color-gray-light);
+    --card-bg: white;
+    --card-border: var(--color-gray-light);
+    --input-bg: white;
+    --text-color: var(--color-dark);
+}
+
+body {
+    font-family: var(--font-base);
+    background-color: #f5fbfa;
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    text-rendering: optimizeSpeed;
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* El #sidebar-container es solo el punto de montaje para el sidebar. */
+/* Sus estilos de layout (width, position, etc.) deben ser definidos en sidebar/sidebar.css */
+#sidebar-container {
+    /* No se aplican estilos de layout fijos aquí para evitar conflictos */
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: var(--space-md);
+    margin-left: 260px; /* Ajustado para coincidir con el width del sidebar en desktop */
+    transition: margin-left var(--transition-medium);
+}
+
+/* Estilos de encabezado y migas de pan */
+.header {
+    margin-bottom: var(--space-lg);
+}
+
+.breadcrumbs {
+    font-size: var(--font-size-sm);
+    color: var(--gray-medium);
+    margin-bottom: var(--space-xs);
+}
+
+.breadcrumbs a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumbs i {
+    margin: 0 var(--space-xxs);
+    font-size: var(--font-size-xs);
+}
+
+h1 {
+    font-size: var(--font-size-xxl);
+    color: var(--primary-dark);
+    margin-top: 0;
+}
+
+/* Estilos de filtros */
+.appointment-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    background-color: var(--card-bg);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--space-lg);
+    align-items: flex-end; /* Alinea los elementos al final */
+}
+
+.filter-group {
+    flex: 1; /* Permite que los grupos de filtro se expandan */
+    min-width: 220px; /* Aumentado ancho mínimo para cada grupo */
+}
+
+.filter-group label {
+    display: block;
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    color: var(--gray-dark);
+    margin-bottom: var(--space-xs);
+}
+
+.filter-group input,
+.filter-group select {
+    width: 100%;
+    padding: var(--space-md); /* Aumentado padding */
+    border: 1px solid var(--card-border); /* Usar card-border para consistencia */
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-md);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    box-sizing: border-box; /* Incluir padding y borde en el tamaño total */
+}
+
+/* Estilos de secciones */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+}
+
+.section-header h2 {
+    font-size: var(--font-size-xl);
+    color: var(--primary-dark);
+    margin: 0;
+}
+
+/* Estilos de tarjetas de citas (upcoming) */
+.appointments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Aumentado min-width */
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.appointment-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--card-border);
+    padding: var(--space-lg); /* Aumentado padding */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.appointment-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.appointment-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-sm);
+}
+
+.appointment-card .card-header i {
+    font-size: 2.4rem; /* Aumentado tamaño de icono */
+    color: var(--primary-color);
+}
+
+.appointment-card .badge {
+    padding: var(--space-xxs) var(--space-xs);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm); /* Aumentado tamaño de fuente */
+    font-weight: 600;
+    text-transform: uppercase;
+    color: white;
+}
+
+.appointment-card .badge.urgent { background-color: var(--color-emergency); }
+.appointment-card .badge.reminder { background-color: var(--color-info); }
+.appointment-card .badge.routine { background-color: var(--color-success); }
+
+.appointment-card .card-body {
+    flex-grow: 1;
+}
+
+.appointment-card h3 {
+    font-size: var(--font-size-lg);
+    color: var(--primary-dark);
+    margin-top: 0;
+    margin-bottom: var(--space-xs);
+}
+
+.appointment-card p {
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    color: var(--gray-dark);
+    margin-bottom: var(--space-xxs);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.appointment-card p i {
+    font-size: var(--font-size-md); /* Aumentado tamaño de icono */
+    color: var(--primary-color);
+}
+
+.appointment-card .appointment-notes {
+    margin-top: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px dashed var(--color-gray-light);
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    color: var(--gray-medium);
+}
+
+.appointment-card .appointment-notes p {
+    margin: 0;
+    gap: var(--space-xs);
+}
+
+.appointment-card .card-actions {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los botones se envuelvan */
+    gap: var(--space-xs);
+    margin-top: var(--space-md);
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+}
+
+/* Estilos de tabla de historial */
+.history-table-container {
+    overflow-x: auto; /* Permite scroll horizontal en tablas en móviles */
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--card-border);
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    text-align: left;
+}
+
+.history-table th,
+.history-table td {
+    padding: var(--space-sm) var(--space-md); /* Aumentado padding */
+    border-bottom: 1px solid var(--card-border); /* Usar card-border para consistencia */
+}
+
+.history-table th {
+    background-color: var(--color-light);
+    color: var(--primary-dark);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: var(--font-size-sm); /* Aumentado tamaño de fuente */
+}
+
+.history-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.history-table .status {
+    padding: var(--space-xxs) var(--space-xs);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+}
+
+.history-table .status.completed { background-color: var(--color-success); color: white; }
+.history-table .status.canceled { background-color: var(--color-danger); color: white; }
+.history-table .status.pending { background-color: var(--color-warning); color: white; }
+
+.history-table .actions-cell {
+    white-space: nowrap; /* Evita que los botones se rompan en varias líneas */
+}
+
+.history-table .icon-button {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: var(--font-size-lg); /* Aumentado tamaño de icono */
+    cursor: pointer;
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast);
+}
+
+.history-table .icon-button:hover {
+    background-color: rgba(38, 166, 154, 0.1);
+}
+
+/* Estilos de acciones rápidas */
+.quick-actions {
+    margin-bottom: var(--space-lg);
+}
+
+.actions-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+/* Estilos de botones generales (reutilizados de index.css) */
+.primary-button, .secondary-button, .danger-button {
+    padding: var(--space-md) var(--space-lg); /* Aumentado padding */
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    text-align: center;
+}
+
+.primary-button {
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.primary-button:hover {
+    background-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.primary-button:focus {
+    box-shadow: var(--shadow-emphasis);
+}
+
+.secondary-button {
+    background-color: white;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+
+.secondary-button:hover {
+    background-color: rgba(38, 166, 154, 0.1);
+}
+
+.secondary-button:focus {
+    box-shadow: var(--shadow-emphasis);
+}
+
+.danger-button {
+    background-color: var(--color-danger);
+    color: white;
+    border: 1px solid var(--color-danger);
+}
+
+.danger-button:hover {
+    background-color: #d32f2f;
+}
+
+.danger-button:focus {
+    box-shadow: 0 0 0 3px rgba(229, 115, 115, 0.3);
+}
+
+.primary-button.small, .secondary-button.small, .danger-button.small {
+    padding: var(--space-sm) var(--space-md); /* Aumentado padding */
+    font-size: var(--font-size-sm); /* Aumentado tamaño de fuente */
+}
+
+/* Estilos de modales (reutilizados de index.css y adaptados) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: var(--z-modal);
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-md);
+    box-sizing: border-box;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    margin: auto;
+    padding: var(--space-xxl); /* Aumentado padding */
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    width: 90%;
+    max-width: 600px; /* Aumentado ancho predeterminado para la mayoría de modales */
+    position: relative;
+    animation: fadeInScale 0.3s ease-out;
+    box-sizing: border-box;
+    border: 1px solid var(--card-border);
+}
+
+.modal-content.small-content {
+    max-width: 500px; /* Para modales de confirmación o recordatorio */
+}
+
+.modal .close {
+    color: var(--gray-dark);
+    font-size: var(--font-size-xxxl);
+    font-weight: bold;
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-md);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.modal .close:hover,
+.modal .close:focus {
+    color: var(--primary-dark);
+    text-decoration: none;
+}
+
+.modal-content h2,
+.modal-content h3 {
+    color: var(--primary-dark);
+    margin-top: 0;
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-xl);
+}
+
+.modal-content h3 {
+    font-size: var(--font-size-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.modal-content p {
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    color: var(--gray-dark);
+    margin-bottom: var(--space-sm);
+}
+
+.modal-content p strong {
+    color: var(--primary-dark);
+}
+
+.modal-content .form-group {
+    margin-bottom: var(--space-md);
+}
+
+.modal-content .form-group label {
+    display: block;
+    margin-bottom: var(--space-xs);
+    font-weight: 600;
+    color: var(--primary-dark);
+    font-size: var(--font-size-lg); /* Aumentado tamaño de fuente */
+}
+
+.modal-content .form-group input[type="text"],
+.modal-content .form-group input[type="number"],
+.modal-content .form-group input[type="date"],
+.modal-content .form-group input[type="time"],
+.modal-content .form-group select,
+.modal-content .form-group textarea {
+    width: 100%;
+    padding: var(--space-md); /* Aumentado padding */
+    border: 1px solid var(--card-border); /* Usar card-border para consistencia */
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-md);
+    color: var(--text-color);
+    background-color: var(--input-bg);
+    box-sizing: border-box;
+}
+
+.modal-content .form-group textarea {
+    resize: vertical;
+}
+
+.modal-content .form-row {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.modal-content .form-row .form-group {
+    flex: 1;
+    margin-bottom: 0; /* Eliminar margen inferior si es parte de un form-row */
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+}
+
+.modal-actions.justify-center {
+    justify-content: center;
+}
+
+.modal-actions.justify-start {
+    justify-content: flex-start;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Estilos específicos para contenido dentro de modales */
+.report-content,
+.certificate-content,
+.results-content,
+.map-placeholder,
+.calendar-view-placeholder,
+.medical-centers-list {
+    background-color: var(--color-light);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-top: var(--space-md);
+    border: 1px solid var(--card-border); /* Usar card-border para consistencia */
+    color: var(--gray-dark);
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    line-height: 1.6; /* Aumentado line-height */
+}
+
+.medical-centers-list {
+    list-style: none; /* Eliminar viñetas por defecto */
+    padding: 0;
+}
+
+.medical-centers-list li {
+    margin-bottom: var(--space-xs);
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px dashed var(--color-gray-light);
+}
+
+.medical-centers-list li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.map-placeholder,
+.calendar-view-placeholder {
+    min-height: 250px; /* Aumentado espacio para el contenido visual */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-size-lg); /* Aumentado tamaño de fuente */
+    color: var(--gray-medium);
+}
+
+/* New style for iframe within modals */
+.modal-content .modal-map-frame {
+    width: 100%;
+    height: 350px; /* Fixed height for the map, increased */
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+/* FullCalendar specific styles */
+#fullCalendar {
+    max-width: 100%;
+    margin: 0 auto;
+    font-size: var(--font-size-md); /* Adjust font size for calendar */
+    height: 450px; /* Set a fixed height for the calendar, increased */
+}
+
+/* Responsividad general */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column; /* Apila el sidebar y el contenido principal verticalmente */
+    }
+
+    .main-content {
+        padding: var(--space-sm);
+        margin-left: 0; /* Anula el margin-left fijo en pantallas pequeñas */
+    }
+
+    /* El #sidebar-container no debe tener estilos de layout aquí. */
+    /* Sus estilos responsivos deben venir de sidebar/sidebar.css. */
+
+    .sidebar-header {
+        padding: 0;
+        margin-right: var(--space-sm);
+        border-bottom: none;
+        background: transparent;
+        border-radius: 0;
+    }
+
+    .app-title {
+        font-size: 1.4rem; /* Ajustado para móviles, coincidiendo con sidebar.css */
+    }
+
+    .appointment-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        min-width: 100%;
+    }
+
+    .appointments-grid {
+        grid-template-columns: 1fr; /* Una columna en móviles */
+    }
+
+    .appointment-card .card-actions {
+        flex-direction: column; /* Botones apilados en móviles */
+        align-items: stretch;
+    }
+
+    .appointment-card .card-actions button {
+        width: 100%;
+    }
+
+    .history-table-container {
+        padding: var(--space-sm);
+    }
+
+    /* Responsividad de la tabla del historial - "card-like" view */
+    .history-table, .history-table thead, .history-table tbody, .history-table th, .history-table td, .history-table tr {
+        display: block;
+    }
+
+    .history-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .history-table tr {
+        border: 1px solid var(--card-border); /* Usar card-border para consistencia */
+        margin-bottom: var(--space-md);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .history-table td {
+        border: none;
+        border-bottom: 1px solid var(--color-gray-light);
+        position: relative;
+        padding-left: 50%; /* Espacio para la etiqueta */
+        text-align: right;
+    }
+
+    .history-table td:last-child {
+        border-bottom: none;
+    }
+
+    .history-table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 45%;
+        padding-left: var(--space-sm);
+        font-weight: 600;
+        color: var(--primary-dark);
+        text-align: left;
+    }
+
+    .history-table .actions-cell {
+        text-align: center;
+        padding-left: 0;
+        display: flex;
+        justify-content: center;
+        gap: var(--space-xs);
+        padding-top: var(--space-sm);
+        padding-bottom: var(--space-sm);
+    }
+
+    .history-table .actions-cell:before {
+        display: none;
+    }
+
+    .actions-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .actions-bar button {
+        width: 100%;
+    }
+
+    /* Modales responsivos */
+    .modal-content {
+        padding: var(--space-lg);
+    }
+
+    .modal-content .form-row {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .modal-actions button {
+        width: 100%;
+    }
+}
+
+/* Media query para pantallas aún más pequeñas (ej., móviles muy pequeños) */
+@media (max-width: 576px) {
+    .sidebar-header {
+        margin-right: 10px;
+    }
+    .app-title {
+        font-size: 1.2rem;
+    }
+    .sidebar-menu li a {
+        padding: 8px 10px; /* Increased padding */
+        font-size: 0.9rem; /* Increased font size */
+    }
+    .sidebar-menu li a i {
+        font-size: 1.1rem; /* Increased icon size */
+        margin-bottom: 4px; /* Adjusted margin */
+    }
+    .sidebar-menu li a span {
+        font-size: 0.85rem; /* Increased font size */
+    }
+}

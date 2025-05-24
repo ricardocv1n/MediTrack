@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTrack - Emergencia</title>
+    <link rel="stylesheet" href="sidebar/sidebar.css">
+    <link rel="stylesheet" href="Estilos/emergencia.css">
+        <link rel="stylesheet" href="medibot/medibot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    
+    <style>
+        /* Estilos temporales para el mapa */
+        #map { height: 350px; } /* Ajustado para coincidir con la altura en otras páginas */
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+        
+        <main class="main-content">
+            <div class="header">
+                <div class="breadcrumbs">
+                    <a href="Inicio.html">Inicio</a> <i class="fas fa-chevron-right"></i> <span>Emergencia</span>
+                </div>
+                <h1>Modo Emergencia</h1>
+                <p class="subtitle">Acceso rápido a servicios de emergencia y contactos de apoyo. Tu seguridad es lo primero.</p>
+            </div>
+
+            <div class="emergency-alert">
+                <div class="alert-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <h3>¿Estás en una situación de emergencia?</h3>
+                        <p>Activa el botón rojo para alertar a tus contactos y servicios de emergencia.</p>
+                    </div>
+                    <button class="emergency-button" id="activate-emergency">
+                        <i class="fas fa-bell"></i> Activar Emergencia
+                    </button>
+                </div>
+            </div>
+
+            <section class="emergency-actions">
+                <h2>Acciones inmediatas</h2>
+                <div class="actions-grid">
+                    <div class="action-card call-emergency">
+                        <div class="card-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h3>Llamar a Emergencias (123)</h3>
+                        <p>Línea única nacional de emergencias en Colombia.</p>
+                        <button class="primary-button full-width">
+                            <i class="fas fa-phone"></i> Llamar ahora
+                        </button>
+                    </div>
+
+                    <div class="action-card alert-contacts">
+                        <div class="card-icon">
+                            <i class="fas fa-sms"></i>
+                        </div>
+                        <h3>Alerta a contactos</h3>
+                        <p>Envía tu ubicación y mensaje personalizado.</p>
+                        <button class="primary-button full-width" id="send-alert">
+                            <i class="fas fa-paper-plane"></i> Enviar alerta
+                        </button>
+                    </div>
+
+                    <div class="action-card medical-info">
+                        <div class="card-icon">
+                            <i class="fas fa-file-medical"></i>
+                        </div>
+                        <h3>Información médica</h3>
+                        <p>Comparte tus datos críticos con personal de emergencia.</p>
+                        <button class="secondary-button full-width" id="show-medical-info">
+                            <i class="fas fa-eye"></i> Ver información
+                        </button>
+                    </div>
+
+                    <div class="action-card first-aid">
+                        <div class="card-icon">
+                            <i class="fas fa-first-aid"></i>
+                        </div>
+                        <h3>Primeros auxilios</h3>
+                        <p>Guías básicas para situaciones de emergencia.</p>
+                        <button class="secondary-button full-width" id="show-first-aid">
+                            <i class="fas fa-book-medical"></i> Ver guía
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="emergency-contacts-section">
+                <div class="section-header">
+                    <h2>Contactos de emergencia</h2>
+                    <button class="secondary-button small" id="edit-contacts">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+                </div>
+                
+                <div class="contacts-grid">
+                    <div class="contact-card primary-contact">
+                        <div class="contact-header">
+                            <i class="fas fa-star"></i>
+                            <h4>Contacto principal</h4>
+                        </div>
+                        <div class="contact-body">
+                            <img src="https://placehold.co/72x72/b2dfdb/00796b?text=Ana" alt="Ana María Rodríguez" class="contact-avatar">
+                            <div class="contact-details">
+                                <h3>Ana María Rodríguez</h3>
+                                <p class="relation">Hermana</p>
+                                <p class="phone">+57 310 123 4567</p>
+                            </div>
+                        </div>
+                        <div class="contact-actions">
+                            <button class="icon-button call-button" title="Llamar">
+                                <i class="fas fa-phone"></i>
+                            </button>
+                            <button class="icon-button message-button" title="Mensaje">
+                                <i class="fas fa-sms"></i>
+                            </button>
+                            <button class="icon-button location-button" title="Enviar ubicación">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="contact-card secondary-contact">
+                        <div class="contact-header">
+                            <h4>Contacto secundario</h4>
+                        </div>
+                        <div class="contact-body">
+                            <img src="https://placehold.co/72x72/80cbc4/333333?text=Juan" alt="Juan Carlos Gómez" class="contact-avatar">
+                            <div class="contact-details">
+                                <h3>Juan Carlos Gómez</h3>
+                                <p class="relation">Amigo Cercano</p>
+                                <p class="phone">+57 300 987 6543</p>
+                            </div>
+                        </div>
+                        <div class="contact-actions">
+                            <button class="icon-button call-button" title="Llamar">
+                                <i class="fas fa-phone"></i>
+                            </button>
+                            <button class="icon-button message-button" title="Mensaje">
+                                <i class="fas fa-sms"></i>
+                            </button>
+                            <button class="icon-button location-button" title="Enviar ubicación">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="emergency-location">
+                <div class="section-header">
+                    <h2>Mi ubicación</h2>
+                    <button class="secondary-button small" id="refresh-location">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+                <div class="location-container">
+                    <div id="map"></div>
+                    <div class="location-details">
+                        <p><i class="fas fa-map-marker-alt"></i> <strong>Última ubicación conocida:</strong></p>
+                        <p>Carrera 4 # 30-50, Centro, Montería, Córdoba, Colombia</p>
+                        <p class="timestamp"><i class="fas fa-clock"></i> Actualizado hace 5 minutos</p>
+                        <button class="secondary-button full-width" id="share-location">
+                            <i class="fas fa-share-alt"></i> Compartir ubicación
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="emergency-message">
+                <h2>Mensaje de emergencia</h2>
+                <div class="message-editor">
+                    <label for="emergency-message-text">Personaliza el mensaje que se enviará a tus contactos:</label>
+                    <textarea id="emergency-message-text">¡Necesito ayuda urgente! Mi ubicación actual es: [ubicación]. Mis datos médicos importantes: [datos médicos]. Por favor, contacta conmigo o con los servicios de emergencia.</textarea>
+                    <div class="message-variables">
+                        <span class="variable-tag" data-variable="ubicación">Insertar ubicación</span>
+                        <span class="variable-tag" data-variable="datos médicos">Insertar datos médicos</span>
+                        <span class="variable-tag" data-variable="contacto">Insertar contacto de emergencia</span>
+                    </div>
+                    <button class="primary-button full-width" id="save-message">
+                        <i class="fas fa-save"></i> Guardar mensaje
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal" id="emergency-modal">
+        <div class="modal-content emergency-modal">
+            <span class="close-modal" data-modal-id="emergency-modal">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Confirmar emergencia</h3>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro que deseas activar el modo emergencia? Se notificará a tus contactos y se compartirá tu ubicación.</p>
+                <div class="emergency-countdown">
+                    <p>El modo emergencia se activará en: <span id="countdown">5</span> segundos</p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="secondary-button" id="cancel-emergency">Cancelar</button>
+                <button class="danger-button" id="confirm-emergency">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="medical-info-modal">
+        <div class="modal-content">
+            <span class="close-modal" data-modal-id="medical-info-modal">&times;</span>
+            <h3><i class="fas fa-file-medical"></i> Información médica crítica</h3>
+            <div class="medical-info-content">
+                <div class="info-section">
+                    <h4>Datos personales</h4>
+                    <p><strong>Nombre:</strong> María Fernanda Pérez</p>
+                    <p><strong>Edad:</strong> 42 años</p>
+                    <p><strong>Tipo de sangre:</strong> A+</p>
+                    <p><strong>Alergias:</strong> Penicilina, AINEs (antiinflamatorios no esteroideos)</p>
+                </div>
+                
+                <div class="info-section">
+                    <h4>Condiciones médicas crónicas</h4>
+                    <ul>
+                        <li>Diabetes Mellitus Tipo 2 (controlada con medicación)</li>
+                        <li>Hipertensión Arterial Esencial (controlada con medicación)</li>
+                        <li>Asma (leve, uso de inhalador de rescate ocasional)</li>
+                    </ul>
+                </div>
+                
+                <div class="info-section">
+                    <h4>Medicación actual</h4>
+                    <ul>
+                        <li>Metformina 850mg - 1 comprimido cada 12 horas (para diabetes)</li>
+                        <li>Losartán 50mg - 1 comprimido al día (para hipertensión)</li>
+                        <li>Salbutamol (inhalador de rescate) - según necesidad</li>
+                    </ul>
+                </div>
+                
+                <div class="info-section">
+                    <h4>Contacto médico principal</h4>
+                    <p><strong>Dr. Carlos Restrepo (Médico General):</strong> +57 301 234 5678</p>
+                    <p><strong>Clínica de Preferencia:</strong> Clínica Zayma, Montería</p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="secondary-button" id="print-medical-info">
+                    <i class="fas fa-print"></i> Imprimir
+                </button>
+                <button class="primary-button" id="share-medical-info">
+                    <i class="fas fa-share-alt"></i> Compartir
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="first-aid-modal">
+        <div class="modal-content">
+            <span class="close-modal" data-modal-id="first-aid-modal">&times;</span>
+            <h3><i class="fas fa-first-aid"></i> Guía de Primeros Auxilios</h3>
+            <div class="first-aid-content">
+                <ol>
+                    <li><strong>Evalúa la situación:</strong> Asegúrate de que el área sea segura antes de acercarte.</li>
+                    <li><strong>Llama al 123</strong> si es necesario.</li>
+                    <li><strong>Comprueba la conciencia:</strong> Habla con la persona y verifica si responde.</li>
+                    <li><strong>Verifica la respiración:</strong> Si no respira, inicia RCP si sabes cómo hacerlo.</li>
+                    <li><strong>Controla hemorragias:</strong> Aplica presión directa sobre la herida con un paño limpio.</li>
+                    <li><strong>No muevas a la persona</strong> si sospechas lesión en la cabeza, cuello o columna.</li>
+                    <li><strong>Permanece con la persona</strong> hasta que llegue ayuda profesional.</li>
+                </ol>
+                <p>Esta guía es solo informativa. Ante cualquier duda, contacta siempre con los servicios de emergencia.</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="secondary-button close-modal-btn" data-modal-id="first-aid-modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cargar el sidebar
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('sidebar/sidebar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('sidebar-container').innerHTML = data;
+                    
+                    // Marcar como activo el elemento del menú correspondiente
+                    const currentPage = window.location.pathname.split('/').pop() || 'Inicio.html';
+                    document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                        if (link.getAttribute('href') === currentPage) {
+                            link.parentElement.classList.add('active');
+                        }
+                    });
+                })
+                .catch(error => console.error('Error loading sidebar:', error));
+
+            // Scripts para los modales (ejemplo básico)
+            document.getElementById('show-medical-info')?.addEventListener('click', function() {
+                document.getElementById('medical-info-modal').classList.add('active');
+                document.getElementById('medical-info-modal').setAttribute('aria-hidden', 'false');
+            });
+
+            document.getElementById('show-first-aid')?.addEventListener('click', function() {
+                document.getElementById('first-aid-modal').classList.add('active');
+                document.getElementById('first-aid-modal').setAttribute('aria-hidden', 'false');
+            });
+
+            // Manejar el cierre de modales con el botón 'x' y data-modal-id
+            document.querySelectorAll('.close-modal').forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal-id');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.remove('active');
+                        modal.setAttribute('aria-hidden', 'true');
+                    }
+                });
+            });
+
+            // Inicializar mapa (ejemplo básico con coordenadas de Montería)
+            if (document.getElementById('map')) {
+                // Coordenadas de Montería, Colombia (aproximadamente el centro)
+                const monteriaCoords = [8.759902, -75.8821946];
+                const map = L.map('map').setView(monteriaCoords, 13); 
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+                
+                L.marker(monteriaCoords).addTo(map)
+                    .bindPopup('Ubicación actual en Montería')
+                    .openPopup();
+            }
+
+            // Función para activar el modo emergencia
+            document.getElementById('activate-emergency').addEventListener('click', function() {
+                document.getElementById('emergency-modal').classList.add('active');
+                document.getElementById('emergency-modal').setAttribute('aria-hidden', 'false');
+                let countdown = 5;
+                const countdownElement = document.getElementById('countdown');
+                const interval = setInterval(() => {
+                    countdown--;
+                    countdownElement.textContent = countdown;
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        alert('Modo emergencia activado. Alerta enviada a tus contactos.'); // Usar alert solo para demostración
+                        document.getElementById('emergency-modal').classList.remove('active');
+                        document.getElementById('emergency-modal').setAttribute('aria-hidden', 'true');
+                    }
+                }, 1000);
+            });
+
+            // Función para cancelar el modo emergencia
+            document.getElementById('cancel-emergency')?.addEventListener('click', function() {
+                document.getElementById('emergency-modal').classList.remove('active');
+                document.getElementById('emergency-modal').setAttribute('aria-hidden', 'true');
+                // Aquí podrías detener el contador si estuviera activo
+            });
+
+            // Función para enviar alerta a contactos (ejemplo)
+            document.getElementById('send-alert')?.addEventListener('click', function() {
+                alert('Alerta de emergencia enviada a tus contactos.'); // Usar alert solo para demostración
+            });
+
+            // Función para compartir ubicación (ejemplo)
+            document.getElementById('share-location')?.addEventListener('click', function() {
+                alert('Ubicación compartida con tus contactos.'); // Usar alert solo para demostración
+            });
+
+            // Función para imprimir información médica (ejemplo)
+            document.getElementById('print-medical-info')?.addEventListener('click', function() {
+                window.print();
+            });
+
+            // Función para editar contactos (ejemplo)
+            document.getElementById('edit-contacts')?.addEventListener('click', function() {
+                alert('Función de edición de contactos no implementada. Esto abriría un modal/página para editar.'); // Usar alert solo para demostración
+            });
+
+            // Función para refrescar ubicación (ejemplo)
+            document.getElementById('refresh-location')?.addEventListener('click', function() {
+                alert('Ubicación actualizada.'); // Usar alert solo para demostración
+            });
+
+            // Función para guardar mensaje de emergencia (ejemplo)
+            document.getElementById('save-message')?.addEventListener('click', function() {
+                const message = document.getElementById('emergency-message-text').value;
+                alert('Mensaje de emergencia guardado: ' + message); // Usar alert solo para demostración
+            });
+
+            // Función para insertar variables en el mensaje
+            document.querySelectorAll('.variable-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    const variable = this.getAttribute('data-variable');
+                    const messageBox = document.getElementById('emergency-message-text');
+                    messageBox.value += ' [' + variable + '] ';
+                });
+            });
+        });
+    </script>
+    
+    <div class="medibot-toggle" id="medibotToggle" role="button" aria-expanded="false" aria-controls="medibotContainer">
+        <i class="fa-solid fa-user-doctor"></i>
+        <span class="notification-badge hidden" id="notificationBadge" aria-live="polite" aria-atomic="true">1</span>
+    </div>
+
+    <div class="medibot-container" id="medibotContainer" aria-live="polite" aria-atomic="true" role="dialog" aria-labelledby="medibotHeaderTitle">
+        <div class="medibot-header" id="medibotHeader">
+            <div class="header-content">
+                <i class="fas fa-robot"></i>
+                <h2 id="medibotHeaderTitle">MediBot</h2>
+                <span class="connection-status">
+                    <i class="fas fa-circle online-status" aria-hidden="true"></i>
+                    Online
+                </span>
+            </div>
+            <div class="header-controls">
+                <button class="control-btn" id="medibotMinimize" aria-label="Minimizar chatbot">
+                    <i class="fas fa-minus" aria-hidden="true"></i>
+                </button>
+                <button class="control-btn" id="medibotClose" aria-label="Cerrar chatbot">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="medibot-messages" id="medibotMessages" role="log" aria-live="polite"></div>
+
+        <div class="medibot-quick-actions" id="medibotQuickActions" role="group" aria-label="Acciones rápidas del chatbot"></div>
+
+        <div class="medibot-input-area">
+            <input type="text" class="medibot-input" id="medibotInput" placeholder="Escribe tu mensaje..." aria-label="Escribe tu mensaje">
+            <button class="voice-btn" id="medibotVoiceInput" aria-label="Entrada de voz">
+                <i class="fas fa-microphone" aria-hidden="true"></i>
+            </button>
+            <button class="send-btn" id="medibotSend" aria-label="Enviar mensaje">
+                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <script src="medibot/medibot.js"></script>
+</body>
+</html>

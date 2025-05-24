@@ -1,0 +1,582 @@
+/* Estilos generales para la página de Recordatorios Extra */
+:root {
+    /* Colores */
+    --color-primary: #26a69a;
+    --color-primary-dark: #00796b;
+    --color-primary-light: #b2dfdb;
+    --color-secondary: #80cbc4;
+    --color-accent: #4db6ac;
+    --color-light: #f5f5f5;
+    --color-dark: #333333;
+    --color-gray-light: #e0e0e0;
+    --color-gray-medium: #9e9e9e;
+    --color-gray-dark: #616161;
+    --color-success: #81c784;
+    --color-warning: #ffb74d;
+    --color-danger: #e57373;
+    --color-info: #64b5f6;
+    --color-emergency: #f44336;
+
+    /* Sombras */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.1);
+    --shadow-emphasis: 0 0 0 3px rgba(38, 166, 154, 0.3);
+
+    /* Transiciones */
+    --transition-fast: 120ms ease;
+    --transition-medium: 240ms ease;
+    --transition-slow: 360ms ease;
+
+    /* Bordes redondeados */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    /* Espaciado (Aumentado para coincidir con inicio.css) */
+    --space-xxs: 0.35rem;
+    --space-xs: 0.7rem;
+    --space-sm: 1rem;
+    --space-md: 1.3rem;
+    --space-lg: 2rem;
+    --space-xl: 2.6rem;
+    --space-xxl: 4rem;
+
+    /* Tipografía (Aumentado para coincidir con inicio.css) */
+    --font-base: 'Poppins', system-ui, -apple-system, sans-serif;
+    --font-size-xs: 0.9rem;
+    --font-size-sm: 1.1rem;
+    --font-size-md: 1.25rem;
+    --font-size-lg: 1.4rem;
+    --font-size-xl: 1.6rem;
+    --font-size-xxl: 1.9rem;
+    --font-size-xxxl: 2.6rem;
+
+    /* Z-index (Ajustado para coincidir con inicio.css) */
+    --z-base: 1;
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-modal: 1000;
+    --z-overlay: 1050;
+}
+
+body {
+    font-family: var(--font-base); /* Usar la nueva variable */
+    margin: 0;
+    padding: 0;
+    background-color: #f5fbfa; /* Usar el color de fondo consistente */
+    color: var(--color-dark); /* Usar el color de texto consistente */
+    display: flex;
+    line-height: 1.6; /* Consistente con otras páginas */
+}
+
+.app-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh; /* Asegurar que ocupe toda la altura */
+}
+
+/* Sidebar - Mantener los estilos del sidebar de su archivo original si es posible,
+   pero ajustar las variables de tamaño y color si se usan. */
+.sidebar {
+    background-color: var(--color-dark); /* Usar una variable de color si es posible */
+    color: var(--color-light); /* Usar una variable de color si es posible */
+    width: 250px; /* Ancho fijo del sidebar */
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    z-index: var(--z-sticky); /* Usar variable */
+}
+
+.sidebar-header {
+    padding: var(--space-md); /* Actualizado */
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-title {
+    font-size: var(--font-size-xl); /* Actualizado */
+    font-weight: bold;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li a {
+    display: block;
+    padding: var(--space-md) var(--space-lg); /* Actualizado */
+    text-decoration: none;
+    color: var(--color-light); /* Usar una variable de color si es posible */
+    transition: background-color var(--transition-fast); /* Usar variable */
+    font-size: var(--font-size-md); /* Actualizado */
+}
+
+.sidebar-menu li a:hover {
+    background-color: rgba(var(--color-primary), 0.1); /* Usar rgba directamente */
+}
+
+.sidebar-menu li a i {
+    margin-right: var(--space-sm); /* Actualizado */
+    font-size: var(--font-size-lg); /* Actualizado */
+}
+
+.sidebar-menu li.active a {
+    background-color: var(--color-primary); /* Usar variable */
+    color: var(--color-light);
+}
+
+.sidebar-footer {
+    padding: var(--space-md); /* Actualizado */
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 48px; /* Aumentado tamaño */
+    height: 48px; /* Aumentado tamaño */
+    border-radius: var(--radius-full); /* Actualizado */
+    margin-right: var(--space-sm); /* Actualizado */
+}
+
+.user-details span {
+    display: block;
+    font-size: var(--font-size-sm); /* Actualizado */
+}
+
+.user-name {
+    font-weight: bold;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: var(--space-lg); /* Actualizado */
+    margin-left: 250px; /* Ajustar al ancho fijo del sidebar */
+    transition: margin-left var(--transition-medium); /* Usar variable */
+    background-color: #f5fbfa; /* Consistente con el body */
+}
+
+/* Estilos específicos para la página de Recordatorios Extra */
+.extra-reminders-content .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg); /* Actualizado */
+    padding-bottom: var(--space-sm); /* Actualizado */
+    border-bottom: 1px solid var(--color-gray-light); /* Usar variable */
+}
+
+.extra-reminders-content .breadcrumbs {
+    font-size: var(--font-size-sm); /* Actualizado */
+    color: var(--color-gray-medium); /* Usar variable */
+}
+
+.extra-reminders-content .breadcrumbs a {
+    color: var(--color-info); /* Usar variable */
+    text-decoration: none;
+}
+
+.extra-reminders-content .breadcrumbs i {
+    margin: 0 var(--space-xs); /* Actualizado */
+}
+
+.extra-reminders-content h1 {
+    margin: 0;
+    font-size: var(--font-size-xxl); /* Actualizado */
+    color: var(--color-primary-dark); /* Consistente */
+}
+
+.extra-reminders-content p {
+    color: var(--color-gray-dark); /* Usar variable */
+    font-size: var(--font-size-md); /* Actualizado */
+}
+
+.active-reminders h2,
+.add-new-reminder h2 {
+    margin-top: var(--space-lg); /* Actualizado */
+    margin-bottom: var(--space-md); /* Actualizado */
+    color: var(--color-dark); /* Usar variable */
+    border-bottom: 2px solid var(--color-gray-light); /* Usar variable */
+    padding-bottom: var(--space-sm); /* Actualizado */
+    font-size: var(--font-size-xl); /* Actualizado */
+}
+
+.reminders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Aumentado min-width */
+    gap: var(--space-md); /* Actualizado */
+    margin-bottom: var(--space-lg); /* Actualizado */
+}
+
+.reminder-card {
+    background-color: var(--color-light); /* Usar variable */
+    border: 1px solid var(--color-gray-light); /* Usar variable */
+    border-radius: var(--radius-md); /* Actualizado */
+    padding: var(--space-lg); /* Actualizado */
+    box-shadow: var(--shadow-sm); /* Usar variable */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.reminder-card i {
+    font-size: var(--font-size-xxl); /* Actualizado */
+    color: var(--color-info); /* Usar variable */
+    margin-bottom: var(--space-sm); /* Actualizado */
+}
+
+.reminder-card h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-xs); /* Actualizado */
+    color: var(--color-dark); /* Usar variable */
+    font-size: var(--font-size-lg); /* Actualizado */
+}
+
+.reminder-card p {
+    color: var(--color-gray-dark); /* Usar variable */
+    font-size: var(--font-size-md); /* Actualizado */
+    margin-bottom: var(--space-md); /* Actualizado */
+}
+
+.reminder-actions {
+    display: flex;
+    gap: var(--space-xs); /* Actualizado */
+    margin-top: auto;
+}
+
+/* Botones (reutilizados y adaptados de inicio.css) */
+.primary-button,
+.secondary-button,
+.danger-button {
+    padding: var(--space-md) var(--space-lg); /* Aumentado padding */
+    border: none;
+    border-radius: var(--radius-md); /* Actualizado */
+    color: white; /* Por defecto para primary/danger, secondary lo sobrescribe */
+    cursor: pointer;
+    font-size: var(--font-size-md); /* Actualizado */
+    transition: all var(--transition-fast); /* Usar variable */
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+}
+
+.primary-button {
+    background-color: var(--color-primary); /* Usar variable */
+    box-shadow: var(--shadow-sm);
+}
+
+.primary-button:hover {
+    background-color: var(--color-primary-dark); /* Usar variable */
+    box-shadow: var(--shadow-md);
+}
+
+.primary-button:focus {
+    box-shadow: var(--shadow-emphasis);
+}
+
+.secondary-button {
+    background-color: white;
+    color: var(--color-primary); /* Usar variable */
+    border: 1px solid var(--color-primary); /* Usar variable */
+}
+
+.secondary-button:hover {
+    background-color: rgba(var(--color-primary), 0.1); /* Usar rgba directamente */
+}
+
+.secondary-button:focus {
+    box-shadow: var(--shadow-emphasis);
+}
+
+.danger-button {
+    background-color: var(--color-danger); /* Usar variable */
+    box-shadow: var(--shadow-sm);
+}
+
+.danger-button:hover {
+    background-color: #d32f2f; /* Tono más oscuro de danger */
+    box-shadow: var(--shadow-md);
+}
+
+.danger-button:focus {
+    box-shadow: 0 0 0 3px rgba(229, 115, 115, 0.3);
+}
+
+.primary-button.small,
+.secondary-button.small,
+.danger-button.small {
+    padding: var(--space-sm) var(--space-md); /* Actualizado */
+    font-size: var(--font-size-sm); /* Actualizado */
+}
+
+.add-new-reminder .form-group {
+    margin-bottom: var(--space-md); /* Actualizado */
+}
+
+.add-new-reminder label {
+    display: block;
+    margin-bottom: var(--space-xs); /* Actualizado */
+    color: var(--color-dark); /* Usar variable */
+    font-size: var(--font-size-md); /* Actualizado */
+    font-weight: bold;
+}
+
+.add-new-reminder input[type="text"],
+.add-new-reminder input[type="time"],
+.add-new-reminder textarea {
+    width: 100%;
+    padding: var(--space-md); /* Actualizado */
+    border: 1px solid var(--color-gray-light); /* Usar variable */
+    border-radius: var(--radius-md); /* Actualizado */
+    font-size: var(--font-size-md); /* Actualizado */
+    box-sizing: border-box;
+    font-family: var(--font-base); /* Usar la nueva variable */
+}
+
+.add-new-reminder textarea {
+    resize: vertical;
+    min-height: 100px; /* Aumentado min-height */
+}
+
+/* Estilos para Modales (reutilizados y adaptados de inicio.css) */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: var(--z-modal); /* Usar variable */
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: white; /* Usar color consistente */
+    border-radius: var(--radius-md); /* Actualizado */
+    box-shadow: var(--shadow-lg); /* Usar variable */
+    width: 90%;
+    max-width: 600px; /* Aumentado max-width */
+    overflow: hidden;
+    padding: var(--space-xl); /* Aumentado padding */
+}
+
+.modal-header {
+    padding: var(--space-md) var(--space-lg); /* Actualizado */
+    background-color: var(--color-light); /* Usar color consistente */
+    border-bottom: 1px solid var(--color-gray-light); /* Usar variable */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: var(--color-dark); /* Usar variable */
+    font-size: var(--font-size-xl); /* Actualizado */
+    display: flex;
+    align-items: center;
+}
+
+.modal-header h3 i {
+    margin-right: var(--space-sm); /* Actualizado */
+    font-size: var(--font-size-lg); /* Actualizado */
+    color: var(--color-primary); /* Consistente */
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: var(--color-gray-medium); /* Usar variable */
+    font-size: var(--font-size-xl); /* Actualizado */
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--transition-fast); /* Usar variable */
+    padding: 0;
+    line-height: 1;
+}
+
+.close-modal:hover {
+    opacity: 1;
+    color: var(--color-danger); /* Consistente */
+}
+
+.modal-body {
+    padding: var(--space-lg); /* Actualizado */
+}
+
+.modal-body .form-group {
+    margin-bottom: var(--space-md); /* Actualizado */
+}
+
+.modal-body label {
+    display: block;
+    margin-bottom: var(--space-xs); /* Actualizado */
+    color: var(--color-dark); /* Usar variable */
+    font-size: var(--font-size-md); /* Actualizado */
+    font-weight: bold;
+}
+
+.modal-body input[type="text"],
+.modal-body input[type="time"],
+.modal-body textarea,
+.modal-body input[type="hidden"] {
+    width: 100%;
+    padding: var(--space-md); /* Actualizado */
+    border: 1px solid var(--color-gray-light); /* Usar variable */
+    border-radius: var(--radius-md); /* Actualizado */
+    font-size: var(--font-size-md); /* Actualizado */
+    box-sizing: border-box;
+    font-family: var(--font-base); /* Usar la nueva variable */
+}
+
+.modal-body textarea {
+    resize: vertical;
+    min-height: 100px; /* Aumentado min-height */
+}
+
+.modal-footer {
+    padding: var(--space-md) var(--space-lg); /* Actualizado */
+    background-color: var(--color-light); /* Usar color consistente */
+    border-top: 1px solid var(--color-gray-light); /* Usar variable */
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm); /* Actualizado */
+}
+
+/* Estilos para Notificaciones (reutilizados y adaptados de inicio.css) */
+.notification-container {
+    position: fixed;
+    top: var(--space-md); /* Actualizado */
+    right: var(--space-md); /* Actualizado */
+    z-index: var(--z-overlay); /* Usar variable */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-sm); /* Actualizado */
+    max-width: 400px; /* Aumentado max-width */
+}
+
+.notification {
+    background-color: white; /* Usar color consistente */
+    border-radius: var(--radius-md); /* Actualizado */
+    box-shadow: var(--shadow-md); /* Usar variable */
+    padding: var(--space-md) var(--space-lg); /* Actualizado */
+    color: var(--color-dark); /* Usar variable */
+    font-size: var(--font-size-md); /* Actualizado */
+    opacity: 0;
+    transform: translateX(30px);
+    animation: slideIn var(--transition-medium) ease-out forwards, slideOut var(--transition-medium) ease-in forwards 3s; /* Usar variables */
+}
+
+.notification.success {
+    background-color: rgba(var(--color-success), 0.1); /* Usar rgba directamente */
+    border-left: 5px solid var(--color-success); /* Usar variable */
+}
+
+.notification.error {
+    background-color: rgba(var(--color-danger), 0.1); /* Usar rgba directamente */
+    border-left: 5px solid var(--color-danger); /* Usar variable */
+}
+
+.notification.warning {
+    background-color: rgba(var(--color-warning), 0.1); /* Usar rgba directamente */
+    border-left: 5px solid var(--color-warning); /* Usar variable */
+}
+
+.notification.info {
+    background-color: rgba(var(--color-info), 0.1); /* Usar rgba directamente */
+    border-left: 5px solid var(--color-info); /* Usar variable */
+}
+
+.notification-message {
+    margin-bottom: var(--space-xxs); /* Actualizado */
+    font-weight: bold;
+}
+
+.notification-details {
+    opacity: 0.8;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+}
+
+/* Estilos para pantallas más pequeñas */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column; /* Apilar sidebar y contenido en pantallas pequeñas */
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static; /* El sidebar fluye con el contenido */
+        overflow-y: auto;
+        margin-bottom: var(--space-md); /* Actualizado */
+    }
+
+    .main-content {
+        margin-left: 0; /* El contenido ocupa todo el ancho */
+    }
+
+    .app-container {
+        flex-direction: column; /* Asegurar que el contenedor también se apile */
+    }
+
+    .reminders-grid {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+    }
+
+    .modal-content {
+        width: 95%;
+        max-width: none; /* Permitir que ocupe más ancho en móviles */
+    }
+
+    .modal-footer {
+        flex-direction: column;
+        gap: var(--space-sm); /* Actualizado */
+    }
+
+    .modal-footer .primary-button,
+    .modal-footer .secondary-button,
+    .modal-footer .danger-button {
+        width: 100%;
+    }
+}

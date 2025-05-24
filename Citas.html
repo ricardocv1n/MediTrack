@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTrack - Mis Citas</title>
+    <link rel="stylesheet" href="Estilos/Citas.css">
+    <link rel="stylesheet" href="sidebar/sidebar.css">
+        <link rel="stylesheet" href="medibot/medibot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content my-appointments-content">
+            <div class="header">
+                <div class="breadcrumbs">
+                    <a href="Inicio.html">Inicio</a> <i class="fas fa-chevron-right"></i> <span>Mis Citas</span>
+                </div>
+                <h1>Gestión de Citas Médicas</h1>
+            </div>
+
+            <section class="appointment-filters">
+                <div class="filter-group">
+                    <label for="filter-date">Filtrar por fecha:</label>
+                    <input type="text" id="filter-date" class="datepicker" placeholder="Selecciona fecha">
+                </div>
+                <div class="filter-group">
+                    <label for="filter-type">Filtrar por tipo:</label>
+                    <select id="filter-type">
+                        <option value="all">Todos los tipos</option>
+                        <option value="general">Consulta general</option>
+                        <option value="specialist">Especialista</option>
+                        <option value="test">Pruebas médicas</option>
+                        <option value="vaccine">Vacunación</option>
+                    </select>
+                </div>
+                <button class="secondary-button" id="reset-filters">
+                    <i class="fas fa-filter-circle-xmark"></i> Limpiar filtros
+                </button>
+            </section>
+
+            <section class="upcoming-appointments">
+                <div class="section-header">
+                    <h2>Próximas citas</h2>
+                    <button class="secondary-button small open-modal-btn" data-modal-id="modalVerCalendario" id="view-calendar">
+                        <i class="fas fa-calendar-days"></i> Ver calendario
+                    </button>
+                </div>
+                <div class="appointments-grid">
+                    <div class="appointment-card today" data-appointment-id="upcoming-0" data-appointment-type="Consulta cardiológica" data-appointment-location="Clínica Zayma, Consultorio 305" data-appointment-doctor="Dra. Sofía Restrepo (Cardióloga)" data-appointment-notes="Llevar resultados de electrocardiograma y análisis recientes.">
+                        <div class="card-header">
+                            <i class="fas fa-calendar-day"></i>
+                            <span class="badge urgent">Urgente</span>
+                        </div>
+                        <div class="card-body">
+                            <h3>Consulta cardiológica</h3>
+                            <p class="appointment-date-time" data-date="2025-05-23" data-time="14:30">Hoy, 14:30 - 15:15</p>
+                            <p class="appointment-location">Clínica Zayma, Consultorio 305, Montería</p>
+                            <p class="appointment-doctor">Dra. Sofía Restrepo (Cardióloga)</p>
+                            <div class="appointment-notes">
+                                <p>Llevar resultados de electrocardiograma y análisis recientes.</p>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="primary-button small confirm-btn">
+                                <i class="fas fa-check-circle"></i> Confirmar asistencia
+                            </button>
+                            <button class="secondary-button small open-modal-btn" data-modal-id="modalRecordatorioCita">
+                                <i class="fas fa-bell"></i> Recordatorio
+                            </button>
+                            <button class="secondary-button small open-modal-btn" data-modal-id="modalComoLlegar">
+                                <i class="fas fa-directions"></i> Cómo llegar
+                            </button>
+                            <button class="secondary-button small open-modal-btn" data-modal-id="modalReprogramarCita">
+                                <i class="fas fa-calendar-pen"></i> Reprogramar
+                            </button>
+                            <button class="danger-button small open-modal-btn" data-modal-id="modalCancelarCitaConfirmacion">
+                                <i class="fas fa-calendar-xmark"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="appointment-card tomorrow" data-appointment-id="upcoming-1" data-appointment-type="Análisis de sangre" data-appointment-location="Laboratorio Clínico Continental" data-appointment-doctor="Lic. Enfermería Juan David" data-appointment-notes="Ayunas de 8 horas. Presentarse 15 minutos antes.">
+                        <div class="card-header">
+                            <i class="fas fa-flask"></i>
+                            <span class="badge reminder">Recordatorio</span>
+                        </div>
+                        <div class="card-body">
+                            <h3>Análisis de sangre</h3>
+                            <p class="appointment-date-time" data-date="2025-05-24" data-time="09:00">Mañana, 09:00 - 09:30</p>
+                            <p class="appointment-location">Laboratorio Clínico Continental, Montería</p>
+                            <p class="appointment-doctor">Lic. Enfermería Juan David</p>
+                            <div class="appointment-notes">
+                                <p>Ayunas de 8 horas. Presentarse 15 minutos antes.</p>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="primary-button small confirm-btn">
+                                <i class="fas fa-check-circle"></i> Confirmar asistencia
+                            </button>
+                            <button class="secondary-button small open-modal-btn" data-modal-id="modalRecordatorioCita">
+                                <i class="fas fa-bell"></i> Recordatorio
+                            </button>
+                            <button class="secondary-button small open-modal-btn" data-modal-id="modalComoLlegar">
+                                <i class="fas fa-directions"></i> Cómo llegar
+                            </button>
+                            <button class="secondary-button small open-modal-btn" data-modal-id="modalReprogramarCita">
+                                <i class="fas fa-calendar-pen"></i> Reprogramar
+                            </button>
+                            <button class="danger-button small open-modal-btn" data-modal-id="modalCancelarCitaConfirmacion">
+                                <i class="fas fa-calendar-xmark"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="appointment-card next-week" data-appointment-id="upcoming-2" data-appointment-type="Revisión oftalmológica" data-appointment-location="Clínica Montería, Torre Médica" data-appointment-doctor="Dr. Andrés Felipe Rojas (Oftalmólogo)" data-appointment-notes="No usar lentes de contacto 24h antes.">
+                        <div class="card-header">
+                            <i class="fas fa-eye"></i>
+                            <span class="badge routine">Rutina</span>
+                        </div>
+                        <div class="card-body">
+                            <h3>Revisión oftalmológica</h3>
+                            <p class="appointment-date-time" data-date="2025-06-10" data-time="10:00">Mar 10/06, 10:00 - 10:45</p>
+                            <p class="appointment-location">Clínica Montería, Torre Médica, Montería</p>
+                            <p class="appointment-doctor">Dr. Andrés Felipe Rojas (Oftalmólogo)</p>
+                            <div class="appointment-notes">
+                                <p>No usar lentes de contacto 24h antes.</p>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="primary-button small confirm-btn">
+                                <i class="fas fa-check-circle"></i> Confirmar asistencia
+                            </button>
+                            <button class="secondary-button small open-modal-btn" data-modal-id="modalRecordatorioCita">
+                                <i class="fas fa-bell"></i> Recordatorio
+                            </button>
+                            <button class="secondary-button small open-modal-btn" data-modal-id="modalComoLlegar">
+                                <i class="fas fa-directions"></i> Cómo llegar
+                            </button>
+                            <button class="secondary-button small open-modal-btn" data-modal-id="modalReprogramarCita">
+                                <i class="fas fa-calendar-pen"></i> Reprogramar
+                            </button>
+                            <button class="danger-button small open-modal-btn" data-modal-id="modalCancelarCitaConfirmacion">
+                                <i class="fas fa-calendar-xmark"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="appointment-history">
+                <div class="section-header">
+                    <h2>Historial de citas</h2>
+                    <button class="secondary-button small open-modal-btn" data-modal-id="modalExportarHistorial" id="download-history">
+                        <i class="fas fa-file-export"></i> Exportar historial
+                    </button>
+                </div>
+                <div class="history-table-container">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Tipo</th>
+                                <th>Profesional</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-appointment-id="history-0" data-date="2024-06-05" data-type="Cardiólogo" data-professional="Dr. Ricardo Vélez" data-status="Completada" data-location="Clínica Zayma" data-notes="Revisión anual, todo en orden. Se recomienda seguimiento en 6 meses.">
+                                <td data-label="Fecha">05/06/2024</td>
+                                <td data-label="Tipo">Cardiólogo</td>
+                                <td data-label="Profesional">Dr. Ricardo Vélez</td>
+                                <td data-label="Estado"><span class="status completed">Completada</span></td>
+                                <td data-label="Acciones" class="actions-cell">
+                                    <button class="icon-button details-btn open-modal-btn" data-modal-id="modalDetallesCitaHistorial" title="Ver detalles">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                    <button class="icon-button report-btn open-modal-btn" data-modal-id="modalVerInforme" title="Ver informe">
+                                        <i class="fas fa-file-medical"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr data-appointment-id="history-1" data-date="2024-05-28" data-type="Vacunación" data-professional="Enfermera Laura M." data-status="Completada" data-location="Centro de Salud La Granja" data-notes="Vacuna antigripal aplicada. Sin reacciones adversas.">
+                                <td data-label="Fecha">28/05/2024</td>
+                                <td data-label="Tipo">Vacunación</td>
+                                <td data-label="Profesional">Enfermera Laura M.</td>
+                                <td data-label="Estado"><span class="status completed">Completada</span></td>
+                                <td data-label="Acciones" class="actions-cell">
+                                    <button class="icon-button details-btn open-modal-btn" data-modal-id="modalDetallesCitaHistorial" title="Ver detalles">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                    <button class="icon-button certificate-btn open-modal-btn" data-modal-id="modalVerCertificado" title="Certificado">
+                                        <i class="fas fa-certificate"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr data-appointment-id="history-2" data-date="2024-05-20" data-type="Consulta general" data-professional="Dra. Camila Soto" data-status="Cancelada" data-location="Clínica Salud Total" data-notes="Cancelada por indisposición del paciente. Se sugiere reprogramar.">
+                                <td data-label="Fecha">20/05/2024</td>
+                                <td data-label="Tipo">Consulta general</td>
+                                <td data-label="Profesional">Dra. Camila Soto</td>
+                                <td data-label="Estado"><span class="status canceled">Cancelada</span></td>
+                                <td data-label="Acciones" class="actions-cell">
+                                    <button class="icon-button details-btn open-modal-btn" data-modal-id="modalDetallesCitaHistorial" title="Ver detalles">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                    <button class="icon-button reschedule-btn open-modal-btn" data-modal-id="modalReprogramarCita" title="Reprogramar">
+                                        <i class="fas fa-calendar-plus"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr data-appointment-id="history-3" data-date="2024-05-15" data-type="Análisis de sangre" data-professional="Laboratorio Clínico Continental" data-status="Completada" data-location="Laboratorio Clínico Continental" data-notes="Resultados de perfil lipídico y glicemia enviados por correo.">
+                                <td data-label="Fecha">15/05/2024</td>
+                                <td data-label="Tipo">Análisis de sangre</td>
+                                <td data-label="Profesional">Laboratorio Clínico Continental</td>
+                                <td data-label="Estado"><span class="status completed">Completada</span></td>
+                                <td data-label="Acciones" class="actions-cell">
+                                    <button class="icon-button details-btn open-modal-btn" data-modal-id="modalDetallesCitaHistorial" title="Ver detalles">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                    <button class="icon-button results-btn open-modal-btn" data-modal-id="modalVerResults" title="Ver resultados">
+                                        <i class="fas fa-chart-line"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="quick-actions">
+                <h2>Acciones rápidas</h2>
+                <div class="actions-bar">
+                    <button class="primary-button open-modal-btn" data-modal-id="modalNuevaCita" id="new-appointment-btn">
+                        <i class="fas fa-calendar-plus"></i> Nueva cita
+                    </button>
+                    <button class="secondary-button open-modal-btn" data-modal-id="modalSincronizarCalendario" id="sync-calendar-btn">
+                        <i class="fas fa-calendar-arrow-down"></i> Sincronizar calendario
+                    </button>
+                    <button class="secondary-button open-modal-btn" data-modal-id="modalCentrosMedicos" id="medical-centers-btn">
+                        <i class="fas fa-hospital"></i> Centros médicos
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <div id="modalNuevaCita" class="modal" aria-hidden="true" aria-labelledby="modalNuevaCitaTitle">
+            <div class="modal-content">
+                <span class="close" data-modal-id="modalNuevaCita">×</span>
+                <h3 id="modalNuevaCitaTitle"><i class="fas fa-calendar-plus"></i> Agendar nueva cita</h3>
+
+                <form id="new-appointment-form">
+                    <div class="form-group">
+                        <label for="appointment-type">Tipo de cita:</label>
+                        <select id="appointment-type" required>
+                            <option value="">Selecciona un tipo</option>
+                            <option value="general">Consulta general</option>
+                            <option value="specialist">Especialista</option>
+                            <option value="test">Pruebas médicas</option>
+                            <option value="vaccine">Vacunación</option>
+                            <option value="followup">Seguimiento</option>
+                            <option value="other">Otro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="appointment-date">Fecha:</label>
+                            <input type="text" id="appointment-date" class="datepicker" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointment-time">Hora:</label>
+                            <input type="text" id="appointment-time" class="timepicker" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointment-location">Lugar:</label>
+                        <input type="text" id="appointment-location" placeholder="Nombre del centro médico" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointment-professional">Profesional (opcional):</label>
+                        <input type="text" id="appointment-professional" placeholder="Nombre del médico o especialista">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointment-notes">Notas adicionales:</label>
+                        <textarea id="appointment-notes" rows="3" placeholder="Motivo de la consulta, preparación requerida, etc."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalNuevaCita">Cancelar</button>
+                        <button type="submit" class="primary-button">Guardar cita</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="modalDetallesCitaHistorial" class="modal" aria-hidden="true" aria-labelledby="modalDetallesCitaHistorialTitle">
+            <div class="modal-content">
+                <span class="close" data-modal-id="modalDetallesCitaHistorial">×</span>
+                <h2 id="modalDetallesCitaHistorialTitle">Detalles de la Cita</h2>
+                <p><strong>Fecha:</strong> <span id="historialCitaFecha"></span></p>
+                <p><strong>Tipo:</strong> <span id="historialCitaTipo"></span></p>
+                <p><strong>Profesional:</strong> <span id="historialCitaProfesional"></span></p>
+                <p><strong>Lugar:</strong> <span id="historialCitaLugar"></span></p>
+                <p><strong>Estado:</strong> <span id="historialCitaEstado"></span></p>
+                <p class="mt-4"><strong>Notas:</strong> <span id="historialCitaNotas">N/A</span></p>
+                <div class="modal-actions justify-end">
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalDetallesCitaHistorial">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalVerInforme" class="modal" aria-hidden="true" aria-labelledby="modalVerInformeTitle">
+            <div class="modal-content">
+                <span class="close" data-modal-id="modalVerInforme">×</span>
+                <h2 id="modalVerInformeTitle">Informe Médico</h2>
+                <div class="report-content">
+                    <p>Aquí se mostraría el contenido detallado del informe médico.</p>
+                    <p><strong>Fecha del Informe:</strong> 15/05/2024</p>
+                    <p><strong>Diagnóstico:</strong> Control de hipertensión y diabetes tipo 2.</p>
+                    <p><strong>Recomendaciones:</strong> Mantener dieta baja en sodio y azúcares, realizar actividad física moderada 30 minutos al día, 5 veces por semana. Monitoreo de presión arterial y glucosa diario.</p>
+                    <p><em>Este es un ejemplo de informe médico general. Para un diagnóstico o tratamiento específico, consulte a su médico.</em></p>
+                </div>
+                <div class="modal-actions justify-end">
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalVerInforme">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalVerCertificado" class="modal" aria-hidden="true" aria-labelledby="modalVerCertificadoTitle">
+            <div class="modal-content">
+                <span class="close" data-modal-id="modalVerCertificado">×</span>
+                <h2 id="modalVerCertificadoTitle">Certificado de Vacunación</h2>
+                <div class="certificate-content">
+                    <p><strong>Tipo de Vacuna:</strong> Influenza Estacional (Cepa 2024-2025)</p>
+                    <p><strong>Fecha de Vacunación:</strong> 28/05/2024</p>
+                    <p><strong>Administrada por:</strong> Enfermera Laura M. (Centro de Salud La Granja)</p>
+                    <p><strong>Lote:</strong> FLU2024MONTERIA-XYZ789</p>
+                    <p><em>Este certificado valida la aplicación de la vacuna mencionada.</em></p>
+                </div>
+                <div class="modal-actions justify-end">
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalVerCertificado">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalVerResults" class="modal" aria-hidden="true" aria-labelledby="modalVerResultsTitle">
+            <div class="modal-content">
+                <span class="close" data-modal-id="modalVerResults">×</span>
+                <h2 id="modalVerResultsTitle">Resultados de Análisis</h2>
+                <div class="results-content">
+                    <p><strong>Tipo de Análisis:</strong> Perfil Lipídico y Glicemia en Ayunas</p>
+                    <p><strong>Fecha del Análisis:</strong> 15/05/2024</p>
+                    <p><strong>Resultados Clave:</strong></p>
+                    <ul class="list-disc pl-5">
+                        <li>Glucosa en Ayunas: 110 mg/dL (Ligeramente elevada)</li>
+                        <li>Colesterol Total: 205 mg/dL (Ligeramente elevado)</li>
+                        <li>HDL Colesterol: 45 mg/dL (Normal)</li>
+                        <li>LDL Colesterol: 130 mg/dL (Elevado)</li>
+                        <li>Triglicéridos: 160 mg/dL (Ligeramente elevados)</li>
+                    </ul>
+                    <p><em>Estos resultados deben ser interpretados por un profesional de la salud.</em></p>
+                </div>
+                <div class="modal-actions justify-end">
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalVerResults">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalReprogramarCita" class="modal" aria-hidden="true" aria-labelledby="modalReprogramarCitaTitle">
+            <div class="modal-content">
+                <span class="close" data-modal-id="modalReprogramarCita">×</span>
+                <h2 id="modalReprogramarCitaTitle">Reprogramar Cita</h2>
+                <p>Estás reprogramando la cita: <strong><span id="reprogramarCitaTitulo"></span></strong></p>
+                <form id="reprogramar-cita-form">
+                    <div class="form-group">
+                        <label for="new-appointment-date">Nueva Fecha:</label>
+                        <input type="text" id="new-appointment-date" class="datepicker" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-appointment-time">Nueva Hora:</label>
+                        <input type="text" id="new-appointment-time" class="timepicker" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reprogramar-notes">Notas (opcional):</label>
+                        <textarea id="reprogramar-notes" rows="3" placeholder="Motivo de la reprogramación, etc."></textarea>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalReprogramarCita">Cancelar</button>
+                        <button type="submit" class="primary-button">Confirmar Reprogramación</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="modalCancelarCitaConfirmacion" class="modal" aria-hidden="true" aria-labelledby="modalCancelarCitaConfirmacionTitle">
+            <div class="modal-content small-content">
+                <span class="close" data-modal-id="modalCancelarCitaConfirmacion">×</span>
+                <h2 id="modalCancelarCitaConfirmacionTitle">Confirmar Cancelación</h2>
+                <p>¿Estás seguro de que quieres cancelar la cita: <strong><span id="cancelarCitaTitulo"></span></strong>?</p>
+                <div class="modal-actions justify-end">
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalCancelarCitaConfirmacion">No, mantener</button>
+                    <button type="button" class="danger-button" id="confirmarCancelacionBtn">Sí, cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalRecordatorioCita" class="modal" aria-hidden="true" aria-labelledby="modalRecordatorioCitaTitle">
+            <div class="modal-content small-content">
+                <span class="close" data-modal-id="modalRecordatorioCita">×</span>
+                <h2 id="modalRecordatorioCitaTitle">Recordatorio de Cita</h2>
+                <p>Tienes una cita de: <strong><span id="recordatorioTipo"></span></strong></p>
+                <p>Con: <strong><span id="recordatorioProfesional"></span></strong></p>
+                <p>El: <strong><span id="recordatorioFecha"></span></strong> a las <strong><span id="recordatorioHora"></span></strong></p>
+                <p>En: <strong><span id="recordatorioLugar"></span></strong></p>
+                <p class="mt-4 text-sm text-gray-600">Este es un recordatorio automático. Por favor, verifica los detalles de tu cita.</p>
+                <div class="modal-actions justify-end">
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalRecordatorioCita">Entendido</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalComoLlegar" class="modal" aria-hidden="true" aria-labelledby="modalComoLlegarTitle">
+            <div class="modal-content">
+                <span class="close" data-modal-id="modalComoLlegar">×</span>
+                <h2 id="modalComoLlegarTitle">Cómo Llegar a la Cita</h2>
+                <p>Dirección: <strong><span id="comoLlegarDireccion"></span></strong></p>
+                <div class="map-placeholder mt-4">
+                    <iframe id="appointmentMapFrame" class="modal-map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3946.907901768853!2d-75.8821946!3d8.759902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e5a2f5f1a5f1a5f%3A0x8e5a2f5f1a5f1a5f!2sCl%C3%ADnica%20Zayma!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <p class="text-center text-gray-500 mt-2">Mapa del lugar de la cita</p>
+                </div>
+                <div class="modal-actions justify-end">
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalComoLlegar">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalVerCalendario" class="modal" aria-hidden="true" aria-labelledby="modalVerCalendarioTitle">
+            <div class="modal-content">
+                <span class="close" data-modal-id="modalVerCalendario">×</span>
+                <h2 id="modalVerCalendarioTitle">Vista de Calendario</h2>
+                <div id="fullCalendar" class="calendar-view-placeholder mt-4"></div>
+                <div class="modal-actions justify-end">
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalVerCalendario">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalSincronizarCalendario" class="modal" aria-hidden="true" aria-labelledby="modalSincronizarCalendarioTitle">
+            <div class="modal-content small-content">
+                <span class="close" data-modal-id="modalSincronizarCalendario">×</span>
+                <h2 id="modalSincronizarCalendarioTitle">Sincronizar Calendario</h2>
+                <p class="text-center">¿Deseas sincronizar tus citas con tu calendario personal (Google Calendar, Outlook, etc.)?</p>
+                <div class="modal-actions justify-center">
+                    <button type="button" class="primary-button">Sincronizar ahora</button>
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalSincronizarCalendario">Más tarde</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalCentrosMedicos" class="modal" aria-hidden="true" aria-labelledby="modalCentrosMedicosTitle">
+            <div class="modal-content">
+                <span class="close" data-modal-id="modalCentrosMedicos">×</span>
+                <h2 id="modalCentrosMedicosTitle">Centros Médicos Afiliados en Montería</h2>
+                <ul class="medical-centers-list">
+                    <li><strong>Clínica Zayma:</strong> Calle 29 #5-20, Tel: (604) 789-1234</li>
+                    <li><strong>Clínica Montería:</strong> Carrera 6 #65-10, Tel: (604) 789-5678</li>
+                    <li><strong>Hospital San Jerónimo de Montería:</strong> Carrera 14 #28-40, Tel: (604) 789-9012</li>
+                    <li><strong>Laboratorio Clínico Continental:</strong> Calle 32 #4-50, Tel: (604) 789-3456</li>
+                    <li><strong>Centro de Salud La Granja:</strong> Calle 41 #14-80, Tel: (604) 789-7890</li>
+                </ul>
+                <p class="mt-4 text-sm text-gray-600">Para más información, contacta directamente con el centro.</p>
+                <div class="modal-actions justify-end">
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalCentrosMedicos">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalExportarHistorial" class="modal" aria-hidden="true" aria-labelledby="modalExportarHistorialTitle">
+            <div class="modal-content small-content">
+                <span class="close" data-modal-id="modalExportarHistorial">×</span>
+                <h2 id="modalExportarHistorialTitle">Exportar Historial de Citas</h2>
+                <p class="text-center">Selecciona el formato de exportación:</p>
+                <div class="modal-actions justify-center">
+                    <button type="button" class="primary-button">Exportar a PDF</button>
+                    <button type="button" class="secondary-button">Exportar a CSV</button>
+                </div>
+                <div class="modal-actions justify-end mt-4">
+                    <button type="button" class="secondary-button close-modal-btn" data-modal-id="modalExportarHistorial">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Cargar el sidebar dinámicamente
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('sidebar/sidebar.html')
+                .then(response => response.text())
+                .then(data => {
+                    const sidebarContainer = document.getElementById('sidebar-container');
+                    if (sidebarContainer) {
+                        sidebarContainer.innerHTML = data;
+                        // Marcar como activo el elemento del menú correspondiente
+                        const currentPage = window.location.pathname.split('/').pop() || 'Inicio.html';
+                        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                            if (link.getAttribute('href') === currentPage) {
+                                link.parentElement.classList.add('active');
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar el sidebar:', error);
+                });
+
+            // Funcionalidad para abrir y cerrar modales
+            document.querySelectorAll('.open-modal-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal-id');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('show');
+                        modal.setAttribute('aria-hidden', 'false');
+
+                        // Llenar contenido del modal si es de detalles de cita o recordatorio
+                        if (modalId === 'modalDetallesCitaHistorial' || modalId === 'modalRecordatorioCita' || modalId === 'modalReprogramarCita' || modalId === 'modalCancelarCitaConfirmacion' || modalId === 'modalComoLlegar') {
+                            const appointmentCard = this.closest('.appointment-card') || this.closest('tr');
+                            if (appointmentCard) {
+                                const appointmentId = appointmentCard.getAttribute('data-appointment-id');
+                                const appointmentType = appointmentCard.getAttribute('data-appointment-type');
+                                const appointmentLocation = appointmentCard.getAttribute('data-appointment-location');
+                                const appointmentDoctor = appointmentCard.getAttribute('data-appointment-doctor');
+                                const appointmentNotes = appointmentCard.getAttribute('data-appointment-notes');
+                                const appointmentDate = appointmentCard.querySelector('.appointment-date-time')?.getAttribute('data-date') || appointmentCard.getAttribute('data-date');
+                                const appointmentTime = appointmentCard.querySelector('.appointment-date-time')?.getAttribute('data-time') || '';
+                                const appointmentStatus = appointmentCard.querySelector('.status')?.textContent || appointmentCard.getAttribute('data-status');
+
+                                // Para modalDetallesCitaHistorial
+                                if (modalId === 'modalDetallesCitaHistorial') {
+                                    document.getElementById('historialCitaFecha').textContent = appointmentDate;
+                                    document.getElementById('historialCitaTipo').textContent = appointmentType;
+                                    document.getElementById('historialCitaProfesional').textContent = appointmentDoctor;
+                                    document.getElementById('historialCitaLugar').textContent = appointmentLocation;
+                                    document.getElementById('historialCitaEstado').textContent = appointmentStatus;
+                                    document.getElementById('historialCitaNotas').textContent = appointmentNotes || 'N/A';
+                                }
+                                // Para modalRecordatorioCita
+                                else if (modalId === 'modalRecordatorioCita') {
+                                    document.getElementById('recordatorioTipo').textContent = appointmentType;
+                                    document.getElementById('recordatorioProfesional').textContent = appointmentDoctor;
+                                    document.getElementById('recordatorioFecha').textContent = appointmentDate;
+                                    document.getElementById('recordatorioHora').textContent = appointmentTime;
+                                    document.getElementById('recordatorioLugar').textContent = appointmentLocation;
+                                }
+                                // Para modalReprogramarCita
+                                else if (modalId === 'modalReprogramarCita') {
+                                    document.getElementById('reprogramarCitaTitulo').textContent = appointmentType + ' con ' + appointmentDoctor + ' el ' + appointmentDate;
+                                    // Puedes pre-llenar las nuevas fechas/horas si lo deseas
+                                }
+                                // Para modalCancelarCitaConfirmacion
+                                else if (modalId === 'modalCancelarCitaConfirmacion') {
+                                    document.getElementById('cancelarCitaTitulo').textContent = appointmentType + ' con ' + appointmentDoctor + ' el ' + appointmentDate;
+                                    document.getElementById('confirmarCancelacionBtn').onclick = () => {
+                                        // Lógica para cancelar la cita
+                                        alert('Cita cancelada: ' + appointmentType);
+                                        modal.classList.remove('show');
+                                        modal.setAttribute('aria-hidden', 'true');
+                                        // Aquí podrías recargar la lista de citas o remover la tarjeta/fila
+                                    };
+                                }
+                                // Para modalComoLlegar
+                                else if (modalId === 'modalComoLlegar') {
+                                    document.getElementById('comoLlegarDireccion').textContent = appointmentLocation;
+                                    // Actualizar el iframe del mapa con la dirección
+                                    // NOTA: Para direcciones exactas, necesitarías una API de geocodificación.
+                                    // Este es un ejemplo genérico para Montería.
+                                    const mapFrame = document.getElementById('appointmentMapFrame');
+                                    // Example for Clínica Zayma: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3946.907901768853!2d-75.8821946!3d8.759902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e5a2f5f1a5f1a5f%3A0x8e5a2f5f1a5f1a5f!2sCl%C3%ADnica%20Zayma!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco
+                                    // You would replace this with a dynamic search query or specific coordinates
+                                    const baseUrl = "https://www.google.com/maps/embed?pb=";
+                                    let queryParam = '';
+                                    if (appointmentLocation.includes('Clínica Zayma')) {
+                                        queryParam = '!1m18!1m12!1m3!1d3946.907901768853!2d-75.8821946!3d8.759902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e5a2f5f1a5f1a5f%3A0x8e5a2f5f1a5f1a5f!2sCl%C3%ADnica%20Zayma!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco';
+                                    } else if (appointmentLocation.includes('Laboratorio Clínico Continental')) {
+                                        queryParam = '!1m18!1m12!1m3!1d3946.907901768853!2d-75.8821946!3d8.759902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e5a2f5f1a5f1a5f%3A0x8e5a2f5f1a5f1a5f!2sLaboratorio%20Cl%C3%ADnico%20Continental!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco'; // Placeholder, replace with actual for Lab Continental
+                                    } else if (appointmentLocation.includes('Clínica Montería')) {
+                                        queryParam = '!1m18!1m12!1m3!1d3946.907901768853!2d-75.8821946!3d8.759902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e5a2f5f1a5f1a5f%3A0x8e5a2f5f1a5f1a5f!2sCl%C3%ADnica%20Monter%C3%ADa!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco'; // Placeholder, replace with actual for Clínica Montería
+                                    } else {
+                                        // Default to Montería city center if specific clinic not found
+                                        queryParam = '!1m18!1m12!1m3!1d3946.907901768853!2d-75.8821946!3d8.759902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e5a2f5f1a5f1a5f%3A0x8e5a2f5f1a5f1a5f!2sMonter%C3%ADa%2C%20C%C3%B3rdoba%2C%20Colombia!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco';
+                                    }
+                                    mapFrame.src = `${baseUrl}${queryParam}`;
+                                }
+                            }
+                        } else if (modalId === 'modalVerCalendario') {
+                            // Inicializar FullCalendar
+                            const calendarEl = document.getElementById('fullCalendar');
+                            if (calendarEl) {
+                                const calendar = new FullCalendar.Calendar(calendarEl, {
+                                    initialView: 'dayGridMonth',
+                                    locale: 'es',
+                                    headerToolbar: {
+                                        left: 'prev,next today',
+                                        center: 'title',
+                                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                                    },
+                                    events: [
+                                        // Ejemplo de eventos (se pueden cargar dinámicamente)
+                                        {
+                                            title: 'Consulta Cardiológica',
+                                            start: '2025-05-23T14:30:00',
+                                            end: '2025-05-23T15:15:00',
+                                            color: '#26a69a'
+                                        },
+                                        {
+                                            title: 'Análisis de sangre',
+                                            start: '2025-05-24T09:00:00',
+                                            end: '2025-05-24T09:30:00',
+                                            color: '#80cbc4'
+                                        },
+                                        {
+                                            title: 'Revisión oftalmológica',
+                                            start: '2025-06-10T10:00:00',
+                                            end: '2025-06-10T10:45:00',
+                                            color: '#4db6ac'
+                                        },
+                                        {
+                                            title: 'Vacunación Antigripal',
+                                            start: '2024-05-28',
+                                            color: '#81c784'
+                                        }
+                                    ]
+                                });
+                                calendar.render();
+                            }
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('.close-modal-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal-id');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.remove('show');
+                        modal.setAttribute('aria-hidden', 'true');
+                    }
+                });
+            });
+
+            // Inicializar Flatpickr para los campos de fecha y hora
+            flatpickr(".datepicker", {
+                dateFormat: "d/m/Y",
+                locale: "es"
+            });
+            flatpickr(".timepicker", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                locale: "es"
+            });
+
+            // Lógica para el botón de confirmar asistencia
+            document.querySelectorAll('.confirm-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.textContent = 'Asistencia confirmada';
+                    this.classList.add('confirmed');
+                    this.disabled = true;
+                    // Aquí podrías enviar la confirmación al servidor
+                });
+            });
+
+            // Lógica para el formulario de nueva cita
+            document.getElementById('new-appointment-form')?.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const type = document.getElementById('appointment-type').value;
+                const date = document.getElementById('appointment-date').value;
+                const time = document.getElementById('appointment-time').value;
+                const location = document.getElementById('appointment-location').value;
+                const professional = document.getElementById('appointment-professional').value;
+                const notes = document.getElementById('appointment-notes').value;
+
+                alert(`Nueva cita agendada:\nTipo: ${type}\nFecha: ${date} Hora: ${time}\nLugar: ${location}\nProfesional: ${professional}\nNotas: ${notes}`);
+                document.getElementById('modalNuevaCita').classList.remove('show');
+                document.getElementById('modalNuevaCita').setAttribute('aria-hidden', 'true');
+                this.reset(); // Limpiar el formulario
+            });
+
+            // Lógica para el formulario de reprogramar cita
+            document.getElementById('reprogramar-cita-form')?.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const newDate = document.getElementById('new-appointment-date').value;
+                const newTime = document.getElementById('new-appointment-time').value;
+                const notes = document.getElementById('reprogramar-notes').value;
+
+                alert(`Cita reprogramada para el ${newDate} a las ${newTime}. Notas: ${notes}`);
+                document.getElementById('modalReprogramarCita').classList.remove('show');
+                document.getElementById('modalReprogramarCita').setAttribute('aria-hidden', 'true');
+                this.reset(); // Limpiar el formulario
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/Inicio.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/locales/es.global.min.js"></script>
+    
+    <div class="medibot-toggle" id="medibotToggle" role="button" aria-expanded="false" aria-controls="medibotContainer">
+        <i class="fa-solid fa-user-doctor"></i>
+        <span class="notification-badge hidden" id="notificationBadge" aria-live="polite" aria-atomic="true">1</span>
+    </div>
+
+    <div class="medibot-container" id="medibotContainer" aria-live="polite" aria-atomic="true" role="dialog" aria-labelledby="medibotHeaderTitle">
+        <div class="medibot-header" id="medibotHeader">
+            <div class="header-content">
+                <i class="fas fa-robot"></i>
+                <h2 id="medibotHeaderTitle">MediBot</h2>
+                <span class="connection-status">
+                    <i class="fas fa-circle online-status" aria-hidden="true"></i>
+                    Online
+                </span>
+            </div>
+            <div class="header-controls">
+                <button class="control-btn" id="medibotMinimize" aria-label="Minimizar chatbot">
+                    <i class="fas fa-minus" aria-hidden="true"></i>
+                </button>
+                <button class="control-btn" id="medibotClose" aria-label="Cerrar chatbot">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="medibot-messages" id="medibotMessages" role="log" aria-live="polite"></div>
+
+        <div class="medibot-quick-actions" id="medibotQuickActions" role="group" aria-label="Acciones rápidas del chatbot"></div>
+
+        <div class="medibot-input-area">
+            <input type="text" class="medibot-input" id="medibotInput" placeholder="Escribe tu mensaje..." aria-label="Escribe tu mensaje">
+            <button class="voice-btn" id="medibotVoiceInput" aria-label="Entrada de voz">
+                <i class="fas fa-microphone" aria-hidden="true"></i>
+            </button>
+            <button class="send-btn" id="medibotSend" aria-label="Enviar mensaje">
+                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <script src="medibot/medibot.js"></script>
+    <script src="Scripts/citas.js"></script>
+</body>
+</html>

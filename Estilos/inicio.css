@@ -1,0 +1,841 @@
+/* Estilos globales basados en emergencia.css para aplicar a la página de inicio */
+/* Asegúrate de que esta hoja de estilo se incluya DESPUÉS de cualquier reset y estilos base */
+
+:root {
+    /* Copia las variables de emergencia.css */
+    --color-primary: #26a69a;
+    --color-primary-dark: #00796b;
+    --color-primary-light: #b2dfdb;
+    --color-secondary: #80cbc4;
+    --color-accent: #4db6ac;
+    --color-light: #f5f5f5;
+    --color-dark: #333333;
+    --color-gray-light: #e0e0e0;
+    --color-gray-medium: #9e9e9e;
+    --color-gray-dark: #616161;
+    --color-success: #81c784;
+    --color-warning: #ffb74d;
+    --color-danger: #e57373; /* Variable para el color de peligro */
+    --color-info: #64b5f6;
+    --color-emergency: #f44336;
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.1);
+    --shadow-emphasis: 0 0 0 3px rgba(38, 166, 154, 0.3);
+
+    --transition-fast: 120ms ease;
+    --transition-medium: 240ms ease;
+    --transition-slow: 360ms ease;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    /* Aumentar el espaciado para hacer los componentes visualmente más grandes */
+    --space-xxs: 0.35rem; /* Original: 0.25rem, antes: 0.3rem */
+    --space-xs: 0.7rem;  /* Original: 0.5rem, antes: 0.6rem */
+    --space-sm: 1rem;    /* Original: 0.75rem, antes: 0.9rem */
+    --space-md: 1.3rem;  /* Original: 1rem, antes: 1.2rem */
+    --space-lg: 2rem;    /* Original: 1.5rem, antes: 1.8rem */
+    --space-xl: 2.6rem;  /* Original: 2rem, antes: 2.4rem */
+    --space-xxl: 4rem;   /* Original: 3rem, antes: 3.6rem */
+
+    --font-base: 'Poppins', system-ui, -apple-system, sans-serif;
+    /* Aumentar los tamaños de fuente */
+    --font-size-xs: 0.9rem;    /* Original: 0.75rem, antes: 0.85rem */
+    --font-size-sm: 1.1rem;    /* Original: 0.875rem, antes: 1rem */
+    --font-size-md: 1.25rem;   /* Original: 1rem, antes: 1.15rem */
+    --font-size-lg: 1.4rem;    /* Original: 1.125rem, antes: 1.3rem */
+    --font-size-xl: 1.6rem;    /* Original: 1.25rem, antes: 1.45rem */
+    --font-size-xxl: 1.9rem;   /* Original: 1.5rem, antes: 1.7rem */
+    --font-size-xxxl: 2.6rem;  /* Original: 2rem, antes: 2.3rem */
+
+    --z-base: 1;
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-modal: 1000; /* Ajustado para que los modales estén por encima de todo */
+    --z-overlay: 1050; /* Ajustado para que las notificaciones estén por encima de los modales */
+
+    /* Variables específicas para la página de inicio */
+    --primary-color: var(--color-primary);
+    --primary-dark: var(--color-primary-dark);
+    --gray-dark: var(--color-dark); /* Usar color-dark para texto principal */
+    --gray-medium: var(--color-gray-medium);
+    --gray-light: var(--color-gray-light);
+    --success-color: var(--color-success);
+    --info-bg: rgba(100, 181, 246, 0.1);
+    --info-border: rgba(100, 181, 246, 0.3);
+    --info-color: var(--color-info);
+    --card-bg: white;
+    --card-border: var(--color-gray-light);
+    --border-color: var(--color-gray-light); /* Añadido para consistencia en inputs */
+    --input-bg: white; /* Fondo de los inputs */
+    --text-color: var(--color-dark); /* Color de texto general */
+}
+
+body {
+    font-family: var(--font-base);
+    background-color: #f5fbfa;
+    color: var(--color-dark);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex; /* Para la disposición del sidebar y el contenido */
+    text-rendering: optimizeSpeed;
+}
+
+.app-container {
+    display: flex; /* Asegura que los hijos directos (sidebar y main) se alineen */
+    min-height: 100vh;
+    width: 100%; /* Ocupa todo el ancho */
+}
+
+#sidebar-container {
+    /* El ancho y otros estilos del sidebar se definen en sidebar/sidebar.css */
+    /* Este contenedor solo sirve como punto de montaje. */
+    /* Los estilos de layout reales para el sidebar fijo/responsivo están en sidebar/sidebar.css */
+}
+
+.main-content {
+    flex-grow: 1; /* Ocupa el espacio restante */
+    padding: var(--space-md);
+    margin-left: 250px; /* Crea espacio para el sidebar fijo. DEBE SER IGUAL AL ANCHO DEL SIDEBAR */
+    transition: margin-left var(--transition-medium); /* Para animaciones si el sidebar es togglable */
+}
+
+/* Si tienes un sidebar que puede colapsar o cambiar de estado */
+.app-container.sidebar-collapsed .main-content {
+    margin-left: 0;
+}
+
+.today-summary .header h1 {
+    font-size: var(--font-size-xxl);
+    color: var(--primary-dark);
+    margin-bottom: var(--space-md);
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Aumentado min-width */
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.summary-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--card-border);
+    padding: var(--space-xl); /* Aumentado padding */
+    display: flex;
+    flex-direction: column;
+}
+
+.summary-card i {
+    font-size: 2.4rem; /* Aumentado tamaño de icono */
+    color: var(--primary-color);
+    margin-bottom: var(--space-sm);
+}
+
+.summary-card h3 {
+    font-size: var(--font-size-lg);
+    color: var(--primary-dark);
+    margin-bottom: var(--space-xs);
+}
+
+.summary-card p {
+    font-size: var(--font-size-md); /* Aumentado tamaño de párrafo */
+    color: var(--gray-dark);
+    line-height: 1.6; /* Ajustado line-height para mejor legibilidad */
+    margin-bottom: var(--space-md);
+}
+
+.summary-card .card-actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: auto;
+}
+
+.health-indicators .header h2,
+.quick-access .header h2,
+.upcoming-appointments .header h2,
+.health-tips .header h2 {
+    font-size: var(--font-size-xl);
+    color: var(--primary-dark);
+    margin-bottom: var(--space-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chart-container {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--card-border);
+    padding: var(--space-md);
+    text-align: center;
+    margin-bottom: var(--space-lg);
+    min-height: 300px; /* Asegura que el contenedor de la gráfica tenga una altura mínima */
+    display: flex; /* Usar flexbox para centrar el canvas si es necesario */
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-labels {
+    display: flex;
+    justify-content: space-around;
+    margin-top: var(--space-xs);
+    color: var(--gray-medium);
+    font-size: var(--font-size-md); /* Aumentado tamaño de etiqueta */
+}
+
+.quick-buttons {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap; /* Permite que los botones se envuelvan en pantallas pequeñas */
+}
+
+.quick-buttons button {
+    padding: var(--space-lg) var(--space-xl); /* Aumentado padding */
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    flex-grow: 1; /* Permite que los botones se expandan */
+    min-width: 200px; /* Ancho mínimo para evitar que se hagan demasiado pequeños */
+}
+
+.progress-bar {
+    background-color: var(--gray-light);
+    border-radius: var(--radius-full);
+    height: 1rem; /* Aumentado altura */
+    margin: var(--space-xs) 0;
+    overflow: hidden;
+}
+
+.progress-bar .progress {
+    background-color: var(--success-color);
+    height: 100%;
+    transition: width 0.5s ease;
+    border-radius: var(--radius-full);
+}
+
+.appointment-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    background-color: var(--card-bg);
+    padding: var(--space-lg); /* Aumentado padding */
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-sm);
+    border: 1px solid var(--card-border);
+    flex-wrap: wrap;
+    cursor: pointer; /* Indica que es clickeable */
+    transition: all 0.3s ease; /* Transición para cambios de estado */
+}
+
+.appointment-card i {
+    font-size: 2.4rem; /* Aumentado tamaño de icono */
+    color: var(--primary-color);
+}
+
+.appointment-details {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.appointment-details h3 {
+    margin: 0;
+    font-size: var(--font-size-lg); /* Aumentado tamaño de título */
+    color: var(--primary-dark);
+}
+
+.appointment-details p {
+    margin: var(--space-xxs) 0;
+    font-size: var(--font-size-md); /* Aumentado tamaño de párrafo */
+    color: var(--gray-dark);
+}
+
+.health-tips {
+    margin-top: var(--space-lg);
+}
+
+.tip-card {
+    background-color: var(--info-bg);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+    border: 1px solid var(--info-border);
+}
+
+.tip-card i {
+    font-size: 2.4rem; /* Aumentado tamaño de icono */
+    color: var(--info-color);
+}
+
+.tip-card p {
+    margin: 0;
+    font-size: var(--font-size-md); /* Aumentado tamaño de párrafo */
+    color: var(--gray-dark);
+}
+
+.view-all {
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.view-all:hover {
+    text-decoration: underline;
+    color: var(--primary-dark);
+}
+
+/* Estilos para los botones */
+.primary-button, .secondary-button, .danger-button {
+    padding: var(--space-md) var(--space-lg); /* Aumentado padding */
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    text-align: center;
+}
+
+.primary-button {
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.primary-button:hover {
+    background-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.primary-button:focus {
+    box-shadow: var(--shadow-emphasis);
+}
+
+.secondary-button {
+    background-color: white;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+
+.secondary-button:hover {
+    background-color: rgba(38, 166, 154, 0.1);
+}
+
+.secondary-button:focus {
+    box-shadow: var(--shadow-emphasis);
+}
+
+.danger-button {
+    background-color: var(--color-danger);
+    color: white;
+    border: 1px solid var(--color-danger);
+}
+
+.danger-button:hover {
+    background-color: #d32f2f; /* Un tono más oscuro de danger */
+}
+
+.danger-button:focus {
+    box-shadow: 0 0 0 3px rgba(229, 115, 115, 0.3);
+}
+
+.primary-button.small, .secondary-button.small, .danger-button.small {
+    padding: var(--space-sm) var(--space-md); /* Aumentado padding */
+    font-size: var(--font-size-sm); /* Aumentado tamaño de fuente */
+}
+
+/* Estilos específicos para el botón de confirmar toma */
+.confirmar-toma-btn.confirmed {
+    background-color: var(--success-color);
+    color: white;
+    border: none;
+}
+
+.confirmar-toma-btn.confirmed:hover {
+    background-color: #4caf50;
+    box-shadow: var(--shadow-sm);
+}
+
+.confirmar-toma-btn.confirmed i {
+    margin-right: var(--space-xxs);
+}
+
+/* Estilos para las notificaciones */
+.notification {
+    position: fixed;
+    top: var(--space-md);
+    right: var(--space-md);
+    padding: var(--space-md) var(--space-lg); /* Aumentado padding */
+    border-radius: var(--radius-sm);
+    color: white;
+    box-shadow: var(--shadow-md);
+    transform: translateX(120%);
+    transition: transform var(--transition-medium);
+    z-index: var(--z-overlay); /* Usa la variable ajustada */
+    max-width: 400px; /* Aumentado max-width */
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    background-color: var(--success-color);
+    border-left: 4px solid #43a047;
+}
+
+.notification i {
+    font-size: 1.6rem; /* Aumentado tamaño de icono */
+}
+
+/* Estilos generales para el modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Permanece en la misma posición al desplazarse */
+    z-index: var(--z-modal); /* Z-index alto para estar por encima de otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    overflow: auto; /* Habilitar scroll si el contenido es demasiado largo */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente oscuro */
+    justify-content: center; /* Centrar horizontalmente el contenido */
+    align-items: center; /* Centrar verticalmente el contenido */
+    padding: var(--space-md); /* Espacio para que no se pegue a los bordes en móviles */
+    box-sizing: border-box; /* Incluir padding en el tamaño total */
+}
+
+/* Mostrar el modal */
+.modal.show {
+    display: flex; /* Usar flexbox para centrar contenido */
+}
+
+/* Contenido del modal */
+.modal-content {
+    background-color: var(--card-bg); /* Color de fondo de las tarjetas */
+    margin: auto; /* Margen automático para centrar (si no usas flexbox para el modal) */
+    padding: var(--space-xxl); /* Aumentado padding */
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg); /* Sombra más pronunciada */
+    width: 90%; /* Ancho predeterminado */
+    max-width: 600px; /* Aumentado ancho máximo */
+    position: relative; /* Para posicionar el botón de cerrar */
+    animation: fadeInScale 0.3s ease-out; /* Animación de entrada */
+    box-sizing: border-box;
+    border: 1px solid var(--card-border);
+}
+
+/* Contenido de modal más pequeño (para confirmaciones, etc.) */
+.modal-content.small-content {
+    max-width: 500px; /* Aumentado max-width */
+}
+
+/* Botón de cerrar */
+.close {
+    color: var(--gray-dark);
+    font-size: var(--font-size-xxxl);
+    font-weight: bold;
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-md);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.close:hover,
+.close:focus {
+    color: var(--primary-dark);
+    text-decoration: none;
+}
+
+/* Estilos para los grupos de formulario dentro del modal */
+.modal-content .form-group {
+    margin-bottom: var(--space-md);
+}
+
+.modal-content .form-group label {
+    display: block;
+    margin-bottom: var(--space-xs);
+    font-weight: 600;
+    color: var(--primary-dark);
+    font-size: var(--font-size-lg); /* Aumentado tamaño de fuente */
+}
+
+.modal-content .form-group input[type="text"],
+.modal-content .form-group input[type="number"],
+.modal-content .form-group input[type="date"],
+.modal-content .form-group input[type="time"],
+.modal-content .form-group select,
+.modal-content .form-group textarea {
+    width: 100%;
+    padding: var(--space-md); /* Aumentado padding */
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    color: var(--text-color);
+    background-color: var(--input-bg);
+    box-sizing: border-box; /* Asegura que padding no aumente el ancho total */
+}
+
+.modal-content .form-group textarea {
+    resize: vertical; /* Permitir redimensionar verticalmente */
+}
+
+/* Acciones del modal (botones) */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinear botones a la derecha por defecto */
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+}
+
+.modal-actions.justify-center {
+    justify-content: center;
+}
+
+.modal-actions.justify-start {
+    justify-content: flex-start;
+}
+
+/* Animación de entrada del modal */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .main-content {
+        padding: var(--space-sm);
+        margin-left: 0; /* Anula el margin-left fijo en pantallas pequeñas */
+        margin-top: 60px; /* Deja espacio para el sidebar que ahora es una barra superior */
+    }
+
+    /* El #sidebar-container no debe tener estilos de layout aquí. */
+    /* Sus estilos responsivos deben venir de sidebar/sidebar.css. */
+    /* IMPORTANTE: Asegúrate de que el CSS en sidebar/sidebar.css también se ajuste para móviles.
+       El elemento principal del sidebar (ej. <nav class="sidebar">) debe tener
+       position: relative; o position: static; y height: auto; en pantallas pequeñas
+       para no anular estos estilos. */
+
+    .today-summary .header h1 {
+        font-size: var(--font-size-xl);
+    }
+
+    .summary-cards {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ajustado min-width para móviles */
+        gap: var(--space-sm);
+    }
+
+    .summary-card {
+        padding: var(--space-md);
+    }
+
+    .summary-card i {
+        font-size: 2rem; /* Ajustado tamaño de icono para móviles */
+        margin-bottom: var(--space-xs);
+    }
+
+    .summary-card h3 {
+        font-size: var(--font-size-lg);
+    }
+
+    .quick-buttons {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .quick-buttons button {
+        width: 100%;
+    }
+
+    .appointment-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+    }
+
+    .appointment-card i {
+        font-size: 2rem; /* Ajustado tamaño de icono para móviles */
+    }
+
+    .health-indicators .header h2,
+    .quick-access .header h2,
+    .upcoming-appointments .header h2,
+    .health-tips .header h2 {
+        font-size: var(--font-size-lg);
+    }
+
+    .appointment-details {
+        margin-bottom: var(--space-sm);
+    }
+
+    /* Modales responsivos */
+    .modal-content {
+        padding: var(--space-lg);
+    }
+
+    .modal-content .form-row {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .modal-actions button {
+        width: 100%;
+    }
+}
+
+/* For symptom analysis content */
+#analisisSintomaContent {
+    min-height: 160px; /* Aumentado min-height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#analisisSintomaText {
+    text-align: center;
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+}
+
+#analisisSintomaLoading {
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    color: var(--gray-medium);
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Estilos específicos para el modal de Historial de Presión Arterial */
+#modalHistorialPresion .modal-content {
+    max-width: 800px; /* Un poco más ancho para la gráfica */
+}
+
+#historialPresionContent {
+    background-color: var(--color-light); /* Fondo más claro para la sección de contenido */
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-top: var(--space-md);
+    border: 1px solid var(--border-color);
+}
+
+#historialPresionContent h3 {
+    color: var(--primary-dark);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-sm);
+}
+
+#historialPresionContent ul {
+    list-style: none; /* Remover viñetas por defecto */
+    padding: 0;
+    margin-bottom: var(--space-md);
+    max-height: 280px; /* Altura máxima para la lista con scroll */
+    overflow-y: auto;
+    border: 1px solid var(--color-gray-light);
+    border-radius: var(--radius-sm);
+    background-color: white;
+}
+
+#historialPresionContent ul li {
+    padding: var(--space-xs) var(--space-sm);
+    border-bottom: 1px solid var(--color-gray-light);
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    color: var(--gray-dark);
+}
+
+#historialPresionContent ul li:last-child {
+    border-bottom: none;
+}
+
+.chart-canvas-container {
+    position: relative;
+    height: 320px; /* Aumentado altura fija para la gráfica */
+    width: 100%;
+    margin-top: var(--space-md);
+    background-color: white;
+    border-radius: var(--radius-md);
+    padding: var(--space-sm);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--card-border);
+}
+
+/* Estilos para el modal de Detalles de Adherencia Semanal */
+#modalDetallesAdherencia .modal-content {
+    max-width: 650px; /* Aumentado max-width */
+}
+
+#detallesAdherenciaContent {
+    background-color: var(--color-light);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-top: var(--space-md);
+    border: 1px solid var(--border-color);
+}
+
+#detallesAdherenciaContent h3 {
+    color: var(--primary-dark);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-sm);
+}
+
+#detallesAdherenciaContent ul {
+    list-style: disc;
+    padding-left: var(--space-lg);
+    margin-bottom: var(--space-md);
+    color: var(--gray-dark);
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+}
+
+/* Estilos para el modal de Recordatorio de Cita */
+#modalRecordatorioCita .modal-content {
+    max-width: 550px; /* Aumentado max-width */
+    text-align: center;
+}
+
+#modalRecordatorioCita h2 {
+    margin-bottom: var(--space-md);
+}
+
+#modalRecordatorioCita p {
+    font-size: var(--font-size-lg); /* Aumentado tamaño de fuente */
+    margin-bottom: var(--space-sm);
+    color: var(--gray-dark);
+}
+
+#modalRecordatorioCita p strong {
+    color: var(--primary-dark);
+}
+
+#modalRecordatorioCita .modal-actions {
+    justify-content: center;
+}
+
+/* Estilos para el modal de Registrar Nueva Medicación */
+#modalRegistrarMedicacion .modal-content {
+    max-width: 600px; /* Aumentado max-width */
+}
+
+#modalRegistrarMedicacion h2 {
+    margin-bottom: var(--space-lg);
+}
+
+#modalRegistrarMedicacion .form-group {
+    margin-bottom: var(--space-md);
+}
+
+#modalRegistrarMedicacion label {
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: var(--space-xs);
+    font-size: var(--font-size-lg); /* Aumentado tamaño de fuente */
+}
+
+#modalRegistrarMedicacion input,
+#modalRegistrarMedicacion textarea {
+    width: 100%;
+    padding: var(--space-md); /* Aumentado padding */
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+#modalRegistrarMedicacion textarea {
+    resize: vertical;
+}
+
+/* Estilos para el modal de Análisis de Síntoma con IA */
+#modalAnalisisSintoma .modal-content {
+    max-width: 700px; /* Aumentado max-width */
+}
+
+#analisisSintomaContent {
+    background-color: var(--color-light);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-top: var(--space-md);
+    border: 1px solid var(--info-border);
+    min-height: 170px; /* Asegura espacio para el contenido */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#analisisSintomaText {
+    color: var(--gray-dark);
+    line-height: 1.5;
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+}
+
+#analisisSintomaLoading {
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+    color: var(--gray-medium);
+    margin-top: var(--space-xs);
+}
+
+/* Estilos para el modal de Ver Informes */
+#modalVerInformes .modal-content {
+    max-width: 600px; /* Aumentado max-width */
+}
+
+#modalVerInformes ul {
+    list-style: disc;
+    padding-left: var(--space-lg);
+    margin-bottom: var(--space-md);
+    color: var(--gray-dark);
+    font-size: var(--font-size-md); /* Aumentado tamaño de fuente */
+}
+
+/* Media query para ajustar el gráfico en pantallas pequeñas */
+@media (max-width: 576px) {
+    .chart-canvas-container {
+        height: 240px; /* Ajustar altura en móviles */
+    }
+}
+
+/* New style for cancelled appointments */
+.appointment-card.cancelled-appointment {
+    background-color: var(--color-gray-light);
+    opacity: 0.7;
+    text-decoration: line-through;
+    border-color: var(--color-gray-medium);
+}
+
+.appointment-card.cancelled-appointment .appointment-details h3,
+.appointment-card.cancelled-appointment .appointment-details p {
+    color: var(--color-gray-dark); /* Color de texto más claro para citas canceladas */
+}

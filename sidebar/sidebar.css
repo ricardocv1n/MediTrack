@@ -1,0 +1,348 @@
+/* Estilos generales y de la barra lateral */
+:root {
+    /* Colores principales */
+    --primary-color: #26a69a;
+    --primary-dark: #00796b;
+    --primary-light: #b2dfdb;
+    --secondary-color: #80cbc4;
+    --accent-color: #4db6ac;
+    --light-color: #f5f5f5;
+    --dark-color: #333333;
+    --gray-light: #e0e0e0;
+    --gray-medium: #9e9e9e;
+    --gray-dark: #616161;
+    --success-color: #81c784;
+    --warning-color: #ffb74d;
+    --danger-color: #e57373;
+    --info-color: #64b5f6;
+
+    /* Colores para tendencias */
+    --up-trend: #4caf50;
+    --down-trend: #f44336;
+    --neutral-trend: #ff9800;
+
+    /* Sombras */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.1);
+    --shadow-emphasis: 0 0 0 3px rgba(38, 166, 154, 0.3);
+
+    /* Transiciones */
+    --transition-fast: 120ms ease;
+    --transition-medium: 240ms ease;
+    --transition-slow: 360ms ease;
+
+    /* Bordes */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    /* Espaciados */
+    --space-xxs: 0.35rem;
+    --space-xs: 0.7rem;
+    --space-sm: 1rem;
+    --space-md: 1.3rem;
+    --space-lg: 2rem;
+    --space-xl: 2.6rem;
+    --space-xxl: 4rem;
+
+    /* Tipografía Base (Ajustado para coincidir con otras páginas) */
+    --font-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-size-xxxs: 0.65rem; /* Añadido para tamaños muy pequeños */
+    --font-size-xxs: 0.7rem;   /* Añadido para tamaños muy pequeños */
+    --font-size-xs: 0.9rem;
+    --font-size-sm: 1.1rem;
+    --font-size-md: 1.25rem;
+    --font-size-lg: 1.4rem;
+    --font-size-xl: 1.6rem;
+    --font-size-xxl: 1.9rem;
+    --font-size-xxxl: 2.6rem;
+
+    /* Z-index */
+    --z-base: 1;
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-modal: 1000;
+    --z-overlay: 1050;
+}
+
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background: linear-gradient(135deg, #26a69a 0%, #80cbc4 100%);
+    box-shadow: 0 4px 24px rgba(38, 166, 154, 0.15);
+    display: flex;
+    flex-direction: column;
+    position: fixed; /* Mantiene la barra lateral fija */
+    left: 0;
+    top: 0;
+    z-index: 100;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+}
+
+.sidebar-header {
+    padding: 28px 20px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.07);
+    border-top-right-radius: 24px;
+    display: flex; /* Para alinear el título */
+    justify-content: center; /* Centra el título */
+    align-items: center; /* Centrar verticalmente */
+}
+
+.app-title {
+    font-size: var(--font-size-xl); /* Usando variable para el tamaño de la fuente */
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(38,166,154,0.15);
+}
+
+/* El botón de hamburguesa ya no existe, por lo que no necesita estilos */
+
+.sidebar-nav {
+    flex: 1;
+    overflow-y: auto; /* Permite el scroll vertical en el menú */
+    padding: 18px 0;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    margin: 8px 18px;
+}
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    background: transparent;
+    box-shadow: none;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.sidebar-menu li a:hover,
+.sidebar-menu li a:focus {
+    background: #fff; /* Fondo blanco al pasar el cursor */
+    color: var(--primary-dark); /* Texto oscuro al pasar el cursor */
+    box-shadow: 0 2px 12px rgba(38,166,154,0.12); /* Sombra para resaltar */
+}
+
+.sidebar-menu li a:hover i,
+.sidebar-menu li a:focus i {
+    color: var(--primary-dark); /* Icono oscuro al pasar el cursor */
+}
+
+.sidebar-menu li a i {
+    font-size: var(--font-size-md); /* Usando variable para el tamaño de la fuente */
+    width: 28px;
+    color: #fff;
+    transition: color 0.2s;
+    filter: drop-shadow(0 2px 4px rgba(38,166,154,0.10));
+}
+
+.sidebar-menu li a span {
+    margin-left: 14px;
+    font-size: var(--font-size-sm); /* Usando variable para el tamaño de la fuente */
+    letter-spacing: 0.5px;
+}
+
+.sidebar-menu li.active a {
+    background: #fff;
+    color: var(--primary-dark); /* Texto oscuro para el elemento activo */
+    box-shadow: 0 2px 12px rgba(38,166,154,0.12);
+}
+
+.sidebar-menu li.active a i {
+    color: var(--primary-dark); /* Icono oscuro para el elemento activo */
+}
+
+.sidebar-footer {
+    padding: 18px 20px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.07);
+    border-bottom-right-radius: 24px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.user-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(38,166,154,0.12);
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: var(--font-size-sm); /* Usando variable para el tamaño de la fuente */
+    color: #fff;
+}
+
+.user-role {
+    font-size: var(--font-size-xs); /* Usando variable para el tamaño de la fuente */
+    color: #e0f2f1;
+}
+
+/* Scrollbar styling */
+.sidebar-nav::-webkit-scrollbar {
+    width: 8px;
+}
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(38,166,154,0.18);
+    border-radius: 8px;
+}
+.sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+/* --- Media Queries para Responsive --- */
+
+/* Tablet y pantallas medianas */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 200px; /* Un poco más estrecha en tablets */
+    }
+    .app-title {
+        font-size: var(--font-size-lg); /* Usando variable para el tamaño de la fuente */
+    }
+    .sidebar-menu li a {
+        padding: 12px 15px;
+    }
+    .sidebar-menu li a span {
+        font-size: var(--font-size-xs); /* Usando variable para el tamaño de la fuente */
+        margin-left: 10px;
+    }
+    .sidebar-menu li a i {
+        font-size: var(--font-size-sm); /* Usando variable para el tamaño de la fuente */
+    }
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+    }
+    .user-name {
+        font-size: var(--font-size-xs); /* Usando variable para el tamaño de la fuente */
+    }
+    .user-role {
+        font-size: var(--font-size-xxs); /* Usando variable para el tamaño de la fuente */
+    }
+}
+
+/* Móviles (pantallas pequeñas) */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%; /* Ocupa todo el ancho en móviles */
+        height: auto; /* Altura automática */
+        position: relative; /* Ya no es fijo, se adapta al flujo del documento */
+        flex-direction: row; /* Cambia a disposición horizontal */
+        padding: 10px;
+        align-items: center; /* Centra verticalmente los elementos */
+        border-radius: 0; /* Sin bordes redondeados en móviles */
+        background: linear-gradient(90deg, #26a69a 0%, #80cbc4 100%); /* Degradado horizontal */
+        box-shadow: 0 2px 12px rgba(38,166,154,0.10); /* Sombra más sutil */
+        overflow-x: auto; /* Permite el scroll horizontal si los elementos no caben */
+    }
+
+    .sidebar-header {
+        padding: 0 10px 0 0; /* Ajusta el padding */
+        margin-right: 15px;
+        border-bottom: none; /* Elimina el borde inferior */
+        background: transparent; /* Fondo transparente */
+        border-radius: 0;
+        justify-content: flex-start; /* Alinea el título a la izquierda */
+    }
+
+    .app-title {
+        font-size: var(--font-size-md); /* Usando variable para el tamaño de la fuente */
+        white-space: nowrap; /* Evita que el título se rompa */
+    }
+
+    .sidebar-nav {
+        flex: 1; /* Permite que la navegación ocupe el espacio disponible */
+        overflow-x: auto; /* Asegura que la navegación sea scrollable horizontalmente */
+        overflow-y: hidden; /* Oculta el scroll vertical */
+        padding: 0;
+    }
+
+    .sidebar-menu {
+        display: flex; /* Mantiene los items del menú en fila */
+        padding-left: 0; /* Elimina el padding izquierdo por defecto de la lista */
+        white-space: nowrap; /* Evita que los items del menú se rompan */
+    }
+
+    .sidebar-menu li {
+        margin: 0 5px; /* Reduce el margen entre los items del menú */
+    }
+
+    .sidebar-menu li a {
+        flex-direction: column; /* Apila el icono y el texto */
+        padding: 8px 12px;
+        font-size: var(--font-size-xxs); /* Usando variable para el tamaño de la fuente */
+        border-radius: 8px;
+        align-items: center; /* Centra el icono y el texto */
+    }
+
+    .sidebar-menu li a i {
+        margin-bottom: 5px; /* Margen inferior para el icono */
+        margin-right: 0;
+        font-size: var(--font-size-sm); /* Usando variable para el tamaño de la fuente */
+    }
+
+    .sidebar-menu li a span {
+        margin-left: 0;
+        font-size: var(--font-size-xxs); /* Usando variable para el tamaño de la fuente */
+    }
+
+    .sidebar-footer {
+        display: none; /* Oculta el footer en pantallas pequeñas para ahorrar espacio */
+    }
+
+    /* Los estilos de user-info, user-avatar, user-details, user-name, user-role ya no son necesarios si el footer está oculto */
+}
+
+/* Media query para pantallas aún más pequeñas (ej., móviles muy pequeños) */
+@media (max-width: 576px) {
+    .sidebar-header {
+        margin-right: 10px;
+    }
+    .app-title {
+        font-size: var(--font-size-sm); /* Usando variable para el tamaño de la fuente */
+    }
+    .sidebar-menu li a {
+        padding: 6px 8px;
+        font-size: var(--font-size-xxs); /* Usando variable para el tamaño de la fuente */
+    }
+    .sidebar-menu li a i {
+        font-size: var(--font-size-xs); /* Usando variable para el tamaño de la fuente */
+        margin-bottom: 3px;
+    }
+    .sidebar-menu li a span {
+        font-size: var(--font-size-xxxs); /* Usando variable para el tamaño de la fuente */
+    }
+}
