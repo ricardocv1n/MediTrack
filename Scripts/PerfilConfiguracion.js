@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
         logoutButton.addEventListener('click', () => {
             showNotification("Cerrando sesión...", 'info');
             setTimeout(() => {
-                window.location.href = '../index.html'; // Redirigir a la página de login
+                window.location.href = 'index.html'; // Redirigir a la página de login
             }, 1000);
         });
     }
