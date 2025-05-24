@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showMessage(`¡Bienvenido, ${user.username}! Has iniciado sesión correctamente.`, 'success');
             // Redirige al usuario a la página principal de la aplicación (index.html en el directorio padre)
             setTimeout(() => {
-                window.location.href = '../Inicio.html'; // Se asume que index.html está en el directorio padre
+                window.location.href = '/Inicio.html'; // Se asume que index.html está en el directorio padre
             }, 1000); // Pequeño retraso para que el usuario vea el mensaje de éxito
         } else {
             showMessage('Usuario o contraseña incorrectos.', 'error');
